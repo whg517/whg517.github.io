@@ -14,26 +14,21 @@
 npm install
 ```
 
-2. 获取主题。参考 [Download latest release version](https://github.com/theme-next/hexo-theme-next/blob/master/docs/INSTALLATION.md)
-
-```bash
-mkdir themes/next
-curl -s https://api.github.com/repos/theme-next/hexo-theme-next/releases/latest | grep tarball_url | cut -d '"' -f 4 | wget -i - -O- | tar -zx -C themes/next --strip-components=1
-```
-
-3. [生成静态文件](https://hexo.io/zh-cn/docs/commands#generate)
+2. [生成静态文件](https://hexo.io/zh-cn/docs/commands#generate)
 
 ```bash
 npm build
 ```
 
-4. [预览](https://hexo.io/zh-cn/docs/commands#server)
+3. [预览](https://hexo.io/zh-cn/docs/commands#server)
 
 ```bash
 npm server
 ```
 
 ## 配置说明
+
+项目采用 `npm` 管理，所需要内容都在 `package.json` 中，包括 hexo 和 Next 主题。
 
 ### Hexo 配置
 
@@ -42,7 +37,9 @@ npm server
 ### 主题配置
 
 主题配置默认在主题目录中 `themes/next/_config.yml` ，为了方便使用，可以将主题配置也分离到 hexo 中。在 [hexo 5.0 增加了多配置功能](https://hexo.io/docs/configuration#Alternate-Theme-Config)，
-所以主题配置存放在 `_config.next.yml` 中，其配置内容会覆盖主题默认配置。
+
+所以现在主题配置存放在 `_config.next.yml` 中，其配置内容会覆盖主题默认配置。由于使用了 npm 管理主题包，所以如果需要查看默认主题配置，
+可以在[源代码仓库查找](https://github.com/theme-next/hexo-theme-next/blob/master/_config.yml) 。
 
 ## 变更记录
 
