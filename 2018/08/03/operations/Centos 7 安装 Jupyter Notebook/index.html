@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Centos 7 安装 Jupyter Notebook | Myblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="本文安装 Jupyter Notebook 是我在 Centos 7 服务器上安装的一次记录过程。此方式可以作为本地环境使用，也可以作为服务器环境部署。当然对于本次Jupyter Notebook 的部署方式，也是我现在常用的项目部署方式—-通过 supervisor 部署，而结合 virtualenvwrapper 能够更方便的控制虚拟环境。下面开始吧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos 7 安装 Jupyter Notebook">
+<meta property="og:url" content="http://blog.iclouds.work/2018/08/03/operations/Centos%207%20%E5%AE%89%E8%A3%85%20Jupyter%20Notebook/index.html">
+<meta property="og:site_name" content="Myblog">
+<meta property="og:description" content="本文安装 Jupyter Notebook 是我在 Centos 7 服务器上安装的一次记录过程。此方式可以作为本地环境使用，也可以作为服务器环境部署。当然对于本次Jupyter Notebook 的部署方式，也是我现在常用的项目部署方式—-通过 supervisor 部署，而结合 virtualenvwrapper 能够更方便的控制虚拟环境。下面开始吧">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-08-03T08:04:00.000Z">
+<meta property="article:modified_time" content="2020-05-28T03:50:00.000Z">
+<meta property="article:author" content="huagang">
+<meta property="article:tag" content="centos">
+<meta property="article:tag" content="Jupyter notebook">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Myblog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Myblog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Hello World !</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.iclouds.work"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-operations/Centos 7 安装 Jupyter Notebook" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/08/03/operations/Centos%207%20%E5%AE%89%E8%A3%85%20Jupyter%20Notebook/" class="article-date">
+  <time class="dt-published" datetime="2018-08-03T08:04:00.000Z" itemprop="datePublished">2018-08-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Centos 7 安装 Jupyter Notebook
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>本文安装 Jupyter Notebook 是我在 Centos 7 服务器上安装的一次记录过程。此方式可以作为本地环境使用，也可以作为服务器环境部署。当然对于本次<br>Jupyter Notebook 的部署方式，也是我现在常用的项目部署方式—-通过 supervisor 部署，而结合 virtualenvwrapper 能够更方便的控制虚拟环境。<br>下面开始吧</p>
+<span id="more"></span>
+
+<p>基础系统环境需要安装 Python36 virtualenv virtualenvwrapper supervisor 。如果你的环境还没准备好，可以参照此文根据自己环境<br>调整相关操作。如果你的环境已经配置完成可以按照此文愉快的安装。如果你想安装前面提到的环境可以参考下面几篇文章。</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>创建 jupyter 虚拟环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkvirtualenv jupyter</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install ipython jupyter</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="生成-jupyter-配置文件"><a href="#生成-jupyter-配置文件" class="headerlink" title="生成 jupyter 配置文件"></a>生成 jupyter 配置文件</h3><p>一般会直接生成在家目录 <code>~/.jupyter/jupyter_notebook_config.py</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure>
+
+<h3 id="生成必要配置参数"><a href="#生成必要配置参数" class="headerlink" title="生成必要配置参数"></a>生成必要配置参数</h3><p>为了服务器数据安全，我们采用设置密码和设置 https 保证安全登录。当然我们的 https 证书是自己颁发的。</p>
+<h4 id="生成加密密码"><a href="#生成加密密码" class="headerlink" title="生成加密密码"></a>生成加密密码</h4><p>进入 ipython ，生成 sha1 密码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from notebook.auth import passwd</span><br><span class="line">passwd()</span><br><span class="line">Enter password:</span><br><span class="line">Verify password:</span><br><span class="line">Out[3]: &#39;sha1:5c82f59da5a3:a68e8360e2cab6336fbbfa3d141f9a617aec7dba&#39;</span><br></pre></td></tr></table></figure>
+
+<p>输入两次密码。密码是不回显的！</p>
+<h4 id="生成自签名证书"><a href="#生成自签名证书" class="headerlink" title="生成自签名证书"></a>生成自签名证书</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout ~/.jupyter/jkey.key -out ~/.jupyter/jcert.pem</span><br></pre></td></tr></table></figure>
+
+<p>会提示输入一些内容，如果你不知道该填什么的话，那就回车默认好了~</p>
+<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><p>修改文件 <code>/.jupyter/jupyter_notebook_config.py</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">c.NotebookApp.password = <span class="string">&#x27;sha1:5c82f59da5a3:a68e8360e2cab6336fbbfa3d141f9a617aec7dba&#x27;</span></span><br><span class="line">c.NotebookApp.port = 8888</span><br><span class="line">c.NotebookApp.ip = <span class="string">&#x27;*&#x27;</span></span><br><span class="line">c.NotebookApp.open_browser = False</span><br><span class="line">c.NotebookApp.notebook_dir = <span class="string">&#x27;/opt/jupyte_notebook/&#x27;</span></span><br><span class="line">c.NotebookApp.certfile = <span class="string">&#x27;/home/user/.jupyter/jcert.pem&#x27;</span></span><br><span class="line">c.NotebookApp.keyfile = <span class="string">&#x27;/home/user/.jupyter/jkey.key&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<ol>
+<li><code>password</code> 要填你上面密码生成的 hash 值</li>
+<li><code>notebook_dir</code> 置了jupyter的notebook路径，即访问jupyter首页时，看到的文件列表就是该目录下的。记得授权给启动用户，要不然可能会出现无法访问</li>
+<li>最后两条配置的文件路径记得要写对应文件的绝对路径！</li>
+</ol>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p><strong>增加防火墙端口</strong></p>
+<p>如果你使用了 firewalld 记得开发端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --add-port=8888/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试启动"><a href="#测试启动" class="headerlink" title="测试启动"></a>测试启动</h3><p>执行命令启动。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure>
+
+<p>然后浏览器访问页面</p>
+<h3 id="supervisord-启动"><a href="#supervisord-启动" class="headerlink" title="supervisord 启动"></a>supervisord 启动</h3><p>编辑文件 <code>/etc/supervisord.d/jupyter_notebook.ini</code> 填入如下配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[program:jupyter_notebook]</span><br><span class="line">command &#x3D; &#x2F;home&#x2F;user&#x2F;.virtualenvs&#x2F;jupyter&#x2F;bin&#x2F;jupyter notebook</span><br><span class="line">autostart &#x3D; true</span><br><span class="line">startsecs &#x3D; 5</span><br><span class="line">autorestart &#x3D; true</span><br><span class="line">startretries &#x3D; 3</span><br><span class="line">user &#x3D; kevin</span><br><span class="line">redirect_stderr &#x3D; true</span><br><span class="line">stdout_logfile_maxbytes &#x3D; 20MB</span><br><span class="line">stdout_logfile_backups &#x3D; 10</span><br><span class="line">stdout_logfile &#x3D; &#x2F;var&#x2F;log&#x2F;supervisor&#x2F;jupyter_notebook&#x2F;stdout.log</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong></p>
+<ol>
+<li><code>command</code> 为你虚拟环境中的启动命令</li>
+<li><code>user</code> 用哪个用户启动。如果公网能访问不建议使用 root 用户</li>
+<li><code>stdout_logfile</code> 日志存放目录。记得把权限给启动用户。因为会生成备份日志。建议单独放一个文件夹，然后授权给此用户。免得日志写满了没有权限备份日志和建立新文件。这里配置不好的话 supervisor 页面的 <code>tail -f</code> 可能看不到实时打出的日志。</li>
+</ol>
+<p>执行 <code>supervisorctl</code>进入 supervisor 交互，重新加载 supervisor 配置文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; upload</span><br></pre></td></tr></table></figure>
+
+<p>查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">status</span><br></pre></td></tr></table></figure>
+
+<p>当然这两个操作都可以在 web 页面上进行。</p>
+<p>如果有出错请查看相关日志</p>
+<hr>
+<p><strong>TODO：</strong></p>
+<ol>
+<li>使用 nginx 代理</li>
+<li>jupyterhub 多用户管理</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.iclouds.work/2018/08/03/operations/Centos%207%20%E5%AE%89%E8%A3%85%20Jupyter%20Notebook/" data-id="ckmwwmzrm0008eqnkdwie9db3" data-title="Centos 7 安装 Jupyter Notebook" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jupyter-notebook/" rel="tag">Jupyter notebook</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/" rel="tag">centos</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/10/12/programming/python/Python%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E5%8C%96/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Python 项目工程化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/02/operations/Centos%207%20%E9%85%8D%E7%BD%AE%20python3.6%20%E7%8E%AF%E5%A2%83/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Centos7 配置 Python36 环境</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CloudNative/">CloudNative</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Documents/">Documents</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jupyter-notebook/" rel="tag">Jupyter notebook</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kerberos/" rel="tag">Kerberos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ambari/" rel="tag">ambari</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api-desig/" rel="tag">api-desig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api-design/" rel="tag">api-design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/" rel="tag">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deepin/" rel="tag">deepin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fastapi/" rel="tag">fastapi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab-ci/" rel="tag">gitlab-ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbase/" rel="tag">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hive/" rel="tag">hive</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kerberos/" rel="tag">kerberos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lvm/" rel="tag">lvm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openldap/" rel="tag">openldap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/" rel="tag">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zabbix/" rel="tag">zabbix</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Jupyter-notebook/" style="font-size: 10px;">Jupyter notebook</a> <a href="/tags/Kerberos/" style="font-size: 10px;">Kerberos</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/ambari/" style="font-size: 10px;">ambari</a> <a href="/tags/api-desig/" style="font-size: 10px;">api-desig</a> <a href="/tags/api-design/" style="font-size: 20px;">api-design</a> <a href="/tags/centos/" style="font-size: 17.5px;">centos</a> <a href="/tags/deepin/" style="font-size: 10px;">deepin</a> <a href="/tags/fastapi/" style="font-size: 10px;">fastapi</a> <a href="/tags/gitlab-ci/" style="font-size: 10px;">gitlab-ci</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/hbase/" style="font-size: 10px;">hbase</a> <a href="/tags/hive/" style="font-size: 10px;">hive</a> <a href="/tags/kerberos/" style="font-size: 15px;">kerberos</a> <a href="/tags/lvm/" style="font-size: 10px;">lvm</a> <a href="/tags/openldap/" style="font-size: 12.5px;">openldap</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/zabbix/" style="font-size: 10px;">zabbix</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/01/api-design/microsoft_api_guide/">Microsoft REST API 准则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/01/api-design/paypal_api_style_guide/">PayPal API 设计原则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/api-design/paypal_api_first_part3/">大规模分解API优先转换。在PayPal学习的经验教训–第3部分</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/api-design/paypal_api_first_part2/">大规模分解API优先转换。在PayPal学习的经验教训–第2部分</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/27/api-design/paypal_api_first_part1/">大规模分解API优先转换。在PayPal学习的经验教训–第1部分</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 huagang<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

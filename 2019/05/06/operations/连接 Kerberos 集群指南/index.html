@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>连接 Kerberos 集群指南 | Myblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="本文主要介绍客户端在使用 Kerberos 的时候如何连接 Kerberos 集群，使用 Kerberos 安全认证。其中包含 Windows 客户端， Linux 客户端安装使用记录。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="连接 Kerberos 集群指南">
+<meta property="og:url" content="http://blog.iclouds.work/2019/05/06/operations/%E8%BF%9E%E6%8E%A5%20Kerberos%20%E9%9B%86%E7%BE%A4%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="Myblog">
+<meta property="og:description" content="本文主要介绍客户端在使用 Kerberos 的时候如何连接 Kerberos 集群，使用 Kerberos 安全认证。其中包含 Windows 客户端， Linux 客户端安装使用记录。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=9213b35de9f81a4c2632ebcfef110764/a5c27d1ed21b0ef485f59977dfc451da81cb3efd.jpg">
+<meta property="og:image" content="http://qiniu.iclouds.work/Fmaqh-qBfq-rXFuXcSUNxplf9Ibu.png">
+<meta property="og:image" content="http://qiniu.iclouds.work/Fkxqfdj7TUx0InXKX3w6QkbNawBp.png">
+<meta property="og:image" content="http://qiniu.iclouds.work/FldFbui6VkQsUeIxVUS9zBIpFXKd.png">
+<meta property="og:image" content="http://qiniu.iclouds.work/Fhof90F5SjgN4s9uGD-JU9-52gdx.png">
+<meta property="og:image" content="http://qiniu.iclouds.work/FtiywmQmIg8ILbI9UX6kr9VWZePz.png">
+<meta property="og:image" content="http://qiniu.iclouds.work/FukOO6s6wCNDX5vE-BuJwWmTcQvF.png">
+<meta property="og:image" content="http://qiniu.iclouds.work/FhCrKMifE6Nj6ZlQGMqlcRtVKZ1C.png">
+<meta property="article:published_time" content="2019-05-06T04:30:00.000Z">
+<meta property="article:modified_time" content="2020-05-28T03:50:00.000Z">
+<meta property="article:author" content="huagang">
+<meta property="article:tag" content="Kerberos">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=9213b35de9f81a4c2632ebcfef110764/a5c27d1ed21b0ef485f59977dfc451da81cb3efd.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Myblog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Myblog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Hello World !</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.iclouds.work"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-operations/连接 Kerberos 集群指南" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/05/06/operations/%E8%BF%9E%E6%8E%A5%20Kerberos%20%E9%9B%86%E7%BE%A4%E6%8C%87%E5%8D%97/" class="article-date">
+  <time class="dt-published" datetime="2019-05-06T04:30:00.000Z" itemprop="datePublished">2019-05-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      连接 Kerberos 集群指南
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>本文主要介绍客户端在使用 Kerberos 的时候如何连接 Kerberos 集群，使用 Kerberos 安全认证。其中包含 Windows 客户端， Linux 客户端安装使用记录。</p>
+<span id="more"></span>
+
+<h2 id="Kerberos-介绍"><a href="#Kerberos-介绍" class="headerlink" title="Kerberos 介绍"></a>Kerberos 介绍</h2><p>Kerberos 简介</p>
+<p><img src="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=9213b35de9f81a4c2632ebcfef110764/a5c27d1ed21b0ef485f59977dfc451da81cb3efd.jpg" alt="kerberos_pic"></p>
+<p><strong>Kerberos</strong>是一种计算机网络授权协议，用来在非安全网络中，对个人通信以安全的手段进行身份认证。这个词又指<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%BA%BB%E7%9C%81%E7%90%86%E5%B7%A5%E5%AD%A6%E9%99%A2">麻省理工学院</a>为这个协议开发的一套计算机软件。</p>
+<p>先来看看Kerberos协议的前提条件：</p>
+<p>如下图所示，Client与KDC， KDC与Service 在协议工作前已经有了各自的共享密钥，并且由于协议中的消息无法穿透防火墙，这些条件就限制了Kerberos协议往往用于一个组织的内部。</p>
+<p><img src="http://qiniu.iclouds.work/Fmaqh-qBfq-rXFuXcSUNxplf9Ibu.png" alt="kerberos"></p>
+<p><strong>过程</strong></p>
+<p>Kerberos协议分为两个部分：</p>
+<ol>
+<li><p>Client向KDC发送自己的身份信息，KDC从Ticket Granting Service得到TGT(ticket-granting ticket)， 并用协议开始前Client与KDC之间的密钥将TGT加密回复给Client。</p>
+<p>此时只有真正的Client才能利用它与KDC之间的密钥将加密后的TGT解密，从而获得TGT。</p>
+<p>（此过程避免了Client直接向KDC发送密码，以求通过验证的不安全方式）</p>
+</li>
+<li><p>Client利用之前获得的TGT向KDC请求其他Service的Ticket，从而通过其他Service的身份鉴别。</p>
+<p>Kerberos协议的重点在于第二部分，简介如下：</p>
+<p><img src="http://qiniu.iclouds.work/Fkxqfdj7TUx0InXKX3w6QkbNawBp.png" alt="kerberos"></p>
+<ul>
+<li>Client将之前获得TGT和要请求的服务信息(服务名等)发送给KDC，KDC中的Ticket Granting Service将为Client和Service之间生成一个Session Key用于Service对Client的身份鉴别。然后KDC将这个Session Key和用户名，用户地址（IP），服务名，有效期, 时间戳一起包装成一个Ticket(这些信息最终用于Service对Client的身份鉴别)发送给Service， 不过Kerberos协议并没有直接将Ticket发送给Service，而是通过Client转发给Service.所以有了第二步。</li>
+<li>此时KDC将刚才的Ticket转发给Client。由于这个Ticket是要给Service的，不能让Client看到，所以KDC用协议开始前KDC与Service之间的密钥将Ticket加密后再发送给Client。同时为了让Client和Service之间共享那个秘密(KDC在第一步为它们创建的Session Key)， KDC用Client与它之间的密钥将Session Key加密随加密的Ticket一起返回给Client。</li>
+<li>为了完成Ticket的传递，Client将刚才收到的Ticket转发到Service. 由于Client不知道KDC与Service之间的密钥，所以它无法算改Ticket中的信息。同时Client将收到的Session Key解密出来，然后将自己的用户名，用户地址（IP）打包成Authenticator用Session Key加密也发送给Service。</li>
+<li>Service 收到Ticket后利用它与KDC之间的密钥将Ticket中的信息解密出来，从而获得Session Key和用户名，用户地址（IP），服务名，有效期。然后再用Session Key将Authenticator解密从而获得用户名，用户地址（IP）将其与之前Ticket中解密出来的用户名，用户地址（IP）做比较从而验证Client的身份。</li>
+<li>如果Service有返回结果，将其返回给Client。</li>
+</ul>
+</li>
+</ol>
+<h2 id="Kerberos-Client-配置"><a href="#Kerberos-Client-配置" class="headerlink" title="Kerberos Client 配置"></a>Kerberos Client 配置</h2><h3 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h3><p>准备</p>
+<p>同步时间</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">timedatectl set-timezone <span class="string">&quot;Asia/Shanghai&quot;</span> <span class="comment"># 设置系统时区</span></span><br><span class="line">timedatectl set-ntp <span class="literal">true</span> <span class="comment"># 联网自动同步到 NTP 时间服务器</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>根据 <a target="_blank" rel="noopener" href="https://help.ubuntu.com/lts/serverguide/kerberos.html.en">Ubuntu 官方文档</a> <strong>Kerberos Linux Client</strong> 一节操作</p>
+<ol>
+<li>安装</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install krb5-user</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改配置</li>
+</ol>
+<p>修改 <code>/etc/krb5.conf</code> ，配置如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[libdefaults]</span><br><span class="line">  renew_lifetime &#x3D; 7d</span><br><span class="line">  forwardable &#x3D; true</span><br><span class="line">  default_realm &#x3D; TENDATA.CN</span><br><span class="line">  ticket_lifetime &#x3D; 24h</span><br><span class="line">  dns_lookup_realm &#x3D; false</span><br><span class="line">  dns_lookup_kdc &#x3D; false</span><br><span class="line">  default_ccache_name &#x3D; &#x2F;tmp&#x2F;krb5cc_%&#123;uid&#125;</span><br><span class="line">  #default_tgs_enctypes &#x3D; aes des3-cbc-sha1 rc4 des-cbc-md5</span><br><span class="line">  #default_tkt_enctypes &#x3D; aes des3-cbc-sha1 rc4 des-cbc-md5</span><br><span class="line"></span><br><span class="line">[logging]</span><br><span class="line">  default &#x3D; FILE:&#x2F;var&#x2F;log&#x2F;krb5kdc.log</span><br><span class="line">  admin_server &#x3D; FILE:&#x2F;var&#x2F;log&#x2F;kadmind.log</span><br><span class="line">  kdc &#x3D; FILE:&#x2F;var&#x2F;log&#x2F;krb5kdc.log</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line">  TENDATA.CN &#x3D; &#123;</span><br><span class="line">    admin_server &#x3D; m1.node.hadoop</span><br><span class="line">    kdc &#x3D; 192.168.10.1</span><br><span class="line">    kdc &#x3D; 192.168.10.2</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>配置域名解析</li>
+</ol>
+<p>修改 hosts 文件，增加如下解析记录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">192.168.10.1  m1.node.hadoop</span><br><span class="line">192.168.10.2  m2.node.hadoop</span><br><span class="line">192.168.10.3  m3.node.hadoop</span><br><span class="line"></span><br><span class="line">192.168.10.10 d1.node.hadoop</span><br><span class="line">192.168.10.11 d2.node.hadoop</span><br><span class="line">192.168.10.12 d3.node.hadoop</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>使用 Kerberos Client</li>
+</ol>
+<p>使用 <code>kinit</code> 获取 tgt </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">kevin@ubuntu-kevin:~$ kinit whg</span><br><span class="line">Password for whg@TENDATA.CN: </span><br><span class="line"></span><br><span class="line">kevin@ubuntu-kevin:~$ klist</span><br><span class="line">Ticket cache: FILE:&#x2F;tmp&#x2F;krb5cc_1000</span><br><span class="line">Default principal: whg@TENDATA.CN</span><br><span class="line"></span><br><span class="line">Valid starting       Expires              Service principal</span><br><span class="line">2019-05-06T09:45:56  2019-05-07T09:45:55  krbtgt&#x2F;TENDATA.CN@TENDATA.CN</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>kdestroy</code> 销毁 tgt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kevin@ubuntu-kevin:~$ kdestroy </span><br><span class="line"></span><br><span class="line">kevin@ubuntu-kevin:~$ klist </span><br><span class="line">klist: No credentials cache found (filename: &#x2F;tmp&#x2F;krb5cc_1000)</span><br></pre></td></tr></table></figure>
+
+<p>命令使用参数和其他命令请阅读 <a target="_blank" rel="noopener" href="https://web.mit.edu/kerberos/krb5-latest/doc/user/user_commands/index.html">Kerberos 用户命令</a> </p>
+<ol start="5">
+<li>访问相关服务</li>
+</ol>
+<p>使用 <code>curl</code> 访问 Kerberos 认证的页面。</p>
+<p>正常访问不会出现 <code>Error 401 Authentication required</code> 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">kevin@ubuntu-kevin:~$ curl -k --negotiate -u: -H &quot;Content-Type: application&#x2F;json&quot; -X GET http:&#x2F;&#x2F;m1.node.hadoop:50070&#x2F;</span><br><span class="line">&lt;!--</span><br><span class="line">   Licensed to the Apache Software Foundation (ASF) under one or more</span><br><span class="line">   contributor license agreements.  See the NOTICE file distributed with</span><br><span class="line">   this work for additional information regarding copyright ownership.</span><br><span class="line">   The ASF licenses this file to You under the Apache License, Version 2.0</span><br><span class="line">   (the &quot;License&quot;); you may not use this file except in compliance with</span><br><span class="line">   the License.  You may obtain a copy of the License at</span><br><span class="line"></span><br><span class="line">       http:&#x2F;&#x2F;www.apache.org&#x2F;licenses&#x2F;LICENSE-2.0</span><br><span class="line"></span><br><span class="line">   Unless required by applicable law or agreed to in writing, software</span><br><span class="line">   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span><br><span class="line">   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line">   See the License for the specific language governing permissions and</span><br><span class="line">   limitations under the License.</span><br><span class="line">--&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-&#x2F;&#x2F;W3C&#x2F;&#x2F;DTD XHTML 1.0 Strict&#x2F;&#x2F;EN&quot;</span><br><span class="line">    &quot;http:&#x2F;&#x2F;www.w3.org&#x2F;TR&#x2F;xhtml1&#x2F;DTD&#x2F;xhtml1-strict.dtd&quot;&gt;</span><br><span class="line">&lt;html xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;1999&#x2F;xhtml&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv&#x3D;&quot;REFRESH&quot; content&#x3D;&quot;0;url&#x3D;dfshealth.html&quot; &#x2F;&gt;</span><br><span class="line">&lt;title&gt;Hadoop Administration&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或者访问 <code>curl -L -k --negotiate -u: -H &quot;Content-Type: application/json&quot; -X GET http://m1.node.hadoop:50070/webhdfs/v1/?op=LISTSTATUS</code> 正常出现 HDFS 文件列表(JSON 格式数据)，没有 401 错误即代表正常访问</p>
+<p><strong>Error 401 Authentication required</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;text/html;charset=utf-8&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Error 401 Authentication required<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;<span class="name">h2</span>&gt;</span>HTTP ERROR 401<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Problem accessing /webhdfs/v1/. Reason:</span><br><span class="line"><span class="tag">&lt;<span class="name">pre</span>&gt;</span>    Authentication required<span class="tag">&lt;/<span class="name">pre</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Centos"><a href="#Centos" class="headerlink" title="Centos"></a>Centos</h3><p>准备</p>
+<p>同步时间</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">timedatectl set-timezone <span class="string">&quot;Asia/Shanghai&quot;</span> <span class="comment"># 设置系统时区</span></span><br><span class="line">timedatectl set-ntp <span class="literal">true</span> <span class="comment"># 联网自动同步到 NTP 时间服务器</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>安装 Kerberos Client</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install krb5-workstation</span><br></pre></td></tr></table></figure>
+
+<p>其余步骤和 Ubuntu 操作相同。</p>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>Windows 默认已经支持 Kerberos，但需要使用 加入 Active Directory ，以获取 tgt。在使用 openladp 的情况下需要配置 AD proxy，这种方式比较麻烦。MIT 提供 <a target="_blank" rel="noopener" href="https://web.mit.edu/kerberos/dist/index.html">Kerberos for Windows</a> 来更方便的使用 Kerberos 认证。</p>
+<p>没有使用 Windows 默认 kerberos 支持，当有程序调用Windows 集成身份验证的时候也就会认证失败。例如 IE，Chrome 浏览器登陆 Kerberos 认证的网站时，会出现 <code>HTTP ERROR 403</code> 错误。</p>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://www.simba.com/products/Hive/doc/ODBC_InstallGuide/win/content/odbc/hi/kerberos.htm">Configuring Kerberos Authentication for Windows</a> </p>
+<p>注意：在选择 kfw 版本应该与后面安装浏览器版本一致，推荐安装 64-bit kfw，因为会向下兼容</p>
+<ol>
+<li>下载安装</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://web.mit.edu/kerberos/dist/index.html">Kerberos for Windows</a></p>
+<p>安装时推荐选择 “Complete” 安装</p>
+<p><img src="http://qiniu.iclouds.work/FldFbui6VkQsUeIxVUS9zBIpFXKd.png" alt="kerberos_for_windows_install"></p>
+<ol start="2">
+<li>配置</li>
+</ol>
+<p>kfw 64位 默认安装在 <code>C:\Program Files\MIT\Kerberos</code> 下，当然这不是重点。 kfw 会加载 <code>C:\ProgramData\MIT\Kerberos5\krb5.ini</code> 的配置文件。</p>
+<blockquote>
+<p><code>ProgramData</code> 目录默认是隐藏的。</p>
+</blockquote>
+<p>修改该配置文件内容为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[libdefaults]</span><br><span class="line">  renew_lifetime &#x3D; 7d</span><br><span class="line">  forwardable &#x3D; true</span><br><span class="line">  default_realm &#x3D; TENDATA.CN</span><br><span class="line">  ticket_lifetime &#x3D; 24h</span><br><span class="line">  dns_lookup_realm &#x3D; false</span><br><span class="line">  dns_lookup_kdc &#x3D; false</span><br><span class="line">  default_ccache_name &#x3D; &#x2F;tmp&#x2F;krb5cc_%&#123;uid&#125;</span><br><span class="line">  #default_tgs_enctypes &#x3D; aes des3-cbc-sha1 rc4 des-cbc-md5</span><br><span class="line">  #default_tkt_enctypes &#x3D; aes des3-cbc-sha1 rc4 des-cbc-md5</span><br><span class="line"></span><br><span class="line">[logging]</span><br><span class="line">  default &#x3D; FILE:&#x2F;var&#x2F;log&#x2F;krb5kdc.log</span><br><span class="line">  admin_server &#x3D; FILE:&#x2F;var&#x2F;log&#x2F;kadmind.log</span><br><span class="line">  kdc &#x3D; FILE:&#x2F;var&#x2F;log&#x2F;krb5kdc.log</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line">  TENDATA.CN &#x3D; &#123;</span><br><span class="line">    admin_server &#x3D; m1.node.hadoop</span><br><span class="line">    kdc &#x3D; 192.168.10.1</span><br><span class="line">    kdc &#x3D; 192.168.10.2</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>配置系统属性：</li>
+</ol>
+<p>打开 <code>控制面板</code> -&gt; 选择 <code>系统和安全</code> -&gt; 选择 <code>系统</code> -&gt; 选择 <code>高级系统设置</code> 打开 <code>系统属性</code> 面板 -&gt; 点击 <code>高级</code> 选项卡 -&gt; 打开环境变量</p>
+<p>新建系统变量，变量名称为 <code>KRB5CCNAME</code> 变量值为 <code>C:\temp\krb5cache</code>  。前提时 <code>C:\temp\</code> 目录存在，<code>krb5cache</code> 不需要创建，在使用 <code>kinit</code> 命令的时候会自动生成该文件。</p>
+<p>如果 <code>krb5.ini</code> 的配置文件不在默认目录可以使用变量名 <code>KRB5_CONFIG</code> 指定，变量值为该文件的绝对路径</p>
+<ol start="4">
+<li>使用</li>
+</ol>
+<p>在 CMD 中使用 <code>kinit</code> 获取 tgt。</p>
+<p>由于 Windows 支持 Kerberos ，所有部分命令默认时 Windows 的。比如 <code>klist</code> 。</p>
+<p>修改环境变量，让 kfw 命令覆盖 Windows。</p>
+<p>编辑 <code>Path</code> 环境变量，将 <code>kerberos</code> 变量上移至最上面即可。</p>
+<p><img src="http://qiniu.iclouds.work/Fhof90F5SjgN4s9uGD-JU9-52gdx.png" alt="up_kerberos_bin"></p>
+<p>在 CMD 中使用 <code>klist</code> 即可查看以获取的 tgt</p>
+<p><strong>注意：</strong></p>
+<p>由于 Java 也实现了 kerberos client 认证机制，在 JDK 的 <code>bin</code> 目录提供了 <code>kinit</code> 、 <code>klist</code> 等相关命令，在配置Path 环境变量时，Kerberos 的优先级应该比 JDK 的要高。</p>
+<p>**403 ** 分析：</p>
+<p>在没有安装 kfw 时，系统已经具有 <code>klist</code> 命令，该命令位于 <code>C:\WINDOWS\system32</code> 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">C:\WINDOWS\system32&gt;klist</span><br><span class="line"></span><br><span class="line">当前登录 ID 是 0:0x73218</span><br><span class="line"></span><br><span class="line">缓存的票证: (0)</span><br><span class="line"></span><br><span class="line">C:\WINDOWS\system32&gt;klist sessions</span><br><span class="line"></span><br><span class="line">当前登录 ID 是 0:0x73218</span><br><span class="line">[0] 会话 0 0:0x136dc999 DESKTOP-5KM5T43\Administrator NTLM:Network</span><br><span class="line">[1] 会话 0 0:0x134bf7a2 DESKTOP-5KM5T43\Administrator NTLM:Network</span><br></pre></td></tr></table></figure>
+
+<p>相关命令使用前查看 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/klist">klist</a> </p>
+<h3 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h3><p>根据 <a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/10/security/introduction-jaas-and-java-gss-api-tutorials1.htm#JSSEC-GUID-202DE2FD-E2CA-44D1-9391-50127913538E">Java Platform, Standard Edition Security Developer’s Guide</a> 描述，Java 为开发人员提供了 JAAS 和 Java GSS-API 来使用 Kerberos 认证。前者是直接认证，后者是使用调用底层认证。</p>
+<p><strong>注意：</strong> 根据 JCE 描述，由于一些国家的进口管制限制，一些版本的 JDK 或者 JRE 允许强，但有限的加密策略。所以如果需要无限长度加密策略，需要下载 <code>Java Cryptography Extension (JCE) </code> 支持。详细描述请查看 JCE 压缩包中的 README.txt。而 Kerberos 的加密正式需要无限长度支持。下载地址为 <a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html">Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 8 Download</a> 。下载后解压到 <code>JAVA_HOME\jre\lib\security</code> 即可。</p>
+<ol>
+<li>配置</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/10/security/kerberos-requirements1.htm#JSSEC-GUID-EAA2758B-3071-4CDA-AEF1-D76F5271E998">Kerberos Requirements</a> 中描述了 JDK 是如何使用 Kerberos 的。它支持系统属性值，和 <code>krb5.conf</code> 配置文件读取。为了便于使用，下面仅配置使用 <code>krb5.conf</code> </p>
+<p><strong>注意：</strong> 系统属性值比配置有更高的优先级！</p>
+<p>JDK 查找配置文件的算法如下：</p>
+<ul>
+<li><p>系统属性 ``java.security.krb5.conf` 指定文件位置</p>
+</li>
+<li><p>查找配置文件位置 (java-home 为 JDK 安装目录)</p>
+<ul>
+<li><code>&lt;java-home&gt;\conf\security</code> (Windows) </li>
+<li><code>&lt;java-home&gt;/conf/security</code>  (Solaris, Linux, and macOS)</li>
+</ul>
+</li>
+<li><p>如果上述没有找到，则查找如下位置：</p>
+<ul>
+<li><p><code>/etc/krb5/krb5.conf</code> (Solaris)</p>
+</li>
+<li><p><code>C:\Windows\krb5.ini</code> (Windows)</p>
+</li>
+<li><p><code>/etc/krb5.conf</code> (Linux)</p>
+</li>
+<li><p><code>~/Library/Preferences/edu.mit.Kerberos</code>, <code>/Library/Preferences/edu.mit.Kerberos</code>, or <code>/etc/krb5.conf</code> (macOS)</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>所以，在 Windows 中，应该把 <code>krb5.conf</code> 更名为 <code>krb5.ini</code> 放在 <code>C:\Windows\krb5.ini</code> 。</p>
+<ol start="2">
+<li>验证</li>
+</ol>
+<p>在 CMD 下，进入到 <code>JAVA_HOME\bin\</code> 中，执行 <code>kinit</code> 和 <code>klist</code> 。关于命令的具体使用，请查看 <a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/10/tools/security-tools-and-commands.htm#JSWOR691">Security Tools and Commands</a></p>
+<h2 id="浏览器访问-Kerberos-服务"><a href="#浏览器访问-Kerberos-服务" class="headerlink" title="浏览器访问 Kerberos 服务"></a>浏览器访问 Kerberos 服务</h2><p>参考文章 <a target="_blank" rel="noopener" href="https://ping.force.com/Support/PingFederate/Integrations/How-to-configure-supported-browsers-for-Kerberos-NTLM">How to configure supported browsers for Kerberos and NTLM</a> </p>
+<p>PingFederate Integrated Windows Authentication (IWA)适配器支持Kerberos和NTLM身份验证协议，但是需要配置一些浏览器来使用它们。</p>
+<p>对于Kerberos和NTLM身份验证，PingFederate IWA适配器使用SPNEGO(Simple and Protected GSS-API Negotiation)机制协商Kerberos或NTLM作为底层身份验证协议。下面的每个浏览器都支持SPNEGO，但是由于浏览器和操作系统的结合，存在的差异可能会影响在每个实例中协商的协议。</p>
+<p>The PingFederate IWA Adapter supports the following browsers:</p>
+<ul>
+<li>Internet Explorer</li>
+<li>Mozilla Firefox</li>
+<li>Google Chrome</li>
+<li>Apple Safari</li>
+</ul>
+<h3 id="Internet-Explorer"><a href="#Internet-Explorer" class="headerlink" title="Internet Explorer"></a>Internet Explorer</h3><p>鉴于 Windows 原因，不进行配置。</p>
+<h3 id="Firefox"><a href="#Firefox" class="headerlink" title="Firefox"></a>Firefox</h3><blockquote>
+<p>当前 Firefox 版本 64.0.2(64-bit) </p>
+</blockquote>
+<p>参考 <a target="_blank" rel="noopener" href="http://people.redhat.com/mikeb/negotiate/">Configuring Firefox for Negotiate Authentication</a> 、 [Integrated Authentication](&lt;<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Mozilla/Integrated_authentication">https://developer.mozilla.org/en-US/docs/Mozilla/Integrated_authentication</a>) </p>
+<h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h4><ol>
+<li>在地址栏中键入about:config，点击 <code>I accept the risk !</code> ，进入配置页面</li>
+</ol>
+<p><img src="http://qiniu.iclouds.work/FtiywmQmIg8ILbI9UX6kr9VWZePz.png" alt="firefox_config"></p>
+<ol start="2">
+<li>配置 SPNEGO authentication</li>
+</ol>
+<p>配置 <code>network.negotiate-auth.trusted-uris</code> 为允许使用浏览器进行SPNEGO身份验证的站点， 支持统配。多个站点使用逗号隔开。</p>
+<p><img src="http://qiniu.iclouds.work/FukOO6s6wCNDX5vE-BuJwWmTcQvF.png" alt="forefox_config_negotiate"></p>
+<p>然后使用 <code>kinit</code> 获取认证 tgt 之后，打开 Chrome 访问服务页面。没有出现 401 即为正常。</p>
+<h4 id="Windows-1"><a href="#Windows-1" class="headerlink" title="Windows"></a>Windows</h4><p>注意：Firefox 浏览器版本应与前面安装的 kfw 版本一致，否则会出现 401 。如果 kfw 为 64bit 则不用关注这一点。</p>
+<p>和 Linux 相同，修改 Firefox 配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">network.negotiate-auth.trusted-uris</span><br><span class="line">network.auth.use-sspi</span><br></pre></td></tr></table></figure>
+
+<p>然后使用 <code>kinit</code> 获取认证 tgt 之后，打开 Chrome 访问服务页面。没有出现 401 即为正常。</p>
+<h3 id="Chrome"><a href="#Chrome" class="headerlink" title="Chrome"></a>Chrome</h3><h4 id="Linux-1"><a href="#Linux-1" class="headerlink" title="Linux"></a>Linux</h4><p>根据 [Chrome HTTP authentication(<a target="_blank" rel="noopener" href="https://www.chromium.org/developers/design-documents/http-authentication">https://www.chromium.org/developers/design-documents/http-authentication</a>) 中 <strong>Integrated Authentication</strong> 描述 Chrome 是支持 Kerberos 和 NTLM 认证的。默认不会启用，只有从代理接收身份验证协商或者在白名单的服务器协商时，才会启用继承身份验证。</p>
+<h5 id="Chrome-策略组启用白名单"><a href="#Chrome-策略组启用白名单" class="headerlink" title="Chrome 策略组启用白名单"></a>Chrome 策略组启用白名单</h5><p>添加白名单可以通过 <a target="_blank" rel="noopener" href="https://dev.chromium.org/administrators/policy-list-3#AuthServerWhitelist">AuthServerWhitelist</a> 策略设置。多个白名单用以逗号分隔。</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://dev.chromium.org/administrators/linux-quick-start">Linux Quick Start</a> </p>
+<p>对于Chromium，策略配置文件位于/etc/chromium之下，对于谷歌Chrome，策略配置文件位于/etc/opt/chrome之下。在这些目录中保存着两组策略:一组是管理员需要并强制执行的，另一组是推荐给用户但不是必需的。这两组在:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies&#x2F;managed&#x2F;</span><br><span class="line">&#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies&#x2F;recommended&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>如果这些目录不存在，请创建它们:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;mkdir &#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies</span><br><span class="line">&gt;mkdir &#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies&#x2F;managed</span><br><span class="line">&gt;mkdir &#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies&#x2F;recommended</span><br></pre></td></tr></table></figure>
+
+<p>确保非管理员用户无法写入/托管下的文件;否则，他们可能只是覆盖您的策略来获得他们想要的配置!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;chmod -w &#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies&#x2F;managed</span><br></pre></td></tr></table></figure>
+
+<p>要设置所需的策略，请在 <code>/etc/opt/chrome/policies/managed/</code> 下创建一个名为 <code>test_policy.json</code> 的文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;touch &#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies&#x2F;managed&#x2F;test_policy.json</span><br></pre></td></tr></table></figure>
+
+<p>在这个文件中，放入以下内容:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">          &quot;AuthServerWhitelist&quot;: &quot;.node.hadoop&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就是这样!下次在该机器上启动谷歌Chrome时，主页将被锁定到这个值。</p>
+<p>在地址栏输入 <code>chrome:policy</code> 查看当前策略</p>
+<p><img src="http://qiniu.iclouds.work/FhCrKMifE6Nj6ZlQGMqlcRtVKZ1C.png" alt="chrome_policy"></p>
+<p>在使用 <code>kinit</code> 获取认证 tgt 之后，打开 Chrome 访问服务页面。没有出现 401 即为正常。</p>
+<h5 id="使用命令行参数启动"><a href="#使用命令行参数启动" class="headerlink" title="使用命令行参数启动"></a>使用命令行参数启动</h5><p>根据 <a target="_blank" rel="noopener" href="https://www.chromium.org/developers/how-tos/run-chromium-with-flags">Run Chromium with flags</a> 中描述，Chromium(和Chrome)支持接受命令行标志(或“开关”)，以便启用特定功能或修改默认功能。</p>
+<p>当前可用参数可以查看 <a target="_blank" rel="noopener" href="https://peter.sh/experiments/chromium-command-line-switches/">List of Chromium Command Line Switches</a> 。可以使用 <a target="_blank" rel="noopener" href="https://peter.sh/experiments/chromium-command-line-switches/#auth-server-whitelist">–auth-server-whitelist </a> 参数启用白名单功能。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chrome --auth-server-whitelist=<span class="string">&quot;.node.hadoop&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Windows-2"><a href="#Windows-2" class="headerlink" title="Windows"></a>Windows</h4><p>由于 Chrome 自身不带有 Gssapi，而是调用操作系统类库，而且依赖于 <code>Internet 选项</code> 配置。因此不在配置。</p>
+<p>具体内容请参考 <a target="_blank" rel="noopener" href="https://www.chromium.org/developers/design-documents/http-authentication">Chrome HTTP authentication</a> 中 <code>Negotiate external libraries</code> 部分</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.iclouds.work/2019/05/06/operations/%E8%BF%9E%E6%8E%A5%20Kerberos%20%E9%9B%86%E7%BE%A4%E6%8C%87%E5%8D%97/" data-id="ckmwwmzsg001oeqnkf5v898a4" data-title="连接 Kerberos 集群指南" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kerberos/" rel="tag">Kerberos</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/05/28/cloudnative/python_web_cloudnative/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Python Web CloudNative [未完]
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/01/programming/python/Python%20PEP8%20%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Python PEP8 编码规范</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CloudNative/">CloudNative</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Documents/">Documents</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jupyter-notebook/" rel="tag">Jupyter notebook</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kerberos/" rel="tag">Kerberos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ambari/" rel="tag">ambari</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api-desig/" rel="tag">api-desig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api-design/" rel="tag">api-design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/" rel="tag">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deepin/" rel="tag">deepin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fastapi/" rel="tag">fastapi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab-ci/" rel="tag">gitlab-ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbase/" rel="tag">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hive/" rel="tag">hive</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kerberos/" rel="tag">kerberos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lvm/" rel="tag">lvm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openldap/" rel="tag">openldap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/" rel="tag">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zabbix/" rel="tag">zabbix</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Jupyter-notebook/" style="font-size: 10px;">Jupyter notebook</a> <a href="/tags/Kerberos/" style="font-size: 10px;">Kerberos</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/ambari/" style="font-size: 10px;">ambari</a> <a href="/tags/api-desig/" style="font-size: 10px;">api-desig</a> <a href="/tags/api-design/" style="font-size: 20px;">api-design</a> <a href="/tags/centos/" style="font-size: 17.5px;">centos</a> <a href="/tags/deepin/" style="font-size: 10px;">deepin</a> <a href="/tags/fastapi/" style="font-size: 10px;">fastapi</a> <a href="/tags/gitlab-ci/" style="font-size: 10px;">gitlab-ci</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/hbase/" style="font-size: 10px;">hbase</a> <a href="/tags/hive/" style="font-size: 10px;">hive</a> <a href="/tags/kerberos/" style="font-size: 15px;">kerberos</a> <a href="/tags/lvm/" style="font-size: 10px;">lvm</a> <a href="/tags/openldap/" style="font-size: 12.5px;">openldap</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/zabbix/" style="font-size: 10px;">zabbix</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/01/api-design/microsoft_api_guide/">Microsoft REST API 准则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/01/api-design/paypal_api_style_guide/">PayPal API 设计原则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/api-design/paypal_api_first_part3/">大规模分解API优先转换。在PayPal学习的经验教训–第3部分</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/api-design/paypal_api_first_part2/">大规模分解API优先转换。在PayPal学习的经验教训–第2部分</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/27/api-design/paypal_api_first_part1/">大规模分解API优先转换。在PayPal学习的经验教训–第1部分</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 huagang<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

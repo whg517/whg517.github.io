@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Zabbix 集群安装（Centos 7.2） | Myblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="本文主要介绍 Zabbix 集群安装记录。操作环境以 Centos 7 和 Zabbix 3.4 安装三节点集群。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zabbix 集群安装（Centos 7.2）">
+<meta property="og:url" content="http://blog.iclouds.work/2018/04/02/operations/Zabbix%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%EF%BC%88Centos%207.2%EF%BC%89/index.html">
+<meta property="og:site_name" content="Myblog">
+<meta property="og:description" content="本文主要介绍 Zabbix 集群安装记录。操作环境以 Centos 7 和 Zabbix 3.4 安装三节点集群。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-04-02T10:59:00.000Z">
+<meta property="article:modified_time" content="2020-05-28T03:50:00.000Z">
+<meta property="article:author" content="huagang">
+<meta property="article:tag" content="centos">
+<meta property="article:tag" content="zabbix">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Myblog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Myblog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Hello World !</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.iclouds.work"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-operations/Zabbix集群安装（Centos 7.2）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/04/02/operations/Zabbix%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%EF%BC%88Centos%207.2%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2018-04-02T10:59:00.000Z" itemprop="datePublished">2018-04-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Zabbix 集群安装（Centos 7.2）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>本文主要介绍 Zabbix 集群安装记录。操作环境以 Centos 7 和 Zabbix 3.4 安装三节点集群。</p>
+<span id="more"></span>
+
+<h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><ol>
+<li>centos 7.2 操作系统</li>
+<li>zibbix 3.4.2</li>
+</ol>
+<p><strong>集群环境</strong></p>
+<table>
+<thead>
+<tr>
+<th>hostname</th>
+<th>ip</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>server</td>
+<td>192.168.80.101</td>
+</tr>
+<tr>
+<td>agent1</td>
+<td>192.168.80.102</td>
+</tr>
+<tr>
+<td>agent2</td>
+<td>192.168.80.103</td>
+</tr>
+</tbody></table>
+<p><strong>server 主机安装的服务</strong></p>
+<ol>
+<li>LNMP 一键安装包，安装了 Nginx、Mariadb、PHP</li>
+<li>安装 zabbix web 管理页面</li>
+<li>安装 Zabbix-server 节点</li>
+<li>安装 Zabbix-agent 节点</li>
+</ol>
+<p><strong>agent1 主机 安装的服务</strong></p>
+<p>agent 主机就是需要监控的主机，所以只要安装 zabbix-agent 服务就可以了。</p>
+<p>然后可以通过 Web 管理页面将 agent 节点添加进去做监控</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="server-节点"><a href="#server-节点" class="headerlink" title="server 节点"></a>server 节点</h3><h4 id="安装-LNMP-LAMP"><a href="#安装-LNMP-LAMP" class="headerlink" title="安装 LNMP / LAMP"></a>安装 LNMP / LAMP</h4><p>执行 lnmp 一键安装包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://soft.vpser.net/lnmp/lnmp1.5.tar.gz -cO lnmp1.5.tar.gz &amp;&amp; tar zxf lnmp1.5.tar.gz &amp;&amp; <span class="built_in">cd</span> lnmp1.5 &amp;&amp; ./install.sh lnmp</span><br></pre></td></tr></table></figure>
+
+<p>安装 </p>
+<ul>
+<li>mariadb</li>
+<li>php</li>
+<li>nginx</li>
+</ul>
+<p><strong>调整参数</strong></p>
+<p>vim /usr/local/php/etc/php.ini</p>
+<p>修改 393 行参数为 300</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">393 max_input_time &#x3D; 300</span><br></pre></td></tr></table></figure>
+
+<p>重新加载 php。即可 继续</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lnmp php-fpm reload</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装-Zabbix3-4"><a href="#安装-Zabbix3-4" class="headerlink" title="安装 Zabbix3.4"></a>安装 Zabbix3.4</h4><ol>
+<li>下载</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O zabbix-3.4.11.tar.gz  https://excellmedia.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/3.4.11/zabbix-3.4.11.tar.gz</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>安装依赖库</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install net-snmp-devel libxml2-devel libcurl-devel libevent libevent-devel gcc</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>解压编译</li>
+</ol>
+<p>在编译时可以指定在编译内容，这里在 server 主机同时编译了 zabbix-server 和 zabbix-agent 服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf zabbix-3.4.11.tar.gz</span><br><span class="line"><span class="built_in">cd</span> zabbix-3.4.11</span><br><span class="line">./configure --prefix=/usr/<span class="built_in">local</span>/zabbix --enable-server --enable-agent --with-mysql --enable-ipv6 --with-net-snmp --with-libcurl --with-libxml2</span><br></pre></td></tr></table></figure>
+
+<p>如果要使用加密，需增加 <code>--with-openssl</code> 参数进行编译</p>
+<p><strong>错误解决</strong></p>
+<p><code>error: MySQL library not found</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y mariadb-devel</span><br></pre></td></tr></table></figure>
+
+<p><code>error: Invalid Net-SNMP directory - unable to find net-snmp-config</code></p>
+<p>解决</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install net-snmp-devel</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>安装</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>创建用户和用户组</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">groupadd zabbix</span><br><span class="line">useradd -r -g zabbix zabbix</span><br><span class="line">chown -R zabbix:zabbix /usr/<span class="built_in">local</span>/zabbix</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>准备 mysql</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql <span class="operator">-</span>uroot <span class="operator">-</span>p</span><br><span class="line"><span class="keyword">create</span> database if <span class="keyword">not</span> <span class="keyword">exists</span> zabbix <span class="keyword">default</span> <span class="type">character</span> <span class="keyword">set</span> utf8 <span class="keyword">collate</span> utf8_general_ci;</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">all</span> privileges <span class="keyword">on</span> zabbix.<span class="operator">*</span> <span class="keyword">to</span> zabbix<span class="variable">@localhost</span> identified <span class="keyword">by</span> <span class="string">&#x27;zabbix&#x27;</span>;</span><br><span class="line">flush privileges;</span><br><span class="line">exit;</span><br></pre></td></tr></table></figure>
+
+<p><strong>导入顺序不能错</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql -uzabbix -pzabbix zabbix &lt; database/mysql/schema.sql</span><br><span class="line">mysql -uzabbix -pzabbix zabbix &lt; database/mysql/images.sql</span><br><span class="line">mysql -uzabbix -pzabbix zabbix &lt; database/mysql/data.sql</span><br></pre></td></tr></table></figure>
+
+<p>在使用完全分离的集群的搭建的时候，下面两点注意下：</p>
+<ul>
+<li>如果只是代理可以不用导入 <code>database/mysql/images.sql</code></li>
+<li>如果只是代理可以不用导入 <code>database/mysql/data.sql</code></li>
+</ul>
+<ol start="6">
+<li>创建日志目录</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/<span class="built_in">log</span>/zabbix</span><br><span class="line">chown zabbix:zabbix /var/<span class="built_in">log</span>/zabbix</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>配置</li>
+</ol>
+<p><strong>配置 zabbix-server 服务</strong></p>
+<p><code>vim /usr/local/zabbix/etc/zabbix_server.conf</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">LogFile&#x3D;&#x2F;var&#x2F;log&#x2F;zabbix&#x2F;server.log</span><br><span class="line">DBHost&#x3D;localhost</span><br><span class="line">DBName&#x3D;zabbix</span><br><span class="line">DBUser&#x3D;zabbix</span><br><span class="line">DBPort&#x3D;3306</span><br><span class="line">DBPassword&#x3D;zabbix</span><br><span class="line">DBSocket&#x3D;&#x2F;tmp&#x2F;mysql.sock</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置 zabbix-agent 服务</strong></p>
+<p>注意 agent 被他们写成 <code>agentd</code></p>
+<p>vim /usr/local/zabbix/etc/zabbix_agentd.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LogFile&#x3D;&#x2F;var&#x2F;log&#x2F;zabbix&#x2F;agentd.log</span><br><span class="line">Server&#x3D;127.0.0.1</span><br><span class="line">ServerActive&#x3D;127.0.0.1</span><br><span class="line">Hostname&#x3D;server</span><br></pre></td></tr></table></figure>
+
+<p>这里有几点要注意的：</p>
+<ul>
+<li><code>DBSocket=/tmp/mysql.sock</code> 这一项要打开，要不然会连不上数据库</li>
+<li><code>Hostname</code> 最好指定一个名词，如果在 Web 上出现问题方便查找</li>
+</ul>
+<ol start="8">
+<li>配置启动服务</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/<span class="built_in">local</span>/zabbix/sbin/* /usr/<span class="built_in">local</span>/sbin/</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/zabbix/bin/* /usr/<span class="built_in">local</span>/bin/</span><br><span class="line"></span><br><span class="line">cp /root/zabbix-3.4.11/misc/init.d/tru64/zabbix_* /etc/init.d/</span><br><span class="line">chmod +x /etc/init.d/zabbix_*</span><br></pre></td></tr></table></figure>
+
+<ol start="9">
+<li>启动 server 和 agent</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/zabbix_server start</span><br><span class="line">/etc/init.d/zabbix_agentd start</span><br></pre></td></tr></table></figure>
+
+<ol start="10">
+<li>注册到服务中</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --add zabbix_server</span><br><span class="line">chkconfig --add zabbix_agentd</span><br></pre></td></tr></table></figure>
+
+<p>配置开机自启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig zabbix_server on</span><br><span class="line">chkconfig zabbix_agentd on</span><br></pre></td></tr></table></figure>
+
+<p>后面启动的时候可以使用服务方式启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service zabbix_server start</span><br><span class="line">service zabbix_server stop</span><br></pre></td></tr></table></figure>
+
+<p>如果报错 <code>service zabbix_server does not support chkconfig</code></p>
+<p>只需要编辑对应的文件在 <code>#!/bin/sh</code> 后 加入一行内容就好了</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># chkconfig: 2345 10 90</span></span><br></pre></td></tr></table></figure>
+
+<p>检查端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@server zabbix-3.4.11]# netstat -ntlp</span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID&#x2F;Program name    </span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      912&#x2F;nginx: master p </span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      895&#x2F;sshd            </span><br><span class="line">tcp        0      0 0.0.0.0:10050           0.0.0.0:*               LISTEN      11967&#x2F;zabbix_agentd </span><br><span class="line">tcp        0      0 0.0.0.0:10051           0.0.0.0:*               LISTEN      11907&#x2F;zabbix_server </span><br><span class="line">tcp6       0      0 :::3306                 :::*                    LISTEN      1383&#x2F;mysqld         </span><br><span class="line">tcp6       0      0 :::22                   :::*                    LISTEN      895&#x2F;sshd            </span><br><span class="line">tcp6       0      0 :::10050                :::*                    LISTEN      11967&#x2F;zabbix_agentd </span><br><span class="line">tcp6       0      0 :::10051                :::*                    LISTEN      11907&#x2F;zabbix_server</span><br></pre></td></tr></table></figure>
+
+<p>看看 <code>zabbix_server</code> / <code>zabbix_agentd</code> 是否都起来了。如果没有可用查看日志检查</p>
+<h4 id="部署-Web"><a href="#部署-Web" class="headerlink" title="部署 Web"></a>部署 Web</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /home/wwwroot/default/zabbix</span><br><span class="line"><span class="built_in">cd</span> /root/zabbix-3.4.11/frontends/php</span><br><span class="line">cp -a . /home/wwwroot/default/zabbix/</span><br></pre></td></tr></table></figure>
+
+<h5 id="访问-Web-初始化引导"><a href="#访问-Web-初始化引导" class="headerlink" title="访问 Web 初始化引导"></a>访问 Web 初始化引导</h5><p>访问zabbix：<a target="_blank" rel="noopener" href="http://ip/zabbix/index.php">http://ip/zabbix/index.php</a> ，初始化安装的默认账号：Admin，密码：zabbix</p>
+<h3 id="agent-节点安装"><a href="#agent-节点安装" class="headerlink" title="agent 节点安装"></a>agent 节点安装</h3><ol>
+<li>下载</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O zabbix-3.4.11.tar.gz  https://excellmedia.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/3.4.11/zabbix-3.4.11.tar.gz</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>安装依赖库</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install net-snmp-devel libxml2-devel libcurl-devel libevent libevent-devel gcc</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>解压编译</li>
+</ol>
+<p>在编译时可以指定在编译内容，这里在 server 主机同时编译了 zabbix-server 和 zabbix-agent 服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf zabbix-3.4.11.tar.gz</span><br><span class="line"><span class="built_in">cd</span> zabbix-3.4.11</span><br><span class="line">./configure --prefix=/usr/<span class="built_in">local</span>/zabbix --enable-agent</span><br></pre></td></tr></table></figure>
+
+<p>如果要使用加密，需增加 <code>--with-openssl</code> 参数进行编译。当然前提是 server 节点支持加密</p>
+<ol start="4">
+<li>安装</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>创建用户和用户组</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">groupadd zabbix</span><br><span class="line">useradd -r -g zabbix zabbix</span><br><span class="line">chown -R zabbix:zabbix /usr/<span class="built_in">local</span>/zabbix</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>创建日志目录</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/<span class="built_in">log</span>/zabbix</span><br><span class="line">chown zabbix:zabbix /var/<span class="built_in">log</span>/zabbix</span><br></pre></td></tr></table></figure>
+
+<p><strong>可选</strong>：加密配置</p>
+<p>生成 PSK string ，并保存 <code>/usr/local/zabbix/etc/zabbix_agentd.psk</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rand -hex 32 &gt; /usr/<span class="built_in">local</span>/zabbix/etc/zabbix_agentd.psk</span><br></pre></td></tr></table></figure>
+
+<p>授权</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown zabbix:zabbix /usr/<span class="built_in">local</span>/zabbix/etc/zabbix_agentd.psk</span><br><span class="line">chmod 644 /usr/<span class="built_in">local</span>/zabbix/etc/zabbix_agentd.psk</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>配置</li>
+</ol>
+<p><strong>配置 zabbix-agent 服务</strong></p>
+<p>注意 agent 被他们写成 <code>agentd</code></p>
+<p><code>vim /usr/local/zabbix/etc/zabbix_agentd.conf</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LogFile&#x3D;&#x2F;var&#x2F;log&#x2F;zabbix&#x2F;agentd.log</span><br><span class="line">Server&#x3D;192.168.80.101</span><br><span class="line">ServerActive&#x3D;192.168.80.101</span><br><span class="line">Hostname&#x3D;agent1</span><br></pre></td></tr></table></figure>
+
+<p><strong>加密配置</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TLSConnect&#x3D;psk</span><br><span class="line">TLSAccept&#x3D;psk</span><br><span class="line">TLSPSKFile&#x3D;&#x2F;usr&#x2F;local&#x2F;zabbix&#x2F;etc&#x2F;zabbix_agentd.psk</span><br><span class="line">TLSPSKIdentity&#x3D;PSK001</span><br></pre></td></tr></table></figure>
+
+<p>这里有几点要注意的：</p>
+<ul>
+<li>要正确配置 server ip</li>
+<li><code>Hostname</code> 最好指定一个名词，如果在 Web 上出现问题方便查找</li>
+</ul>
+<ol start="8">
+<li>配置启动服务</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/<span class="built_in">local</span>/zabbix/sbin/* /usr/<span class="built_in">local</span>/sbin/</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/zabbix/bin/* /usr/<span class="built_in">local</span>/bin/</span><br><span class="line"></span><br><span class="line">cp /root/zabbix-3.4.11/misc/init.d/tru64/zabbix_agentd /etc/init.d/</span><br><span class="line">chmod +x /etc/init.d/zabbix_agentd</span><br></pre></td></tr></table></figure>
+
+<ol start="9">
+<li>启动 server 和 agent</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/zabbix_agentd start</span><br></pre></td></tr></table></figure>
+
+<p>配置开机自启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig zabbix_agentd on</span><br></pre></td></tr></table></figure>
+
+<p>如果报错 <code>service zabbix_agentd does not support chkconfig</code></p>
+<p>只需要编辑对应的文件在 <code>#!/bin/sh</code> 后 加入一行内容就好了</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># chkconfig: 2345 10 90</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>加密检测</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zabbix_get-s127.0.0.1-k<span class="string">&quot;system.cpu.load[all,avg1]&quot;</span>--tls-connect=psk--tls-psk-identity=<span class="string">&quot;PSK001&quot;</span>--tls-psk-file=/usr/<span class="built_in">local</span>/zabbix/etc/zabbix_agentd.psk</span><br></pre></td></tr></table></figure>
+
+<ol start="10">
+<li>在 Web 页面添加到主机中</li>
+</ol>
+<hr>
+<p>记录</p>
+<p>通过 yum 安装后的服务启动文件</p>
+<p>cat /usr/lib/systemd/system/zabbix-server.service</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;Zabbix Server</span><br><span class="line">After&#x3D;syslog.target</span><br><span class="line">After&#x3D;network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Environment&#x3D;&quot;CONFFILE&#x3D;&#x2F;etc&#x2F;zabbix&#x2F;zabbix_server.conf&quot;</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;zabbix-server</span><br><span class="line">Type&#x3D;forking</span><br><span class="line">Restart&#x3D;on-failure</span><br><span class="line">PIDFile&#x3D;&#x2F;run&#x2F;zabbix&#x2F;zabbix_server.pid</span><br><span class="line">KillMode&#x3D;control-group</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;sbin&#x2F;zabbix_server -c $CONFFILE</span><br><span class="line">ExecStop&#x3D;&#x2F;bin&#x2F;kill -SIGTERM $MAINPID</span><br><span class="line">RestartSec&#x3D;10s</span><br><span class="line">TimeoutSec&#x3D;0</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>cat /usr/lib/systemd/system/zabbix-agent.service </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;Zabbix Agent</span><br><span class="line">After&#x3D;syslog.target</span><br><span class="line">After&#x3D;network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Environment&#x3D;&quot;CONFFILE&#x3D;&#x2F;etc&#x2F;zabbix&#x2F;zabbix_agentd.conf&quot;</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;zabbix-agent</span><br><span class="line">Type&#x3D;forking</span><br><span class="line">Restart&#x3D;on-failure</span><br><span class="line">PIDFile&#x3D;&#x2F;run&#x2F;zabbix&#x2F;zabbix_agentd.pid</span><br><span class="line">KillMode&#x3D;control-group</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;sbin&#x2F;zabbix_agentd -c $CONFFILE</span><br><span class="line">ExecStop&#x3D;&#x2F;bin&#x2F;kill -SIGTERM $MAINPID</span><br><span class="line">RestartSec&#x3D;10s</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.iclouds.work/2018/04/02/operations/Zabbix%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%EF%BC%88Centos%207.2%EF%BC%89/" data-id="ckmwwmzrt000feqnk6kr66cle" data-title="Zabbix 集群安装（Centos 7.2）" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/centos/" rel="tag">centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zabbix/" rel="tag">zabbix</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/02/operations/Centos%207%20%E9%85%8D%E7%BD%AE%20python3.6%20%E7%8E%AF%E5%A2%83/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Centos7 配置 Python36 环境
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/23/operations/Deepin%20%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Deepin 使用记录</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CloudNative/">CloudNative</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Documents/">Documents</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jupyter-notebook/" rel="tag">Jupyter notebook</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kerberos/" rel="tag">Kerberos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ambari/" rel="tag">ambari</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api-desig/" rel="tag">api-desig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api-design/" rel="tag">api-design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/" rel="tag">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deepin/" rel="tag">deepin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fastapi/" rel="tag">fastapi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab-ci/" rel="tag">gitlab-ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbase/" rel="tag">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hive/" rel="tag">hive</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kerberos/" rel="tag">kerberos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lvm/" rel="tag">lvm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openldap/" rel="tag">openldap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/" rel="tag">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zabbix/" rel="tag">zabbix</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Jupyter-notebook/" style="font-size: 10px;">Jupyter notebook</a> <a href="/tags/Kerberos/" style="font-size: 10px;">Kerberos</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/ambari/" style="font-size: 10px;">ambari</a> <a href="/tags/api-desig/" style="font-size: 10px;">api-desig</a> <a href="/tags/api-design/" style="font-size: 20px;">api-design</a> <a href="/tags/centos/" style="font-size: 17.5px;">centos</a> <a href="/tags/deepin/" style="font-size: 10px;">deepin</a> <a href="/tags/fastapi/" style="font-size: 10px;">fastapi</a> <a href="/tags/gitlab-ci/" style="font-size: 10px;">gitlab-ci</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/hbase/" style="font-size: 10px;">hbase</a> <a href="/tags/hive/" style="font-size: 10px;">hive</a> <a href="/tags/kerberos/" style="font-size: 15px;">kerberos</a> <a href="/tags/lvm/" style="font-size: 10px;">lvm</a> <a href="/tags/openldap/" style="font-size: 12.5px;">openldap</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/zabbix/" style="font-size: 10px;">zabbix</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/01/api-design/microsoft_api_guide/">Microsoft REST API 准则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/01/api-design/paypal_api_style_guide/">PayPal API 设计原则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/api-design/paypal_api_first_part3/">大规模分解API优先转换。在PayPal学习的经验教训–第3部分</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/api-design/paypal_api_first_part2/">大规模分解API优先转换。在PayPal学习的经验教训–第2部分</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/27/api-design/paypal_api_first_part1/">大规模分解API优先转换。在PayPal学习的经验教训–第1部分</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 huagang<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

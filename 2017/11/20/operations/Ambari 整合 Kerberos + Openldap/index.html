@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Ambari 整合 Kerberos + Openldap | Myblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="本文是在学习 Ambari 集成 Kerberos 做安全认证，同时使用 Openldap 作为 Ambari 和 Kerberos 的后端用户管理时总结的。 在学习的时候参照了许多国内外的安装文档，中间也出了不少问题。都是一点点找，才搞出来。 因为战线拉得比较长，在学习过程中，看了太多的博客，也没太仔细记录博主的连接。没能及时的在文中贴上。如果发现引用，请及时联系我。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ambari 整合 Kerberos + Openldap">
+<meta property="og:url" content="http://blog.iclouds.work/2017/11/20/operations/Ambari%20%E6%95%B4%E5%90%88%20Kerberos%20+%20Openldap/index.html">
+<meta property="og:site_name" content="Myblog">
+<meta property="og:description" content="本文是在学习 Ambari 集成 Kerberos 做安全认证，同时使用 Openldap 作为 Ambari 和 Kerberos 的后端用户管理时总结的。 在学习的时候参照了许多国内外的安装文档，中间也出了不少问题。都是一点点找，才搞出来。 因为战线拉得比较长，在学习过程中，看了太多的博客，也没太仔细记录博主的连接。没能及时的在文中贴上。如果发现引用，请及时联系我。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.iclouds.work/2017/11/20/operations/Ambari%20%E6%95%B4%E5%90%88%20Kerberos%20+%20Openldap/FgebwAsqPaPFJTIFecC9xfXoEI3P">
+<meta property="og:image" content="http://qiniu.iclouds.work/FnauYneup7vt01kIs1g18dRLDpj3.png">
+<meta property="og:image" content="http://ono3vb8rf.bkt.clouddn.com/Fq1RIVUaC5rOUWR_5rFgfEoN7Nny.png">
+<meta property="og:image" content="http://ono3vb8rf.bkt.clouddn.com/Fkzz-BixXinr63A3qciytXOy-ZIj.png">
+<meta property="og:image" content="http://ono3vb8rf.bkt.clouddn.com/Fq7UeqH9hJRfyNCzgGCC11WEGa3v.png">
+<meta property="og:image" content="http://ono3vb8rf.bkt.clouddn.com/Fu_YdcRpNLqf9cA87QH5Z-SmbReO.png">
+<meta property="og:image" content="http://ono3vb8rf.bkt.clouddn.com/Fr9zMt40ZalrCIf4la3wt3WL-W16.png">
+<meta property="og:image" content="http://ono3vb8rf.bkt.clouddn.com/FluQ4WiVs4G4PjzqHqqRub_yy5Cp.png">
+<meta property="og:image" content="http://ono3vb8rf.bkt.clouddn.com/Fmaqh-qBfq-rXFuXcSUNxplf9Ibu.png">
+<meta property="article:published_time" content="2017-11-20T08:18:25.000Z">
+<meta property="article:modified_time" content="2020-05-28T03:50:00.000Z">
+<meta property="article:author" content="huagang">
+<meta property="article:tag" content="ambari">
+<meta property="article:tag" content="openldap">
+<meta property="article:tag" content="kerberos">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.iclouds.work/2017/11/20/operations/Ambari%20%E6%95%B4%E5%90%88%20Kerberos%20+%20Openldap/FgebwAsqPaPFJTIFecC9xfXoEI3P">
+  
+    <link rel="alternate" href="/atom.xml" title="Myblog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Myblog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Hello World !</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.iclouds.work"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-operations/Ambari 整合 Kerberos + Openldap" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/11/20/operations/Ambari%20%E6%95%B4%E5%90%88%20Kerberos%20+%20Openldap/" class="article-date">
+  <time class="dt-published" datetime="2017-11-20T08:18:25.000Z" itemprop="datePublished">2017-11-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Ambari 整合 Kerberos + Openldap
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>本文是在学习 Ambari 集成 Kerberos 做安全认证，同时使用 Openldap 作为 Ambari 和 Kerberos 的后端用户管理时总结的。</p>
+<p>在学习的时候参照了许多国内外的安装文档，中间也出了不少问题。都是一点点找，才搞出来。</p>
+<p>因为战线拉得比较长，在学习过程中，看了太多的博客，也没太仔细记录博主的连接。没能及时的在文中贴上。如果发现引用，请及时联系我。</p>
+<span id="more"></span>
+
+<p>再次感谢走过这条路的前辈们。</p>
+<p>文章还有不太详细之处，后期有空会继续补充。</p>
+<p>经过测试在使用openldap + Kerberos 实现集中用户认证及授权系统时，先安装 Openldap 做后端数据库，然后安装 Kerberos 使用 Openldap ，接着配置 Openldap 使用 Kerberos 安全认证。最后安装 Ambari，配置 Ambari 使用 Kerberos。</p>
+<p>在用户管理方面，LDAP 用来做账号管理，Kerberos作为认证。</p>
+<p><img src="FgebwAsqPaPFJTIFecC9xfXoEI3P" alt="Ambari use Kerberos+LDAP"></p>
+<p>有关 Ambari 使用 Kerberos 文章</p>
+<p><a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/opensource/os-cn-ambrri-kerberos/">大数据平台搭建利器 Ambari 之 Kerberos 集成之路</a></p>
+<h2 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h2><p><strong>注意：以下操作均是 shell 脚本形式</strong></p>
+<ol>
+<li>配置静态主机名，配置 hosts 文件</li>
+<li>同步时间，写入硬件时钟</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">IPADDR=192.168.80.15</span><br><span class="line">HOSTNAME=kdc.kevin.com</span><br><span class="line"></span><br><span class="line">hostnamectl set-hostname kdc.kevin.com</span><br><span class="line">cat &lt;&lt;- EOF &gt;&gt;/etc/hosts</span><br><span class="line"><span class="meta">$</span><span class="bash">IPADDR <span class="variable">$HOSTNAME</span></span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">yum install -y ntp</span><br><span class="line">ntpdate 192.168.80.5</span><br><span class="line">ntpdate 192.168.80.5</span><br><span class="line"><span class="meta">#</span><span class="bash"> ntpdate cn.pool.ntp.org</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Synchronize the system time to hardware clock to system time</span></span><br><span class="line">/sbin/hwclock --systohc</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Openldap"><a href="#Openldap" class="headerlink" title="Openldap"></a>Openldap</h2><h3 id="1-LDAP简介"><a href="#1-LDAP简介" class="headerlink" title="1. LDAP简介"></a>1. LDAP简介</h3><p>LDAP（轻量级目录访问协议，Lightweight Directory Access Protocol)是实现提供被称为目录服务的信息服务。目录服务是一种特殊的数据库系统，其专门针对读取，浏览和搜索操作进行了特定的优化。目录一般用来包含描述性的，基于属性的信息并支持精细复杂的过滤能力。目录一般不支持通用数据库针对大量更新操作操作需要的复杂的事务管理或回卷策略。而目录服务的更新则一般都非常简单。这种目录可以存储包括个人信息、web链结、jpeg图像等各种信息。为了访问存储在目录中的信息，就需要使用运行在TCP/IP 之上的访问协议—LDAP。</p>
+<p>LDAP目录中的信息是是按照树型结构组织，具体信息存储在条目(entry)的数据结构中。条目相当于关系数据库中表的记录；条目是具有区别名DN （Distinguished Name）的属性（Attribute），DN是用来引用条目的，DN相当于关系数据库表中的关键字（Primary Key）。属性由类型（Type）和一个或多个值（Values）组成，相当于关系数据库中的字段（Field）由字段名和数据类型组成，只是为了方便检索的需要，LDAP中的Type可以有多个Value，而不是关系数据库中为降低数据的冗余性要求实现的各个域必须是不相关的。LDAP中条目的组织一般按照地理位置和组织关系进行组织，非常的直观。LDAP把数据存放在文件中，为提高效率可以使用基于索引的文件数据库，而不是关系数据库。类型的一个例子就是mail，其值将是一个电子邮件地址。</p>
+<p>LDAP的信息是以树型结构存储的，在树根一般定义国家(c=CN)或域名(dc=com)，在其下则往往定义一个或多个组织 (organization)(o=Acme)或组织单元(organizational units) (ou=People)。一个组织单元可能包含诸如所有雇员、大楼内的所有打印机等信息。此外，LDAP支持对条目能够和必须支持哪些属性进行控制，这是有一个特殊的称为对象类别(objectClass)的属性来实现的。该属性的值决定了该条目必须遵循的一些规则，其规定了该条目能够及至少应该包含哪些属性。例如：inetorgPerson对象类需要支持sn(surname)和cn(common name)属性，但也可以包含可选的如邮件，电话号码等属性。</p>
+<h3 id="2-LDAP简称对应"><a href="#2-LDAP简称对应" class="headerlink" title="2. LDAP简称对应"></a>2. LDAP简称对应</h3><ol>
+<li>o – organization（组织-公司）</li>
+<li>ou – organization unit（组织单元-部门）</li>
+<li>c - countryName（国家）</li>
+<li>dc - domainComponent（域名）</li>
+<li>sn – suer name（真实名称）</li>
+<li>cn - common name（常用名称）</li>
+</ol>
+<h3 id="3-LDAP组织数据的方式"><a href="#3-LDAP组织数据的方式" class="headerlink" title="3. LDAP组织数据的方式"></a>3. LDAP组织数据的方式</h3><p><img src="http://qiniu.iclouds.work/FnauYneup7vt01kIs1g18dRLDpj3.png" alt="LDAP组织数据的方式"></p>
+<h3 id="4-Openldap-安装配置"><a href="#4-Openldap-安装配置" class="headerlink" title="4. Openldap 安装配置"></a>4. Openldap 安装配置</h3><h4 id="4-1-install-opneldap"><a href="#4-1-install-opneldap" class="headerlink" title="4.1 install opneldap"></a>4.1 install opneldap</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y openldap openldap-clients openldap-servers openldap-devel </span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2-start-openldap"><a href="#4-2-start-openldap" class="headerlink" title="4.2 start openldap"></a>4.2 start openldap</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 启动服务命令</span></span><br><span class="line">systemctl start slapd</span><br><span class="line"><span class="meta">#</span><span class="bash"> 加入开机启动项</span></span><br><span class="line">systemctl enable slapd</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3-config-openldap-schema"><a href="#4-3-config-openldap-schema" class="headerlink" title="4.3 config openldap schema"></a>4.3 config openldap schema</h4><p>这里最好把 <code>core.ldif</code> 放在第一行，要不然可能会出现错误</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/core.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/collective.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/corba.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/duaconf.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/dyngroup.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/java.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/misc.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/openldap.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/pmi.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/ppolicy.ldif</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-4-init-openldap"><a href="#4-4-init-openldap" class="headerlink" title="4.4 init openldap"></a>4.4 init openldap</h4><p><code>RootDN: cn=ldapadmin,dc=kevin,dc=com</code> 是Openldap 的超级管理用户</p>
+<p><code>RootPW: &#123;SSHA&#125;KB+0AIufB7WpDCvf15u30aD2HSRHyGvZ</code> 是其密码。当然可以直接使用明文</p>
+<p>密码是生成哈希口令可以通过 <code>slappasswd</code> 生成。这里的密码明文是 <code>000001</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/openldapConf</span><br><span class="line">cat &lt;&lt;- EOF &gt;/root/openldapConf/db.ldif</span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">replace: olcSuffix</span><br><span class="line">olcSuffix: dc=kevin,dc=com</span><br><span class="line"></span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">replace: olcRootDN</span><br><span class="line">olcRootDN: cn=ldapadmin,dc=kevin,dc=com</span><br><span class="line"></span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">replace: olcRootPW</span><br><span class="line">olcRootPW: &#123;SSHA&#125;KB+0AIufB7WpDCvf15u30aD2HSRHyGvZ</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">cat &lt;&lt;- EOF &gt;/root/openldapConf/monitor.ldif</span><br><span class="line">dn: olcDatabase=&#123;1&#125;monitor,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">replace: olcAccess</span><br><span class="line">olcAccess: &#123;0&#125;to * by dn.base=&quot;gidNumber=0+uidNumber=0,cn=peercred,cn=external, cn=auth&quot; read by dn.base=&quot;cn=ldapadmin,dc=kevin,dc=com&quot; read by * none</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">ldapmodify -Y EXTERNAL -H ldapi:/// -f ~/openldapConf/db.ldif </span><br><span class="line">ldapmodify -Y EXTERNAL -H ldapi:/// -f ~/openldapConf/monitor.ldif </span><br><span class="line"></span><br><span class="line">cat &lt;&lt;- EOF &gt;/root/openldapConf/base.ldif</span><br><span class="line">dn: dc=kevin,dc=com</span><br><span class="line">objectClass: top</span><br><span class="line">objectClass: dcObject</span><br><span class="line">objectclass: organization</span><br><span class="line">o: kevin net</span><br><span class="line"></span><br><span class="line">dn: ou=People,dc=kevin,dc=com</span><br><span class="line">objectClass: organizationalUnit</span><br><span class="line">ou: People</span><br><span class="line"></span><br><span class="line">dn: ou=Group,dc=kevin,dc=com</span><br><span class="line">objectClass: organizationalUnit</span><br><span class="line">ou: Group</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">ldapadd -x -w 000001 -D &quot;cn=ldapadmin,dc=kevin,dc=com&quot; -f ~/openldapConf/base.ldif</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-5-import-System’s-users"><a href="#4-5-import-System’s-users" class="headerlink" title="4.5 import System’s users"></a>4.5 import System’s users</h4><p>使用 <code>migrationtools</code> 工具导入我们在 机器中创建的测试账户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">yum install -y migrationtools</span><br><span class="line">sed -i &#x27;/\$DEFAULT_MAIL_DOMAIN = &quot;/s/\(&quot;.*&quot;\)/&quot;kevim.com&quot;/g&#x27; /usr/share/migrationtools/migrate_common.ph</span><br><span class="line">sed -i &#x27;/\$DEFAULT_BASE = &quot;/s/\(&quot;.*&quot;\)/&quot;dc=kevin,dc=com&quot;/g&#x27; /usr/share/migrationtools/migrate_common.ph</span><br><span class="line">sed -i &#x27;/\$EXTENDED_SCHEMA = /s/\([0-9]\)/1/g&#x27; /usr/share/migrationtools/migrate_common.ph</span><br><span class="line"></span><br><span class="line">useradd ldapuser1</span><br><span class="line">useradd ldapuser2</span><br><span class="line"></span><br><span class="line">echo &quot;redhat&quot; | passwd --stdin ldapuser1</span><br><span class="line">echo &quot;redhat&quot; | passwd --stdin ldapuser2</span><br><span class="line"></span><br><span class="line">grep &quot;:10[0-9][0-9]&quot; /etc/passwd &gt; /root/passwd</span><br><span class="line">grep &quot;:10[0-9][0-9]&quot; /etc/group &gt; /root/group</span><br><span class="line"></span><br><span class="line">/usr/share/migrationtools/migrate_passwd.pl /root/passwd ~/openldapConf/users.ldif</span><br><span class="line">/usr/share/migrationtools/migrate_group.pl /root/group ~/openldapConf/groups.ldif</span><br><span class="line"></span><br><span class="line">ldapadd -x -w 000001 -D &quot;cn=ldapadmin,dc=kevin,dc=com&quot; -f ~/openldapConf/users.ldif</span><br><span class="line">ldapadd -x -w 000001 -D &quot;cn=ldapadmin,dc=kevin,dc=com&quot; -f ~/openldapConf/groups.ldif</span><br></pre></td></tr></table></figure>
+
+<p>搜索一下我们刚刚创建的用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldapsearch -x cn=ldapuser1 -b dc=kdc,dc=kevin,dc=com</span><br></pre></td></tr></table></figure>
+
+<p>到这里 openldap 就安装配置完成了</p>
+<p>可以使用 <a target="_blank" rel="noopener" href="http://directory.apache.org/studio/">Apache Directory Studio</a> 工具在可视化界面进行操作。</p>
+<h2 id="Kerberos-backend-Openldap"><a href="#Kerberos-backend-Openldap" class="headerlink" title="Kerberos backend Openldap"></a>Kerberos backend Openldap</h2><p>kerberos认证过程</p>
+<blockquote>
+<p>参考博文：<br><a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog_5384e78b0100fhcx.html">http://blog.sina.com.cn/s/blog_5384e78b0100fhcx.html</a></p>
+</blockquote>
+<h3 id="1-Kerberos-基本原理"><a href="#1-Kerberos-基本原理" class="headerlink" title="1. Kerberos 基本原理"></a>1. Kerberos 基本原理</h3><p>Authentication解决的是“如何证明某个人确确实实就是他或她所声称的那个人” 的问题。对于如何进行Authentication，我们采用这样的方法：如果一个秘密（secret）仅仅存在于A和B，那么有个人对B声称自己就是 A，B通过让A提供这个秘密来证明这个人就是他或她所声称的A。这个过程实际上涉及到3个重要的关于Authentication的方面：</p>
+<ul>
+<li>Secret 如何表示。</li>
+<li>A如何向 B 提供 Secret。</li>
+<li>B如何识别 Secret。</li>
+</ul>
+<p>基于这3个方面，我们把 Kerberos Authentication 进行最大限度的简化：整个过程涉及到 Client 和 Server ，他们之间的这个 ecret 我们用一个 Key（KServer-Client）来表示。 Client 为了让 Server 对自己进行有效的认证，向对方提供如下两组信息：</p>
+<ul>
+<li>代表 Client 自身 Identity 的信息，为了简便，它以明文的形式传递。</li>
+<li>将 Client 的 dentity使用 KServer-Client 作为 Public Key 、并采用对称加密算法进行加密。</li>
+</ul>
+<p>由于 KServer-Client 仅仅被 Client 和 Server 知晓，所以被 Client 使用 KServer-Client 加密过的Client Identity 只能被 Client 和 Server 解密。同理，Server 接收到 Client 传送的这两组信息，先通过  KServer-Client 对 后者进行解密，随后将机密的数据同前者进行比较，如果完全一样，则可以证明Client能过提供正确的 KServer-Client，而这个世界上，仅仅 只有真正的Client和自己知道KServer-Client，所以可以对方就是他所声称的那个人。</p>
+<p><img src="http://ono3vb8rf.bkt.clouddn.com/Fq1RIVUaC5rOUWR_5rFgfEoN7Nny.png" alt="Kerberos 简化认证"></p>
+<p>Keberos 大体上就是按照这样的一个原理来进行 Authentication 的。但是 Kerberos 远比这个复杂，我将在后续的章节中不断地扩充这个过程，知道 Kerberos 真实的认证过程。为了使读者更加容易理解后续的部分，在这里我们先给出两个重要的概念：</p>
+<ul>
+<li>Long-term Key/Master Key：<br>在 Security 的领域中，有的 Key 可能长期内保持不变，比如你在密码，可能几年都不曾改变，这样的 Key、以及由此派生的 Key 被称为 Long-term Key。对于 Long-term Key 的使用有这样的原则：被 Long-term Key 加密的数据不应该在网络上传输。原因很简单，一旦这些被 Long-term Key 加密的数据包被恶意的网络监听者截获，在原则上，只要有充足的时间，他是可以通过计算获得你用于加密的 Long-term Key 的——任何加密算法都不可能做到绝对保密。<br>在一般情况下，对于一个 Account 来说，密码往往仅仅限于该 Account 的所有者知 晓，甚至对于任何 Domain 的 Administrator，密码仍然应该是保密的。但是密码却又是证明身份的凭据，所以必须通过基于你密码的派生的信息 来证明用户的真实身份，在这种情况下，一般将你的密码进行Hash运算得到一个 Hash code , 我们一般管这样的 Hash Code 叫做 Master Key。由于 Hash Algorithm 是不可逆的，同时保证密码和 Master Key 是一一对应的，这样既保证了你密码的保密性，有同时保证你的 Master Key 和密码本身在证明你身份的时候具有相同的效力。</li>
+<li>Short-term Key/Session Key：<br>由于被 Long-term Key 加密的数据包不能用于网络传送，所以我们使用另一种 Short-term Key 来加密需要进行网络传输的数据。由于这种Key只在一段时间内有效，即使被加密的数据包被黑客截获，等他把Key计算出来的时候，这个 Key 早就已 经过期了。</li>
+</ul>
+<h3 id="2-引入Key-Distribution-KServer-Client从何而来"><a href="#2-引入Key-Distribution-KServer-Client从何而来" class="headerlink" title="2. 引入Key Distribution: KServer-Client从何而来"></a>2. 引入Key Distribution: KServer-Client从何而来</h3><p>上面我们讨论了Kerberos Authentication的基本原理：通过让被认证的一方提供一个仅限于他和认证方知晓的Key来鉴定对方的真实身份。而被这个Key加密的数据包需 要在Client和Server之间传送，所以这个Key不能是一个Long-term Key，而只可能是Short-term Key，这个可以仅仅在Client和Server的一个Session中有效，所以我们称这个Key为Client和Server之间的Session Key（SServer-Client）。</p>
+<p>现在我们来讨论Client和Server如何得到这个SServer-Client。在这 里我们要引入一个重要的角色：Kerberos Distribution Center-KDC。KDC在整个Kerberos Authentication中作为Client和Server共同信任的第三方起着重要的作用，而Kerberos的认证过程就是通过这3方协作完成。 顺便说一下，Kerberos起源于希腊神话，是一支守护着冥界长着3个头颅的神犬，在keberos Authentication中，Kerberos的3个头颅代表中认证过程中涉及的3方：Client、Server和KDC。</p>
+<p>对于一个Windows Domain来说，Domain Controller扮演着KDC的角色。KDC维护着一个存储着该Domain中所有帐户的Account Database（一般地，这个Account Database由AD来维护），也就是说，他知道属于每个Account的名称和派生于该Account Password的Master Key。而用于Client和Server相互认证的SServer-Client就是有KDC分发。下面我们来看看KDC分发SServer- Client的过程。</p>
+<p>通过下图我们可以看到KDC分发SServer-Client的简单的过程：首先 Client向KDC发送一个对SServer-Client的申请。这个申请的内容可以简单概括为“我是某个Client，我需要一个Session Key用于访问某个Server ”。KDC在接收到这个请求的时候，生成一个Session Key，为了保证这个Session Key仅仅限于发送请求的Client和他希望访问的Server知晓，KDC会为这个Session Key生成两个Copy，分别被Client和Server使用。然后从Account database中提取Client和Server的Master Key分别对这两个Copy进行对称加密。对于后者，和Session Key一起被加密的还包含关于Client的一些信息。</p>
+<p>KDC现在有了两个分别被Client和Server 的Master Key加密过的Session Key，这两个Session Key如何分别被Client和Server获得呢？也许你 马上会说，KDC直接将这两个加密过的包发送给Client和Server不就可以了吗，但是如果这样做，对于Server来说会出现下面 两个问题：</p>
+<ul>
+<li>由于一个Server会面对若干不同的Client, 而每个Client都具有一个不同的Session Key。那么Server就会为所有的Client维护这样一个Session Key的列表，这样做对于Server来说是比较麻烦而低效的。</li>
+<li>由于网络传输的不确定性，可能出现这样一种情况：Client很快获得Session Key，并将这个Session Key作为Credential随同访问请求发送到Server，但是用于Server的Session Key确还没有收到，并且很有可能承载这个Session Key的永远也到不了Server端，Client将永远得不到认证。<br>为了解决这个问题，Kerberos的做法很简单，将这两个被加密的Copy一并发送给Client，属于Server的那份由Client发送给Server。</li>
+</ul>
+<p><img src="http://ono3vb8rf.bkt.clouddn.com/Fkzz-BixXinr63A3qciytXOy-ZIj.png" alt="kerberos认证过程-2"></p>
+<p>可能有人会问，KDC并没有真正去认证这个发送请求的Client是否真的就是那个他所声称的那个人，就把Session Key发送给他，会不会有什么问题？如果另一个人（比如Client B）声称自己是Client A，他同样会得到Client A和Server的Session Key，这会不会有什么问题？实际上不存在问题，因为Client B声称自己是Client A，KDC就会使用Client A的Password派生的Master Key对Session Key进行加密，所以真正知道Client A 的Password的一方才会通过解密获得Session Key。</p>
+<h3 id="3-引入Authenticator-为有效的证明自己提供证据"><a href="#3-引入Authenticator-为有效的证明自己提供证据" class="headerlink" title="3. 引入Authenticator - 为有效的证明自己提供证据"></a>3. 引入Authenticator - 为有效的证明自己提供证据</h3><p>通过上面的过程，Client实际上获得了两组信息：一个通过自己Master Key加密的Session Key，另一个被Sever的Master Key加密的数据包，包含Session Key和关于自己的一些确认信息。通过第一节，我们说只要通过一个双方知晓的Key就可以对对方进行有效的认证，但是在一个网络的环境中，这种简单的做法 是具有安全漏洞，为此,Client需要提供更多的证明信息，我们把这种证明信息称为Authenticator，在Kerberos的 Authenticator实际上就是关于Client的一些信息和当前时间的一个Timestamp（关于这个安全漏洞和Timestamp的作用，我 将在后面解释）。</p>
+<p>在这个基础上，我们再来看看Server如何对Client进行认证：Client通过自己 的Master Key对KDC加密的Session Key进行解密从而获得Session Key，随后创建Authenticator（Client Info + Timestamp）并用Session Key对其加密。最后连同从KDC获得的、被Server的Master Key加密过的数据包（Client Info + Session Key）一并发送到Server端。我们把通过Server的Master Key加密过的数据包称为Session Ticket。</p>
+<p>当Server接收到这两组数据后，先使用他自己的Master Key对Session Ticket进行解密，从而获得Session Key。随后使用该Session Key解密Authenticator，通过比较Authenticator中的Client Info和Session Ticket中的Client Info从而实现对Client的认证。</p>
+<p><img src="http://ono3vb8rf.bkt.clouddn.com/Fq7UeqH9hJRfyNCzgGCC11WEGa3v.png" alt="kerberos认证过程-3"></p>
+<p>为什么要使用Timestamp？</p>
+<p>到这里，很多人可能认为这样的认证过程天衣无缝：只有当Client提供正确的Session Key方能得到Server的认证。但是在现实环境中，这存在很大的安全漏洞。</p>
+<p>我们试想这样的现象：Client向Server发送的数据包被某个恶意网络监听者截获，该 监听者随后将数据包座位自己的Credential冒充该Client对Server进行访问，在这种情况下，依然可以很顺利地获得Server的成功认 证。为了解决这个问题，Client在Authenticator中会加入一个当前时间的Timestamp。</p>
+<p>在Server对Authenticator中的Client Info和Session Ticket中的Client Info进行比较之前，会先提取Authenticator中的Timestamp，并同当前的时间进行比较，如果他们之间的偏差超出一个可以接受的时间 范围（一般是5mins），Server会直接拒绝该Client的请求。在这里需要知道的是，Server维护着一个列表，这个列表记录着在这个可接受 的时间范围内所有进行认证的Client和认证的时间。对于时间偏差在这个可接受的范围中的Client，Server会从这个这个列表中获得最近一个该 Client的认证时间，只有当Authenticator中的Timestamp晚于通过一个Client的最近的认证时间的情况下，Server采用 进行后续的认证流程。</p>
+<p>Time Synchronization的重要性</p>
+<p>上述 基于Timestamp的认证机制只有在Client和Server端的时间保持同步的情况才有意义。所以保持Time Synchronization在整个认证过程中显得尤为重要。在一个Domain中，一般通过访问同一个Time Service获得当前时间的方式来实现时间的同步。</p>
+<p>双向认证（Mutual Authentication）</p>
+<p>Kerberos一个重要的优势在于它能够提供双向认证：不但Server可以对Client 进行认证，Client也能对Server进行认证。</p>
+<p>具体过程是这样的，如果Client需要对他访问的Server进行认证，会在它向 Server发送的Credential中设置一个是否需要认证的Flag。Server在对Client认证成功之后，会把Authenticator 中的Timestamp提出出来，通过Session Key进行加密，当Client接收到并使用Session Key进行解密之后，如果确认Timestamp和原来的完全一致，那么他可以认定Server正式他试图访问的Server。</p>
+<p>那么为什么Server不直接把通过Session Key进行加密的Authenticator原样发送给Client，而要把Timestamp提取出来加密发送给Client呢？原因在于防止恶意的监 听者通过获取的Client发送的Authenticator冒充Server获得Client的认证。</p>
+<h3 id="4-引入Ticket-Granting-Service"><a href="#4-引入Ticket-Granting-Service" class="headerlink" title="4. 引入Ticket Granting  Service"></a>4. 引入Ticket Granting  Service</h3><p>通过上面的介绍，我们发现Kerberos实际上一个基于Ticket的认证方式。 Client想要获取Server端的资源，先得通过Server的认证；而认证的先决条件是Client向Server提供从KDC获得的一个有 Server的Master Key进行加密的Session Ticket（Session Key + Client Info）。可以这么说，Session Ticket是Client进入Server领域的一张门票。而这张门票必须从一个合法的Ticket颁发机构获得，这个颁发机构就是Client和 Server双方信任的KDC， 同时这张Ticket具有超强的防伪标识：它是被Server的Master Key加密的。对Client来说， 获得Session Ticket是整个认证过程中最为关键的部分。</p>
+<p>上面我们只是简单地从大体上说明了KDC向Client分发Ticket的过程，而真正在 Kerberos中的Ticket Distribution要复杂一些。为了更好的说明整个Ticket Distribution的过程，我在这里做一个类比。现在的股事很火爆，上海基本上是全民炒股，我就举一个认股权证的例子。有的上市公司在股票配股、增 发、基金扩募、股份减持等情况会向公众发行认股权证，认股权证的持有人可以凭借这个权证认购一定数量的该公司股票，认股权证是一种具有看涨期权的金融衍生 产品。</p>
+<p>而我们今天所讲的Client获得Ticket的过程也和通过认股权证购买股票的过程类似。 如果我们把Client提供给Server进行认证的Ticket比作股票的话，那么Client在从KDC那边获得Ticket之前，需要先获得这个 Ticket的认购权证，这个认购权证在Kerberos中被称为TGT：Ticket Granting Ticket，TGT的分发方仍然是KDC。</p>
+<p>我们现在来看看Client是如何从KDC处获得TGT的：首先Client向KDC发起对 TGT的申请，申请的内容大致可以这样表示：“我需要一张TGT用以申请获取用以访问所有Server的Ticket”。KDC在收到该申请请求后，生成 一个用于该Client和KDC进行安全通信的Session Key（SKDC-Client）。为了保证该Session Key仅供该Client和自己使用，KDC使用Client的Master Key和自己的Master Key对生成的Session Key进行加密，从而获得两个加密的SKDC-Client的Copy。对于后者，随SKDC-Client一起被加密的还包含以后用于鉴定Client 身份的关于Client的一些信息。最后KDC将这两份Copy一并发送给Client。这里有一点需要注意的是：为了免去KDC对于基于不同 Client的Session Key进行维护的麻烦，就像Server不会保存Session Key（SServer-Client）一样，KDC也不会去保存这个Session Key（SKDC-Client），而选择完全靠Client自己提供的方式。</p>
+<p><img src="http://ono3vb8rf.bkt.clouddn.com/Fu_YdcRpNLqf9cA87QH5Z-SmbReO.png" alt="kerberos认证过程-4"></p>
+<p>当Client收到KDC的两个加密数据包之后，先使用自己的Master Key对第一个Copy进行解密，从而获得KDC和Client的Session Key（SKDC-Client），并把该Session 和TGT进行缓存。有了Session Key和TGT，Client自己的Master Key将不再需要，因为此后Client可以使用SKDC-Client向KDC申请用以访问每个Server的Ticket，相对于Client的 Master Key这个Long-term Key，SKDC-Client是一个Short-term Key，安全保证得到更好的保障，这也是Kerberos多了这一步的关键所在。同时需要注意的是SKDC-Client是一个Session Key，他具有自己的生命周期，同时TGT和Session相互关联，当Session Key过期，TGT也就宣告失效，此后Client不得不重新向KDC申请新的TGT，KDC将会生成一个不同Session Key和与之关联的TGT。同时，由于Client Log off也导致SKDC-Client的失效，所以SKDC-Client又被称为Logon Session Key。</p>
+<p>接下来，我们看看Client如何使用TGT来从KDC获得基于某个Server的 Ticket。在这里我要强调一下，Ticket是基于某个具体的Server的，而TGT则是和具体的Server无关的，Client可以使用一个 TGT从KDC获得基于不同Server的Ticket。我们言归正传，Client在获得自己和KDC的Session Key（SKDC-Client）之后，生成自己的Authenticator以及所要访问的Server名称的并使用SKDC-Client进行加密。 随后连同TGT一并发送给KDC。KDC使用自己的Master Key对TGT进行解密，提取Client Info和Session Key（SKDC-Client），然后使用这个SKDC-Client解密Authenticator获得Client Info，对两个Client Info进行比较进而验证对方的真实身份。验证成功，生成一份基于Client所要访问的Server的Ticket给Client，这个过程就是我们第 二节中介绍的一样了。</p>
+<p><img src="http://ono3vb8rf.bkt.clouddn.com/Fr9zMt40ZalrCIf4la3wt3WL-W16.png" alt="kerberos认证过程-4"></p>
+<h3 id="5-Kerberos的3个Sub-protocol：整个Authentication"><a href="#5-Kerberos的3个Sub-protocol：整个Authentication" class="headerlink" title="5. Kerberos的3个Sub-protocol：整个Authentication"></a>5. Kerberos的3个Sub-protocol：整个Authentication</h3><p>通过以上的介绍，我们基本上了解了整个Kerberos authentication的整个流程：整个流程大体上包含以下3个子过程：</p>
+<ul>
+<li>Client向KDC申请TGT（Ticket Granting Ticket）。</li>
+<li>Client通过获得TGT向DKC申请用于访问Server的Ticket。</li>
+<li>Client最终向为了Server对自己的认证向其提交Ticket。</li>
+</ul>
+<p>不过上面的介绍离真正的Kerberos Authentication还是有一点出入。Kerberos整个认证过程通过3个sub-protocol来完成。这个3个Sub-Protocol分别完成上面列出的3个子过程。这3个sub-protocol分别为：</p>
+<ul>
+<li>Authentication Service Exchange</li>
+<li>Ticket Granting Service Exchange</li>
+<li>Client/Server Exchange</li>
+</ul>
+<p>下图简单展示了完成这个3个Sub-protocol所进行Message Exchange。</p>
+<p><img src="http://ono3vb8rf.bkt.clouddn.com/FluQ4WiVs4G4PjzqHqqRub_yy5Cp.png" alt="kerberos认证过程-5"></p>
+<h4 id="5-1-Authentication-Service-Exchange"><a href="#5-1-Authentication-Service-Exchange" class="headerlink" title="5.1 Authentication Service Exchange"></a>5.1 Authentication Service Exchange</h4><p>通过这个Sub-protocol，KDC（确切地说是KDC中的Authentication Service）实现对Client身份的确认，并颁发给该Client一个TGT。具体过程如下：</p>
+<p>Client向KDC的Authentication Service发送Authentication Service Request（KRB_AS_REQ）, 为了确保KRB_AS_REQ仅限于自己和KDC知道，Client使用自己的Master Key对KRB_AS_REQ的主体部分进行加密（KDC可以通过Domain 的Account Database获得该Client的Master Key）。KRB_AS_REQ的大体包含以下的内容：</p>
+<ul>
+<li>Pre-authentication data：包含用以证明自己身份的信息。说白了，就是证明自己知道自己声称的那个account的Password。一般地，它的内容是一个被Client的Master key加密过的Timestamp。</li>
+<li>Client name &amp; realm: 简单地说就是Domain name\Client</li>
+<li>Server Name：注意这里的Server Name并不是Client真正要访问的Server的名称，而我们也说了TGT是和Server无关的（Client只能使用Ticket，而不是 TGT去访问Server）。这里的Server Name实际上是KDC的Ticket Granting Service的Server Name。</li>
+</ul>
+<p>AS（Authentication Service）通过它接收到的KRB_AS_REQ验证发送方的是否是在Client name &amp; realm中声称的那个人，也就是说要验证发送放是否知道Client的Password。所以AS只需从Account Database中提取Client对应的Master Key对Pre-authentication data进行解密，如果是一个合法的Timestamp，则可以证明发送放提供的是正确无误的密码。验证通过之后，AS将一份 Authentication Service Response（KRB_AS_REP）发送给Client。KRB_AS_REQ主要包含两个部分：本Client的Master Key加密过的Session Key（SKDC-Client：Logon Session Key）和被自己（KDC）加密的TGT。而TGT大体又包含以下的内容：</p>
+<ul>
+<li>Session Key: SKDC-Client：Logon Session Key</li>
+<li>Client name &amp; realm: 简单地说就是Domain name\Client</li>
+<li>End time: TGT到期的时间。</li>
+</ul>
+<p>Client通过自己的Master Key对第一部分解密获得Session Key（SKDC-Client：Logon Session Key）之后，携带着TGT便可以进入下一步：TGS（Ticket Granting Service）Exchange。</p>
+<h4 id="5-2-TGS（Ticket-Granting-Service）Exchange"><a href="#5-2-TGS（Ticket-Granting-Service）Exchange" class="headerlink" title="5.2  TGS（Ticket Granting Service）Exchange"></a>5.2  TGS（Ticket Granting Service）Exchange</h4><p>TGS（Ticket Granting Service）Exchange通过Client向KDC中的TGS（Ticket Granting Service）发送Ticket Granting Service Request（KRB_TGS_REQ）开始。KRB_TGS_REQ大体包含以下的内容：</p>
+<ul>
+<li>TGT：Client通过AS Exchange获得的Ticket Granting Ticket，TGT被KDC的Master Key进行加密。</li>
+<li>Authenticator：用以证明当初TGT的拥有者是否就是自己，所以它必须以TGT的办法方和自己的Session Key（SKDC-Client：Logon Session Key）来进行加密。</li>
+<li>Client name &amp; realm: 简单地说就是Domain name\Client。</li>
+<li>Server name &amp; realm: 简单地说就是Domain name\Server，这回是Client试图访问的那个Server。</li>
+</ul>
+<p>TGS收到KRB_TGS_REQ在发给Client真正的Ticket之前，先得整个 Client提供的那个TGT是否是AS颁发给它的。于是它不得不通过Client提供的Authenticator来证明。但是 Authentication是通过Logon Session Key（SKDC-Client）进行加密的，而自己并没有保存这个Session Key。所以TGS先得通过自己的Master Key对Client提供的TGT进行解密，从而获得这个Logon Session Key（SKDC-Client），再通过这个Logon Session Key（SKDC-Client）解密Authenticator进行验证。验证通过向对方发送Ticket Granting Service Response（KRB_TGS_REP）。这个KRB_TGS_REP有两部分组成：使用Logon Session Key（SKDC-Client）加密过用于Client和Server的Session Key（SServer-Client）和使用Server的Master Key进行加密的Ticket。该Ticket大体包含以下一些内容：</p>
+<ul>
+<li>Session Key：SServer-Client。</li>
+<li>Client name &amp; realm: 简单地说就是Domain name\Client。</li>
+<li>End time: Ticket的到期时间。</li>
+</ul>
+<p>Client收到KRB_TGS_REP，使用Logon Session Key（SKDC-Client）解密第一部分后获得Session Key（SServer-Client）。有了Session Key和Ticket，Client就可以之间和Server进行交互，而无须在通过KDC作中间人了。所以我们说Kerberos是一种高效的认证方 式，它可以直接通过Client和Server双方来完成，不像Windows NT 4下的NTLM认证方式，每次认证都要通过一个双方信任的第3方来完成。</p>
+<p>我们现在来看看 Client如果使用Ticket和Server怎样进行交互的，这个阶段通过我们的第3个Sub-protocol来完成：CS（Client/Server ）Exchange。</p>
+<h4 id="5-3-CS（Client-Server-）Exchange"><a href="#5-3-CS（Client-Server-）Exchange" class="headerlink" title="5.3 CS（Client/Server ）Exchange"></a>5.3 CS（Client/Server ）Exchange</h4><p>这个已经在本文的第二节中已经介绍过，对于重复发内容就不再累赘了。Client通过TGS Exchange获得Client和Server的Session Key（SServer-Client），随后创建用于证明自己就是Ticket的真正所有者的Authenticator，并使用Session Key（SServer-Client）进行加密。最后将这个被加密过的Authenticator和Ticket作为Application Service Request（KRB_AP_REQ）发送给Server。除了上述两项内容之外，KRB_AP_REQ还包含一个Flag用于表示Client是否需 要进行双向验证（Mutual Authentication）。</p>
+<p>Server接收到KRB_AP_REQ之后，通过自己的Master Key解密Ticket，从而获得Session Key（SServer-Client）。通过Session Key（SServer-Client）解密Authenticator，进而验证对方的身份。验证成功，让Client访问需要访问的资源，否则直接拒 绝对方的请求。</p>
+<p>对于需要进行双向验证，Server从Authenticator提取Timestamp，使用Session Key（SServer-Client）进行加密，并将其发送给Client用于Client验证Server的身份。</p>
+<h3 id="6-User2User-Sub-Protocol：有效地保障Server的安全"><a href="#6-User2User-Sub-Protocol：有效地保障Server的安全" class="headerlink" title="6. User2User Sub-Protocol：有效地保障Server的安全"></a>6. User2User Sub-Protocol：有效地保障Server的安全</h3><p>通过3个Sub-protocol的介绍，我们可以全面地掌握整个Kerberos的认证过 程。实际上，在Windows 2000时代，基于Kerberos的Windows Authentication就是按照这样的工作流程来进行的。但是我在上面一节结束的时候也说了，基于3个Sub-protocol的Kerberos 作为一种Network Authentication是具有它自己的局限和安全隐患的。我在整篇文章一直在强调这样的一个原则：以某个Entity的Long-term Key加密的数据不应该在网络中传递。原因很简单，所有的加密算法都不能保证100%的安全，对加密的数据进行解密只是一个时间的过程，最大限度地提供安 全保障的做法就是：使用一个Short-term key（Session Key）代替Long-term Key对数据进行加密，使得恶意用户对其解密获得加密的Key时，该Key早已失效。但是对于3个Sub-Protocol的C/S Exchange，Client携带的Ticket却是被Server Master Key进行加密的，这显现不符合我们提出的原则，降低Server的安全系数。</p>
+<p>所以我们必须寻求一种解决方案来解决上面的问题。这个解决方案很明显：就是采用一个 Short-term的Session Key，而不是Server Master Key对Ticket进行加密。这就是我们今天要介绍的Kerberos的第4个Sub-protocol：User2User Protocol。我们知道，既然是Session Key，仅必然涉及到两方，而在Kerberos整个认证过程涉及到3方：Client、Server和KDC，所以用于加密Ticket的只可能是 Server和KDC之间的Session Key（SKDC-Server）。</p>
+<p>我们知道Client通过在AS Exchange阶段获得的TGT从KDC那么获得访问Server的Ticket。原来的Ticket是通过Server的Master Key进行加密的，而这个Master Key可以通过Account Database获得。但是现在KDC需要使用Server和KDC之间的SKDC-Server进行加密，而KDC是不会维护这个Session Key，所以这个Session Key只能靠申请Ticket的Client提供。所以在AS Exchange和TGS Exchange之间，Client还得对Server进行请求已获得Server和KDC之间的Session Key（SKDC-Server）。而对于Server来说，它可以像Client一样通过AS Exchange获得他和KDC之间的Session Key（SKDC-Server）和一个封装了这个Session Key并被KDC的Master Key进行加密的TGT，一旦获得这个TGT，Server会缓存它，以待Client对它的请求。我们现在来详细地讨论这一过程。</p>
+<p><img src="http://ono3vb8rf.bkt.clouddn.com/Fmaqh-qBfq-rXFuXcSUNxplf9Ibu.png" alt="kerberos认证过程-6"></p>
+<p>上图基本上翻译了基于User2User的认证过程，这个过程由4个步骤组成。我们发现较之我在上面一节介绍的基于传统3个Sub-protocol的认证过程，这次对了第2部。我们从头到尾简单地过一遍：</p>
+<ol>
+<li>AS Exchange：Client通过此过程获得了属于自己的TGT，有了此TGT，Client可凭此向KDC申请用于访问某个Server的Ticket。</li>
+<li>这一步的主要任务是获得封装了Server和KDC的Session Key（SKDC-Server）的属于Server的TGT。如果该TGT存在于Server的缓存中，则Server会直接将其返回给Client。否则通过AS Exchange从KDC获取。</li>
+<li>TGS Exchange：Client通过向KDC提供自己的TGT，Server的TGT以及Authenticator向KDC申请用于访问Server的 Ticket。KDC使用先用自己的Master Key解密Client的TGT获得SKDC-Client，通过SKDC-Client解密Authenticator验证发送者是否是TGT的真正拥 有者，验证通过再用自己的Master Key解密Server的TGT获得KDC和Server 的Session Key（SKDC-Server），并用该Session Key加密Ticket返回给Client。</li>
+<li>C/S Exchange：Client携带者通过KDC和Server 的Session Key（SKDC-Server）进行加密的Ticket和通过Client和Server的Session Key（SServer-Client）的Authenticator访问Server，Server通过SKDC-Server解密Ticket获得 SServer-Client，通过SServer-Client解密Authenticator实现对Client的验证。<br>这就是整个过程。</li>
+</ol>
+<h3 id="7-Kerberos的优点"><a href="#7-Kerberos的优点" class="headerlink" title="7. Kerberos的优点"></a>7. Kerberos的优点</h3><p>分析整个Kerberos的认证过程之后，我们来总结一下Kerberos都有哪些优点：</p>
+<h4 id="7-1-较高的Performance"><a href="#7-1-较高的Performance" class="headerlink" title="7.1 较高的Performance"></a>7.1 较高的Performance</h4><p>虽然我们一再地说Kerberos是一个涉及到3方的认证过程：Client、 Server、KDC。但是一旦Client获得用过访问某个Server的Ticket，该Server就能根据这个Ticket实现对Client的 验证，而无须KDC的再次参与。和传统的基于Windows NT 4.0的每个完全依赖Trusted Third Party的NTLM比较，具有较大的性能提升。</p>
+<h4 id="7-2-实现了双向验证（Mutual-Authentication）"><a href="#7-2-实现了双向验证（Mutual-Authentication）" class="headerlink" title="7.2 实现了双向验证（Mutual Authentication）"></a>7.2 实现了双向验证（Mutual Authentication）</h4><p>传统的NTLM认证基于这样一个前提：Client访问的远程的Service是可信的、无 需对于进行验证，所以NTLM不曾提供双向验证的功能。这显然有点理想主义，为此Kerberos弥补了这个不足：Client在访问Server的资源 之前，可以要求对Server的身份执行认证。</p>
+<h4 id="7-3-对Delegation的支持"><a href="#7-3-对Delegation的支持" class="headerlink" title="7.3 对Delegation的支持"></a>7.3 对Delegation的支持</h4><p>Impersonation和Delegation是一个分布式环境中两个重要的功能。 Impersonation允许Server在本地使用Logon 的Account执行某些操作，Delegation需用Server将logon的Account带入到另过一个Context执行相应的操作。 NTLM仅对Impersonation提供支持，而Kerberos通过一种双向的、可传递的（Mutual 、Transitive）信任模式实现了对Delegation的支持。</p>
+<h4 id="7-4-互操作性（Interoperability）"><a href="#7-4-互操作性（Interoperability）" class="headerlink" title="7.4 互操作性（Interoperability）"></a>7.4 互操作性（Interoperability）</h4><p>Kerberos最初由MIT首创，现在已经成为一行被广泛接受的标准。所以对于不同的平台可以进行广泛的互操作。</p>
+<h3 id="8-install-and-config"><a href="#8-install-and-config" class="headerlink" title="8. install and config"></a>8. install and config</h3><h4 id="8-1-install-kerberos"><a href="#8-1-install-kerberos" class="headerlink" title="8.1 install kerberos"></a>8.1 install kerberos</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install krb5-server krb5-libs krb5-server-ldap</span><br></pre></td></tr></table></figure>
+
+<p>准备 <code>kerberos.schema</code> ，以便openldap 能够作为Kerberos KDC的后端数据库</p>
+<p><code>kerberos.schema</code> 这个文件要在安装了 <code>krb5-server-ldap</code> 包之后才会出现。<br>具体位置在下面目录中。 x 代表版本号</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mkdir /root/kopenldap/</span><br><span class="line">cp `find / -name kerberos.schema` /etc/openldap/schema/</span><br><span class="line">echo &quot;include /etc/openldap/schema/kerberos.schema&quot; &gt; ~/kopenldap/schema_convert.conf</span><br><span class="line">mkdir ~/kopenldap/ldif_result</span><br><span class="line">slapcat -f ~/kopenldap/schema_convert.conf -F ~/kopenldap/ldif_result/ -s &quot;cn=kerberos,cn=schema,cn=config&quot;</span><br><span class="line">cp  ~/kopenldap/ldif_result/cn\=config/cn\=schema/cn\=\&#123;0\&#125;kerberos.ldif /etc/openldap/schema/kerberos.ldif</span><br><span class="line">sed -i &#x27;/dn:/s/\(&#123;.*\)/cn=kerberos,cn=schema,cn=config/g&#x27; /etc/openldap/schema/kerberos.ldif</span><br><span class="line">sed -i &#x27;/cn:/s/\(&#123;.*\)/kerberos/g&#x27; /etc/openldap/schema/kerberos.ldif</span><br><span class="line">sed -i &#x27;/^structuralObjectClass/,$d&#x27; /etc/openldap/schema/kerberos.ldif</span><br><span class="line"></span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/kerberos.ldif</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-2-kerberos-acl"><a href="#8-2-kerberos-acl" class="headerlink" title="8.2 kerberos acl"></a>8.2 kerberos acl</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;- EOF &gt;/root/kopenldap/access_kerberos.ldif</span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">add: olcAccess</span><br><span class="line">olcAccess: to dn.base=&quot;&quot; </span><br><span class="line"> by * read</span><br><span class="line"></span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">add: olcAccess</span><br><span class="line">olcAccess: to dn.base=&quot;cn=Subschema&quot; </span><br><span class="line"> by * read</span><br><span class="line"></span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">add: olcAccess</span><br><span class="line">olcAccess: to attrs=userPassword,userPKCS12 </span><br><span class="line"> by self write </span><br><span class="line"> by * auth</span><br><span class="line"></span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">add: olcAccess</span><br><span class="line">olcAccess: to attrs=shadowLastChange </span><br><span class="line"> by self write </span><br><span class="line"> by * read</span><br><span class="line"></span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">add: olcAccess</span><br><span class="line">olcAccess: to dn.subtree=&quot;cn=KEVIN.COM,cn=krbContainer,dc=kevin,dc=com&quot; </span><br><span class="line"> by dn.exact=&quot;cn=adm-srv,dc=kevin,dc=com&quot; write </span><br><span class="line"> by dn.exact=&quot;cn=kdc-srv,dc=kevin,dc=com&quot; write </span><br><span class="line"> by * none</span><br><span class="line"></span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">add: olcAccess</span><br><span class="line">olcAccess: to dn.subtree=&quot;ou=people,dc=kevin,dc=com&quot; </span><br><span class="line"> by dn.exact=&quot;cn=adm-srv,dc=kevin,dc=com&quot; write </span><br><span class="line"> by dn.exact=&quot;cn=kdc-srv,dc=kevin,dc=com&quot; write </span><br><span class="line"> by * read</span><br><span class="line"></span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">add: olcAccess</span><br><span class="line">olcAccess: to * </span><br><span class="line"> by * read</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">ldapmodify -Y EXTERNAL  -H ldapi:/// -f /root/kopenldap/access_kerberos.ldif</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;- EOF&gt;/root/kopenldap/add_dbindex.ldif</span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">add: olcDbIndex</span><br><span class="line">olcDbIndex: krbPrincipalName eq,pres,sub</span><br><span class="line"></span><br><span class="line">dn: olcDatabase=&#123;2&#125;hdb,cn=config</span><br><span class="line">changetype: modify</span><br><span class="line">add: olcDbIndex</span><br><span class="line">olcDbIndex: krbPwdPolicyReference eq</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">ldapmodify -Y EXTERNAL  -H ldapi:/// -f /root/kopenldap/add_dbindex.ldif</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-3-import-kerberos-users"><a href="#8-3-import-kerberos-users" class="headerlink" title="8.3 import kerberos users"></a>8.3 import kerberos users</h4><p>这里的 <code>userPassword: adm</code> 我使用的是明文。当然也可以使用 ldap 工具生成密文密码，如哈希的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;- EOF &gt;/root/kopenldap/krb5_users.ldif</span><br><span class="line">dn: cn=adm-srv,dc=kevin,dc=com</span><br><span class="line">cn: adm-srv</span><br><span class="line">objectClass: simpleSecurityObject</span><br><span class="line">objectClass: organizationalRole</span><br><span class="line">description: Default bind DN for the Kerberos Administration server</span><br><span class="line">userPassword: adm</span><br><span class="line"></span><br><span class="line">dn: cn=kdc-srv,dc=kevin,dc=com</span><br><span class="line">cn: kdc-srv</span><br><span class="line">objectClass: simpleSecurityObject</span><br><span class="line">objectClass: organizationalRole</span><br><span class="line">description: Default bind DN for the Kerberos KDC server</span><br><span class="line">userPassword: kdc</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">ldapadd -x -w 000001 -D &quot;cn=ldapadmin,dc=kevin,dc=com&quot; -f /root/kopenldap/krb5_users.ldif</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>slappasswd</code> 生成密文密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kdc ~]# slappasswd -s adm000000</span><br><span class="line">&#123;SSHA&#125;mAlCWsXBNyRzA+Ah&#x2F;yFGjAX7A10bZKV2</span><br><span class="line">[root@kdc ~]# slappasswd -s kdc000000</span><br><span class="line">&#123;SSHA&#125;N+zBdLzinTQ652GaMehC0xzuQTQiIT1&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>修改 kerberos 管理密码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;- EOF&gt;/root/kopenldap/changes.ldif</span><br><span class="line">dn: cn=adm-srv,dc=kevin,dc=com</span><br><span class="line">changetype: modify</span><br><span class="line">replace: userPassword</span><br><span class="line">userPassword: &#123;SSHA&#125;mAlCWsXBNyRzA+Ah/yFGjAX7A10bZKV2</span><br><span class="line"></span><br><span class="line">dn: cn=kdc-srv,dc=kevin,dc=com</span><br><span class="line">changetype: modify</span><br><span class="line">replace: userPassword</span><br><span class="line">userPassword: &#123;SSHA&#125;N+zBdLzinTQ652GaMehC0xzuQTQiIT1/</span><br><span class="line">EOF</span><br><span class="line">ldapadd -x -w 000001 -D &quot;cn=ldapadmin,dc=kevin,dc=com&quot; -f /root/kopenldap/changes.ldif</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-4-config-kdc"><a href="#8-4-config-kdc" class="headerlink" title="8.4 config kdc"></a>8.4 config kdc</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;- EOF &gt;/var/kerberos/krb5kdc/kdc.conf</span><br><span class="line">[logging]</span><br><span class="line">    default = FILE:/var/log/kerberos/krb5libs.log</span><br><span class="line">    kdc = FILE:/var/log/kerberos/krb5kdc.log</span><br><span class="line">    admin_server = FILE:/var/log/kerberos/kadmin.log</span><br><span class="line">    </span><br><span class="line">[libdefaults]</span><br><span class="line">    dns_lookup_realm = false</span><br><span class="line">    ticket_lifetime = 24h</span><br><span class="line">    renew_lifetime = 7d</span><br><span class="line">    forwardable = true</span><br><span class="line">    rdns = false</span><br><span class="line">    default_realm = KEVIN.COM</span><br><span class="line">    default_ccache_name = KEYRING:persistent:%&#123;uid&#125;</span><br><span class="line">    </span><br><span class="line">[kdcdefaults]</span><br><span class="line">     kdc_ports = 88</span><br><span class="line">     kdc_tcp_ports = 88</span><br><span class="line">     </span><br><span class="line">[realms]</span><br><span class="line">    KEVIN.COM = &#123;</span><br><span class="line">        kdc = ambari21.kevin.com</span><br><span class="line">        admin_server = ambari21.kevin.com</span><br><span class="line">        database_module = openldap_ldapconf</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">[domain_realm]</span><br><span class="line">    .kevin.com = KEVIN.COM</span><br><span class="line">    kevin.com = KEVIN.COM</span><br><span class="line">    </span><br><span class="line">[dbmodules]</span><br><span class="line">    openldap_ldapconf = &#123;</span><br><span class="line">        db_library = kldap</span><br><span class="line">        ldap_kerberos_container_dn = cn=krbContainer,dc=kevin,dc=com</span><br><span class="line">        ldap_kdc_dn = cn=kdc-srv,dc=kevin,dc=com</span><br><span class="line">        ldap_kadmind_dn = cn=adm-srv,dc=kevin,dc=com</span><br><span class="line">        ldap_service_password_file = /var/kerberos/krb5kdc/service.keyfile</span><br><span class="line">        ldap_servers = ldapi:///</span><br><span class="line">        ldap_conns_per_server = 5</span><br><span class="line">   &#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-5-Generate-password-file"><a href="#8-5-Generate-password-file" class="headerlink" title="8.5 Generate password file"></a>8.5 Generate password file</h4><p>生成 Kerberos 访问 openldap 的密码文件</p>
+<p>这里需要输入上面导入的 kerberos 用户密码，然后会在指定目录生成密码文件，Kerberos 通过 kdc 配置文件来读取并使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kdb5_ldap_util stashsrvpw -f /var/kerberos/krb5kdc/service.keyfile &quot;cn=adm-srv,dc=kevin,dc=com&quot; -w 000001</span><br><span class="line">kdb5_ldap_util stashsrvpw -f /var/kerberos/krb5kdc/service.keyfile &quot;cn=kdc-srv,dc=kevin,dc=com&quot; -w 000001 </span><br></pre></td></tr></table></figure>
+
+<h4 id="8-6-init-kdc-db"><a href="#8-6-init-kdc-db" class="headerlink" title="8.6 init kdc db"></a>8.6 init kdc db</h4><p>创建kerberos数据库。这里会数据初始的 kdc 数据库密码。然后会根据 kdc 的配置，在 openldap 中创建 <code>cn=krbContainer,dc=kdc,dc=kevin,dc=com</code></p>
+<p>里面就存放的 kerberos 的数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kdb5_ldap_util -D cn=ldapadmin,dc=kevin,dc=com -w 000001 -H ldapi:///  create  -r KEVIN.COM</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-7-add-kerberos-user"><a href="#8-7-add-kerberos-user" class="headerlink" title="8.7 add kerberos user"></a>8.7 add kerberos user</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@kdc ~]# kadmin.local</span><br><span class="line">kadmin.local:  addprinc root&#x2F;admin</span><br><span class="line">kadmin.local:  addprinc user1</span><br><span class="line">kadmin.local:  ktadd -k &#x2F;var&#x2F;kerberos&#x2F;krb5kdc&#x2F;kadm5.keytab kadmin&#x2F;admin</span><br><span class="line">kadmin.local:  ktadd -k &#x2F;var&#x2F;kerberos&#x2F;krb5kdc&#x2F;kadm5.keytab kadmin&#x2F;changepw</span><br><span class="line">kadmin.local:  exit</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-8-satrt-KDC"><a href="#8-8-satrt-KDC" class="headerlink" title="8.8 satrt KDC"></a>8.8 satrt KDC</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start krb5kdc.service</span><br><span class="line">systemctl enable krb5kdc.service</span><br></pre></td></tr></table></figure>
+
+<p>到这里通过 Apache Directory Studio 查看 Openldap 可以发现  kerberos 数据已经在里面了</p>
+<h4 id="8-9-config-kerberos"><a href="#8-9-config-kerberos" class="headerlink" title="8.9 config kerberos"></a>8.9 config kerberos</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;- EOF &gt;/etc/krb5.conf</span><br><span class="line">includedir /etc/krb5.conf.d/</span><br><span class="line"></span><br><span class="line">[logging]</span><br><span class="line">    default = FILE:/var/log/kerberos/krb5libs.log</span><br><span class="line">    kdc = FILE:/var/log/kerberos/krb5kdc.log</span><br><span class="line">    admin_server = FILE:/var/log/kerberos/kadmind.log</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line">    KEVIN.COM = &#123;</span><br><span class="line">        kdc = kdc.kevin.com</span><br><span class="line">        admin_server = kdc.kevin.com</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">[domain_realm]</span><br><span class="line">    .kevin.com = KEVIN.COM</span><br><span class="line">    kevin.com = KEVIN.COM</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-10-start-Kerberos"><a href="#8-10-start-Kerberos" class="headerlink" title="8.10 start Kerberos"></a>8.10 start Kerberos</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start kadmin.service</span><br><span class="line">systemctl enable kadmin.service</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-11-setup-Kerberos-client"><a href="#8-11-setup-Kerberos-client" class="headerlink" title="8.11 setup Kerberos client"></a>8.11 setup Kerberos client</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">yum -y install krb5-workstation</span><br><span class="line">cat &lt;&lt;- EOF &gt;/etc/krb5.conf</span><br><span class="line">includedir /etc/krb5.conf.d/</span><br><span class="line"></span><br><span class="line">[logging]</span><br><span class="line">    default = FILE:/var/log/kerberos/krb5libs.log</span><br><span class="line">    kdc = FILE:/var/log/kerberos/krb5kdc.log</span><br><span class="line">    admin_server = FILE:/var/log/kerberos/kadmind.log</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line">    KEVIN.COM = &#123;</span><br><span class="line">        kdc = kdc.kevin.com</span><br><span class="line">        admin_server = kdc.kevin.com</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">[domain_realm]</span><br><span class="line">    .kevin.com = KEVIN.COM</span><br><span class="line">    kevin.com = KEVIN.COM</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">kinit -kt user1.keytab user1@TENDATA.COM</span><br></pre></td></tr></table></figure>
+
+<h2 id="Openldap-enable-SASL"><a href="#Openldap-enable-SASL" class="headerlink" title="Openldap enable SASL"></a>Openldap enable SASL</h2><p>暂未配置</p>
+<h2 id="Ambari-enable-Kerberos"><a href="#Ambari-enable-Kerberos" class="headerlink" title="Ambari enable Kerberos"></a>Ambari enable Kerberos</h2><p>具体细节参见 <a target="_blank" rel="noopener" href="https://docs.hortonworks.com/HDPDocuments/Ambari-2.5.1.0/bk_ambari-security/content/ch_amb_sec_guide.html">Apache Ambari Security</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.iclouds.work/2017/11/20/operations/Ambari%20%E6%95%B4%E5%90%88%20Kerberos%20+%20Openldap/" data-id="ckmwwmzsl0020eqnkfujv7rjd" data-title="Ambari 整合 Kerberos + Openldap" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ambari/" rel="tag">ambari</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kerberos/" rel="tag">kerberos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openldap/" rel="tag">openldap</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/21/programming/%E8%BF%9E%E6%8E%A5%E5%B8%A6%E6%9C%89%20Kerberos%20%E8%AE%A4%E8%AF%81%E7%9A%84%20Hadoop%20%20HBase%20Spark/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          连接带有 Kerberos 认证的 Hadoop Hbase Hive Spark
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/11/20/documents/mit_kerberos_documentation/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">MIT Kerberos Documentation (1.15.2)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CloudNative/">CloudNative</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Documents/">Documents</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jupyter-notebook/" rel="tag">Jupyter notebook</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kerberos/" rel="tag">Kerberos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ambari/" rel="tag">ambari</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api-desig/" rel="tag">api-desig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api-design/" rel="tag">api-design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/" rel="tag">centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deepin/" rel="tag">deepin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fastapi/" rel="tag">fastapi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitlab-ci/" rel="tag">gitlab-ci</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hbase/" rel="tag">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hive/" rel="tag">hive</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kerberos/" rel="tag">kerberos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lvm/" rel="tag">lvm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openldap/" rel="tag">openldap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/" rel="tag">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zabbix/" rel="tag">zabbix</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Jupyter-notebook/" style="font-size: 10px;">Jupyter notebook</a> <a href="/tags/Kerberos/" style="font-size: 10px;">Kerberos</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/ambari/" style="font-size: 10px;">ambari</a> <a href="/tags/api-desig/" style="font-size: 10px;">api-desig</a> <a href="/tags/api-design/" style="font-size: 20px;">api-design</a> <a href="/tags/centos/" style="font-size: 17.5px;">centos</a> <a href="/tags/deepin/" style="font-size: 10px;">deepin</a> <a href="/tags/fastapi/" style="font-size: 10px;">fastapi</a> <a href="/tags/gitlab-ci/" style="font-size: 10px;">gitlab-ci</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/hbase/" style="font-size: 10px;">hbase</a> <a href="/tags/hive/" style="font-size: 10px;">hive</a> <a href="/tags/kerberos/" style="font-size: 15px;">kerberos</a> <a href="/tags/lvm/" style="font-size: 10px;">lvm</a> <a href="/tags/openldap/" style="font-size: 12.5px;">openldap</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/zabbix/" style="font-size: 10px;">zabbix</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/01/api-design/microsoft_api_guide/">Microsoft REST API 准则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/01/api-design/paypal_api_style_guide/">PayPal API 设计原则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/api-design/paypal_api_first_part3/">大规模分解API优先转换。在PayPal学习的经验教训–第3部分</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/api-design/paypal_api_first_part2/">大规模分解API优先转换。在PayPal学习的经验教训–第2部分</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/27/api-design/paypal_api_first_part1/">大规模分解API优先转换。在PayPal学习的经验教训–第1部分</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 huagang<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
