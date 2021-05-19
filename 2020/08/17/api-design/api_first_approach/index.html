@@ -22,14 +22,14 @@
 <script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;blog.iclouds.work&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Mist&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;}}</script>
 <meta name="description" content="本文是 Understanding the API-First Approach to Building Products的翻译，进供学习交流。如有翻译不当，请斧正。所有权归原作者。侵删。   ———— 珍妮特·瓦格纳（Janet Wagner） Web API已经存在将近20年了，但是直到最近几年，“API优先” 的概念才在软件团队中引起关注。采用API优先方法构建产品的开发人员数量正在增加。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Myblog">
+<meta property="og:title" content="API first">
 <meta property="og:url" content="http://blog.iclouds.work/2020/08/17/api-design/api_first_approach/index.html">
 <meta property="og:site_name" content="Myblog">
 <meta property="og:description" content="本文是 Understanding the API-First Approach to Building Products的翻译，进供学习交流。如有翻译不当，请斧正。所有权归原作者。侵删。   ———— 珍妮特·瓦格纳（Janet Wagner） Web API已经存在将近20年了，但是直到最近几年，“API优先” 的概念才在软件团队中引起关注。采用API优先方法构建产品的开发人员数量正在增加。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://static1.smartbear.co/swagger/media/images/resources/articles/api-first-approach-to-products.png">
 <meta property="article:published_time" content="2020-08-17T03:08:00.000Z">
-<meta property="article:modified_time" content="2021-05-19T11:18:21.642Z">
+<meta property="article:modified_time" content="2021-05-19T11:22:11.145Z">
 <meta property="article:author" content="huagang">
 <meta property="article:tag" content="api-design">
 <meta name="twitter:card" content="summary">
@@ -40,10 +40,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;blog.iclouds.work&#x2F;2020&#x2F;08&#x2F;17&#x2F;api-design&#x2F;api_first_approach&#x2F;&quot;,&quot;path&quot;:&quot;2020&#x2F;08&#x2F;17&#x2F;api-design&#x2F;api_first_approach&#x2F;&quot;,&quot;title&quot;:&quot;&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;blog.iclouds.work&#x2F;2020&#x2F;08&#x2F;17&#x2F;api-design&#x2F;api_first_approach&#x2F;&quot;,&quot;path&quot;:&quot;2020&#x2F;08&#x2F;17&#x2F;api-design&#x2F;api_first_approach&#x2F;&quot;,&quot;title&quot;:&quot;API first&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title> | Myblog</title><script src="/js/config.js"></script>
+<title>API first | Myblog</title><script src="/js/config.js"></script>
   
 
   <script src="/js/third-party/analytics/baidu-analytics.js"></script>
@@ -214,7 +214,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          API first
         </h1>
 
         <div class="post-meta-container">
@@ -232,7 +232,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-05-19 19:18:21" itemprop="dateModified" datetime="2021-05-19T19:18:21+08:00">2021-05-19</time>
+        <time title="修改时间：2021-05-19 19:22:11" itemprop="dateModified" datetime="2021-05-19T19:22:11+08:00">2021-05-19</time>
       </span>
 
   
