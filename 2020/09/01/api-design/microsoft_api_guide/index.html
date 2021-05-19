@@ -16,13 +16,10 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.iclouds.work","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
-  </script>
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;blog.iclouds.work&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Mist&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;}}</script>
 <meta name="description" content="Microsoft REST API准则工作组   名称 名称 名称    戴夫·坎贝尔（CTO C + E） 里克·拉希德（CTO ASG） John Shewchuk（TED总部技术研究员）   马克·鲁西诺维奇（CTO Azure） Steve Lucco（DevDiv技术研究员） Murali Krishnaprasad（Azure应用平台）   罗伯·霍华德（ASG） 彼得·托（OSG）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Microsoft REST API 准则">
@@ -40,65 +37,21 @@
 <link rel="canonical" href="http://blog.iclouds.work/2020/09/01/api-design/microsoft_api_guide/">
 
 
-<script class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
-<title>Microsoft REST API 准则 | Myblog</title>
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;blog.iclouds.work&#x2F;2020&#x2F;09&#x2F;01&#x2F;api-design&#x2F;microsoft_api_guide&#x2F;&quot;,&quot;path&quot;:&quot;2020&#x2F;09&#x2F;01&#x2F;api-design&#x2F;microsoft_api_guide&#x2F;&quot;,&quot;title&quot;:&quot;Microsoft REST API 准则&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Microsoft REST API 准则 | Myblog</title><script src="/js/config.js"></script>
   
 
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a"></script>
 
 
 
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -184,7 +137,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -197,7 +150,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -223,7 +176,7 @@
     </header>
 
     
-  <div class="back-to-top" role="button">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -274,7 +227,7 @@
     </span>
 
   
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
@@ -358,12 +311,12 @@
 <h2 id="7-一致性基础"><a href="#7-一致性基础" class="headerlink" title="7 一致性基础"></a>7 一致性基础</h2><h3 id="7-1-URL结构"><a href="#7-1-URL结构" class="headerlink" title="7.1 URL结构"></a>7.1 URL结构</h3><p>人类应该能够轻松地阅读和构造URL。</p>
 <p>在没有良好支持的客户端库的情况下，这有助于发现并简化在平台上的采用。</p>
 <p>结构良好的URL的示例是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;api.contoso.com&#x2F;v1.0&#x2F;people&#x2F;jdoe@contoso.com&#x2F;inbox</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://api.contoso.com/v1.0/people/jdoe@contoso.com/inbox</span><br></pre></td></tr></table></figure>
 <p>不友好的URL是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;api.contoso.com&#x2F;EWS&#x2F;OData&#x2F;Users(&#39;jdoe@microsoft.com&#39;)&#x2F;Folders(&#39;AAMkADdiYzI1MjUzLTk4MjQtNDQ1Yy05YjJkLWNlMzMzYmIzNTY0MwAuAAAAAACzMsPHYH6HQoSwfdpDx-2bAQCXhUk6PC1dS7AERFluCgBfAAABo58UAAA&#x3D;&#39;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://api.contoso.com/EWS/OData/Users(&#x27;jdoe@microsoft.com&#x27;)/Folders(&#x27;AAMkADdiYzI1MjUzLTk4MjQtNDQ1Yy05YjJkLWNlMzMzYmIzNTY0MwAuAAAAAACzMsPHYH6HQoSwfdpDx-2bAQCXhUk6PC1dS7AERFluCgBfAAABo58UAAA=&#x27;)</span><br></pre></td></tr></table></figure>
 
 <p>经常出现的模式是使用URL作为值。服务可以使用URL作为值。例如，以下是可接受的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;api.contoso.com&#x2F;v1.0&#x2F;items?url&#x3D;https:&#x2F;&#x2F;resources.contoso.com&#x2F;shoes&#x2F;fancy</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://api.contoso.com/v1.0/items?url=https://resources.contoso.com/shoes/fancy</span><br></pre></td></tr></table></figure>
 
 <h3 id="7-2-URL长度"><a href="#7-2-URL长度" class="headerlink" title="7.2 URL长度"></a>7.2 URL长度</h3><p>在RFC 7230的<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc7230#section-3.1.1">3.1.1</a>节中定义的HTTP 1.1消息格式在请求行上没有长度限制，该长度包括目标URL。从RFC：</p>
 <blockquote>
@@ -378,7 +331,7 @@
 <h3 id="7-3规范标识符"><a href="#7-3规范标识符" class="headerlink" title="7.3规范标识符"></a>7.3规范标识符</h3><p>除了友好的URL，可以移动或重命名的资源也应该公开包含唯一稳定标识符的URL。与某些服务使用“ /我”快捷方式的情况一样，可能有必要与服务进行交互以从资源的友好名称中获取稳定的URL。</p>
 <p>稳定标识符不需要是GUID。</p>
 <p>包含规范标识符的URL的示例是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;api.contoso.com&#x2F;v1.0&#x2F;people&#x2F;7011042402&#x2F;inbox</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://api.contoso.com/v1.0/people/7011042402/inbox</span><br></pre></td></tr></table></figure>
 
 <h3 id="7-4支持的方法"><a href="#7-4支持的方法" class="headerlink" title="7.4支持的方法"></a>7.4支持的方法</h3><p>操作必须尽可能使用正确的HTTP方法，并且必须尊重操作幂等性。HTTP方法通常称为HTTP动词。这些术语在此上下文中是同义词，但是HTTP规范使用术语“方法”。</p>
 <p>以下是Microsoft REST服务应支持的方法的列表。并非所有资源都支持所有方法，但是使用以下方法的所有资源必须符合其用法。</p>
@@ -428,10 +381,10 @@
 </tbody></table>
 <h4 id="7-4-1-POST"><a href="#7-4-1-POST" class="headerlink" title="7.4.1 POST"></a>7.4.1 POST</h4><p>POST操作应支持Location响应标头，以通过Location标头指定未显式命名的任何已创建资源的位置。</p>
 <p>例如，设想一个允许创建托管服务器的服务，该服务将由该服务命名：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">POST http:&#x2F;&#x2F;api.contoso.com&#x2F;account1&#x2F;servers</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">POST http://api.contoso.com/account1/servers</span><br></pre></td></tr></table></figure>
 
 <p>响应：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">201 Created</span><br><span class="line">Location: http:&#x2F;&#x2F;api.contoso.com&#x2F;account1&#x2F;servers&#x2F;server321</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">201 Created</span><br><span class="line">Location: http://api.contoso.com/account1/servers/server321</span><br></pre></td></tr></table></figure>
 
 <p>其中 “server321”是服务分配的服务器名称。</p>
 <p>服务还可以在响应中返回所创建项目的完整元数据。</p>
@@ -441,7 +394,7 @@
 <p>如果服务不支持UPSERT，则对不存在的资源的PATCH调用务必导致HTTP“ 409冲突”错误。</p>
 <h4 id="7-4-4-Options-和链接头"><a href="#7-4-4-Options-和链接头" class="headerlink" title="7.4.4 Options 和链接头"></a>7.4.4 Options 和链接头</h4><p>OPTIONS允许客户端至少通过返回表示该资源有效方法的Allow标头来检索有关资源的信息。</p>
 <p>另外，服务应该包括一个链接头（参见<a target="_blank" rel="noopener" href="http://tools.ietf.org/html/rfc5988">RFC 5988</a>），以指向相关资源的文档：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Link: &lt;&#123;help&#125;&gt;; rel&#x3D;&quot;help&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Link: &lt;&#123;help&#125;&gt;; rel=&quot;help&quot;</span><br></pre></td></tr></table></figure>
 
 <p>其中{help}是文档资源的URL。</p>
 <p>有关使用OPTIONS的示例，请参阅<a target="_blank" rel="noopener" href="http://www.w3.org/TR/cors/#resource-preflight-requests">预检CORS跨域调用</a>。</p>
@@ -577,7 +530,7 @@
 <td>对于 <code>text/javascript</code> 可以是 JSONP 格式</td>
 </tr>
 </tbody></table>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET https:&#x2F;&#x2F;api.contoso.com&#x2F;v1.0&#x2F;products&#x2F;user</span><br><span class="line">Accept: application&#x2F;json</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET https://api.contoso.com/v1.0/products/user</span><br><span class="line">Accept: application/json</span><br></pre></td></tr></table></figure>
 
 <h4 id="7-10-2错误条件响应"><a href="#7-10-2错误条件响应" class="headerlink" title="7.10.2错误条件响应"></a>7.10.2错误条件响应</h4><p>对于不成功的情况，开发人员应该能够编写一段代码，以在不同的Microsoft REST API准则服务之间一致地处理错误。这允许构建简单可靠的基础结构来将异常作为成功响应的独立流程来处理。以下内容基于OData v4 JSON规范。但是，它非常通用，不需要特定的OData构造。即使没有使用其他OData构造，API也应该使用这种格式。</p>
 <p>错误响应必须是单个JSON对象。这个对象必须有一个名为“错误”的名称/值对。该值必须是JSON对象。</p>
@@ -734,7 +687,7 @@
 <h4 id="12-1-1组版本控制"><a href="#12-1-1组版本控制" class="headerlink" title="12.1.1组版本控制"></a>12.1.1组版本控制</h4><p>组版本控制是一项可选功能，可以使用查询字符串参数机制在服务上提供。组版本允许在通用版本名称下对API端点进行逻辑分组。这使开发人员可以查找单个版本号，并在多个端点之间使用它。组版本号是众所周知的，服务应该拒绝任何无法识别的值。</p>
 <p>在内部，服务将采用组版本并将其映射到适当的Major.Minor版本。</p>
 <p>组版本格式定义为YYYY-MM-DD，例如2012年12月7日为2012-12-07。此日期版本格式仅适用于组版本，不应用作替代Major.Minor版本。</p>
-<h5 id="12-1-1-1组版本控制的示例"><a href="#12-1-1-1组版本控制的示例" class="headerlink" title="12.1.1.1组版本控制的示例"></a>12.1.1.1组版本控制的示例</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Group      | Major.Minor</span><br><span class="line">---------- | -----------</span><br><span class="line">2012-12-01 | 1.0</span><br><span class="line">           | 1.1</span><br><span class="line">           | 1.2</span><br><span class="line">2013-03-21 | 1.0</span><br><span class="line">           | 2.0</span><br><span class="line">           | 3.0</span><br><span class="line">           | 3.1</span><br><span class="line">           | 3.2</span><br><span class="line">           | 3.3</span><br></pre></td></tr></table></figure>
+<h5 id="12-1-1-1组版本控制的示例"><a href="#12-1-1-1组版本控制的示例" class="headerlink" title="12.1.1.1组版本控制的示例"></a>12.1.1.1组版本控制的示例</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Group      | Major.Minor</span><br><span class="line">---------- | -----------</span><br><span class="line">2012-12-01 | 1.0</span><br><span class="line">           | 1.1</span><br><span class="line">           | 1.2</span><br><span class="line">2013-03-21 | 1.0</span><br><span class="line">           | 2.0</span><br><span class="line">           | 3.0</span><br><span class="line">           | 3.1</span><br><span class="line">           | 3.2</span><br><span class="line">           | 3.3</span><br></pre></td></tr></table></figure>
 
 <table>
 <thead>
@@ -762,7 +715,7 @@
 </tbody></table>
 <p>客户端可以指定组版本或专业版本。</p>
 <p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET http:&#x2F;&#x2F;api.contoso.com&#x2F;acct1&#x2F;c1&#x2F;blob2?api-version&#x3D;1.0</span><br><span class="line">PUT http:&#x2F;&#x2F;api.contoso.com&#x2F;acct1&#x2F;c1&#x2F;b2?api-version&#x3D;2011-12-07</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET http://api.contoso.com/acct1/c1/blob2?api-version=1.0</span><br><span class="line">PUT http://api.contoso.com/acct1/c1/b2?api-version=2011-12-07</span><br></pre></td></tr></table></figure>
 
 <h3 id="12-2何时版本"><a href="#12-2何时版本" class="headerlink" title="12.2何时版本"></a>12.2何时版本</h3><p>服务必须响应任何重大的API更改而增加其版本号。请参阅以下部分，详细讨论什么是重大更改。如果需要，服务也可以增加其版本号以进行不间断的更改。</p>
 <p>使用新的主要版本号表示将来将不再支持现有客户端。引入新的主要版本时，服务必须为现有客户提供清晰的升级路径，并制定与业务组策略一致的弃用计划。服务应将新的次要版本号用于所有其他更改。</p>
@@ -790,7 +743,7 @@
 <p>一个示例可能是计算机重新引导，该操作本身同步完成，但是虚拟机资源上的GET操作将具有“状态：正在重新引导”，“状态：正在运行”，可以随时查询。</p>
 <p>该模型可以集成推送通知。</p>
 <p>虽然大多数操作可能是POST语义，但除POST语义服务外，MAY还可以通过路由支持PUT语义，以简化其API。例如，想要创建一个名为“ db1”的数据库的用户可以调用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUT https:&#x2F;&#x2F;api.contoso.com&#x2F;v1.0&#x2F;databases&#x2F;db1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUT https://api.contoso.com/v1.0/databases/db1</span><br></pre></td></tr></table></figure>
 
 <p>在这种情况下，数据库段正在处理PUT操作。</p>
 <p>服务也可以使用下面定义的混合。</p>
@@ -802,24 +755,24 @@
 <p>服务必须对逐步请求执行尽可能多的同步验证。服务必须以同步方式确定返回错误的优先级，目标是使用长时间运行的操作有线协议仅处理“有效”操作。</p>
 <p>对于定义为逐步长期运行操作的API，服务必须经过逐步长期运行操作流程，即使该操作可以立即完成。换句话说，API必须采用并坚持LRO模式，并且不得根据情况更改模式。</p>
 <h4 id="13-2-1-PUT"><a href="#13-2-1-PUT" class="headerlink" title="13.2.1 PUT"></a>13.2.1 PUT</h4><p>服务可以启用用于实体创建的PUT请求。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUT https:&#x2F;&#x2F;api.contoso.com&#x2F;v1.0&#x2F;databases&#x2F;db1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUT https://api.contoso.com/v1.0/databases/db1</span><br></pre></td></tr></table></figure>
 
 <p>在这种情况下，<em>数据库</em>段正在处理PUT操作。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 202 Accepted</span><br><span class="line">Operation-Location: https:&#x2F;&#x2F;api.contoso.com&#x2F;v1.0&#x2F;operations&#x2F;123</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 202 Accepted</span><br><span class="line">Operation-Location: https://api.contoso.com/v1.0/operations/123</span><br></pre></td></tr></table></figure>
 
 <p>对于需要返回此处创建201的服务，请使用下面描述的混合流程。</p>
 <p>202已接受不返回任何正文。201 Created案例应返回目标资源的主体。</p>
 <h4 id="13-2-2-POST"><a href="#13-2-2-POST" class="headerlink" title="13.2.2 POST"></a>13.2.2 POST</h4><p>服务可以启用用于实体创建的POST请求。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST https:&#x2F;&#x2F;api.contoso.com&#x2F;v1.0&#x2F;databases&#x2F;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;fileName&quot;: &quot;someFile.db&quot;,</span><br><span class="line">  &quot;color&quot;: &quot;red&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST https://api.contoso.com/v1.0/databases/</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;fileName&quot;: &quot;someFile.db&quot;,</span><br><span class="line">  &quot;color&quot;: &quot;red&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 202 Accepted</span><br><span class="line">Operation-Location: https:&#x2F;&#x2F;api.contoso.com&#x2F;v1.0&#x2F;operations&#x2F;123</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 202 Accepted</span><br><span class="line">Operation-Location: https://api.contoso.com/v1.0/operations/123</span><br></pre></td></tr></table></figure>
 
 <h4 id="13-2-3-POST，混合模型"><a href="#13-2-3-POST，混合模型" class="headerlink" title="13.2.3 POST，混合模型"></a>13.2.3 POST，混合模型</h4><p>服务可以对创建资源的集合的POST请求进行同步响应，即使在生成响应时并未完全创建资源。为了使用这种模式，响应必须包括不完整资源的表示和不完整资源的指示。</p>
 <p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">POST https:&#x2F;&#x2F;api.contoso.com&#x2F;v1.0&#x2F;databases&#x2F; HTTP&#x2F;1.1</span><br><span class="line">Host: api.contoso.com</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line">Accept: application&#x2F;json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;fileName&quot;: &quot;someFile.db&quot;,</span><br><span class="line">  &quot;color&quot;: &quot;red&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">POST https://api.contoso.com/v1.0/databases/ HTTP/1.1</span><br><span class="line">Host: api.contoso.com</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Accept: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;fileName&quot;: &quot;someFile.db&quot;,</span><br><span class="line">  &quot;color&quot;: &quot;red&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>服务响应说数据库已经创建，但是通过包含Operation-Location标头指示请求未完成。在这种情况下，响应有效负载中的状态属性还指示操作尚未完全完成。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 201 Created</span><br><span class="line">Location: https:&#x2F;&#x2F;api.contoso.com&#x2F;v1.0&#x2F;databases&#x2F;db1</span><br><span class="line">Operation-Location: https:&#x2F;&#x2F;api.contoso.com&#x2F;v1.0&#x2F;operations&#x2F;123</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;databaseName&quot;: &quot;db1&quot;,</span><br><span class="line">  &quot;color&quot;: &quot;red&quot;,</span><br><span class="line">  &quot;Status&quot;: &quot;Provisioning&quot;,</span><br><span class="line">  [ … other fields for &quot;database&quot; …]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 201 Created</span><br><span class="line">Location: https://api.contoso.com/v1.0/databases/db1</span><br><span class="line">Operation-Location: https://api.contoso.com/v1.0/operations/123</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;databaseName&quot;: &quot;db1&quot;,</span><br><span class="line">  &quot;color&quot;: &quot;red&quot;,</span><br><span class="line">  &quot;Status&quot;: &quot;Provisioning&quot;,</span><br><span class="line">  [ … other fields for &quot;database&quot; …]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="13-2-4-操作资源"><a href="#13-2-4-操作资源" class="headerlink" title="13.2.4 操作资源"></a>13.2.4 操作资源</h4><p>服务可以在租户级别提供“ / operations”资源。</p>
 <p>提供“ /operations”资源的服务必须提供GET语义。GET必须枚举遵循标准分页，排序和过滤语义的操作集。此操作的默认排序顺序必须为：</p>
@@ -870,14 +823,14 @@
 <li>操作状态（未启动/正在运行/已完成）。</li>
 </ol>
 <p>服务可以在操作中添加其他特定于API的字段。返回的操作状态JSON如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;createdDateTime&quot;: &quot;2015-06-19T12-01-03.45Z&quot;,</span><br><span class="line">  &quot;lastActionDateTime&quot;: &quot;2015-06-19T12-01-03.45Z&quot;,</span><br><span class="line">  &quot;status&quot;: &quot;notstarted | running | succeeded | failed&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;createdDateTime&quot;: &quot;2015-06-19T12-01-03.45Z&quot;,</span><br><span class="line">  &quot;lastActionDateTime&quot;: &quot;2015-06-19T12-01-03.45Z&quot;,</span><br><span class="line">  &quot;status&quot;: &quot;notstarted | running | succeeded | failed&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h5 id="13-2-5-1完成百分比"><a href="#13-2-5-1完成百分比" class="headerlink" title="13.2.5.1完成百分比"></a>13.2.5.1完成百分比</h5><p>有时，服务无法完全准确地知道操作何时完成。这使得使用Retry-After标头有问题。在这种情况下，服务可以在operationStatus JSON中包含完成百分比字段。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   “ createdDateTime ”：“ 2015-06-19T12-01-03.45Z ”，</span><br><span class="line">   “ percentComplete ”：“ 50 ”，</span><br><span class="line">   “ status ”：“ running ” </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   “ createdDateTime ”：“ 2015-06-19T12-01-03.45Z ”，</span><br><span class="line">   “ percentComplete ”：“ 50 ”，</span><br><span class="line">   “ status ”：“ running ” </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在此示例中，服务器已向客户端指示长时间运行的操作已完成50％。</p>
 <h5 id="13-2-5-2目标资源位置"><a href="#13-2-5-2目标资源位置" class="headerlink" title="13.2.5.2目标资源位置"></a>13.2.5.2目标资源位置</h5><p>对于产生或操纵资源的操作，服务必须在操作完成后的状态中包含目标资源位置。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;createdDateTime&quot;: &quot;2015-06-19T12-01-03.45Z&quot;,</span><br><span class="line">  &quot;lastActionDateTime&quot;: &quot;2015-06-19T12-06-03.0024Z&quot;,</span><br><span class="line">  &quot;status&quot;: &quot;succeeded&quot;,</span><br><span class="line">  &quot;resourceLocation&quot;: &quot;https:&#x2F;&#x2F;api.contoso.com&#x2F;v1.0&#x2F;databases&#x2F;db1&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;createdDateTime&quot;: &quot;2015-06-19T12-01-03.45Z&quot;,</span><br><span class="line">  &quot;lastActionDateTime&quot;: &quot;2015-06-19T12-06-03.0024Z&quot;,</span><br><span class="line">  &quot;status&quot;: &quot;succeeded&quot;,</span><br><span class="line">  &quot;resourceLocation&quot;: &quot;https://api.contoso.com/v1.0/databases/db1&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="13-2-6删除操作"><a href="#13-2-6删除操作" class="headerlink" title="13.2.6删除操作"></a>13.2.6删除操作</h4><p>服务可以选择支持逻辑删除操作。服务可以在服务定义的一段时间后选择删除逻辑删除。</p>
 <h4 id="13-2-7典型流程，轮询"><a href="#13-2-7典型流程，轮询" class="headerlink" title="13.2.7典型流程，轮询"></a>13.2.7典型流程，轮询</h4><ul>
@@ -906,6 +859,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2021/03/31/programming/python/python_logging/" rel="next" title="Python Logging 使用实践">
+                  Python Logging 使用实践 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -916,29 +872,7 @@
 
 
 
-
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
+<script src="/js/comments.js"></script>
 </div>
   </main>
 
@@ -955,7 +889,7 @@
   <span class="author" itemprop="copyrightHolder">huagang</span>
 </div>
 <div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
@@ -963,7 +897,7 @@
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>

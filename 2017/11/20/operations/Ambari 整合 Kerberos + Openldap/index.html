@@ -16,13 +16,10 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.iclouds.work","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
-  </script>
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;blog.iclouds.work&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Mist&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;}}</script>
 <meta name="description" content="本文是在学习 Ambari 集成 Kerberos 做安全认证，同时使用 Openldap 作为 Ambari 和 Kerberos 的后端用户管理时总结的。 在学习的时候参照了许多国内外的安装文档，中间也出了不少问题。都是一点点找，才搞出来。 因为战线拉得比较长，在学习过程中，看了太多的博客，也没太仔细记录博主的连接。没能及时的在文中贴上。如果发现引用，请及时联系我。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ambari 整合 Kerberos + Openldap">
@@ -52,65 +49,21 @@
 <link rel="canonical" href="http://blog.iclouds.work/2017/11/20/operations/Ambari%20%E6%95%B4%E5%90%88%20Kerberos%20+%20Openldap/">
 
 
-<script class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
-<title>Ambari 整合 Kerberos + Openldap | Myblog</title>
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;blog.iclouds.work&#x2F;2017&#x2F;11&#x2F;20&#x2F;operations&#x2F;Ambari%20%E6%95%B4%E5%90%88%20Kerberos%20+%20Openldap&#x2F;&quot;,&quot;path&quot;:&quot;2017&#x2F;11&#x2F;20&#x2F;operations&#x2F;Ambari 整合 Kerberos + Openldap&#x2F;&quot;,&quot;title&quot;:&quot;Ambari 整合 Kerberos + Openldap&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Ambari 整合 Kerberos + Openldap | Myblog</title><script src="/js/config.js"></script>
   
 
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a"></script>
 
 
 
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -196,7 +149,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -209,7 +162,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -235,7 +188,7 @@
     </header>
 
     
-  <div class="back-to-top" role="button">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -302,7 +255,7 @@
     </span>
 
   
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
@@ -502,7 +455,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;- EOF &gt;/root/kopenldap/krb5_users.ldif</span><br><span class="line">dn: cn=adm-srv,dc=kevin,dc=com</span><br><span class="line">cn: adm-srv</span><br><span class="line">objectClass: simpleSecurityObject</span><br><span class="line">objectClass: organizationalRole</span><br><span class="line">description: Default bind DN for the Kerberos Administration server</span><br><span class="line">userPassword: adm</span><br><span class="line"></span><br><span class="line">dn: cn=kdc-srv,dc=kevin,dc=com</span><br><span class="line">cn: kdc-srv</span><br><span class="line">objectClass: simpleSecurityObject</span><br><span class="line">objectClass: organizationalRole</span><br><span class="line">description: Default bind DN for the Kerberos KDC server</span><br><span class="line">userPassword: kdc</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">ldapadd -x -w 000001 -D &quot;cn=ldapadmin,dc=kevin,dc=com&quot; -f /root/kopenldap/krb5_users.ldif</span><br></pre></td></tr></table></figure>
 
 <p>使用 <code>slappasswd</code> 生成密文密码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kdc ~]# slappasswd -s adm000000</span><br><span class="line">&#123;SSHA&#125;mAlCWsXBNyRzA+Ah&#x2F;yFGjAX7A10bZKV2</span><br><span class="line">[root@kdc ~]# slappasswd -s kdc000000</span><br><span class="line">&#123;SSHA&#125;N+zBdLzinTQ652GaMehC0xzuQTQiIT1&#x2F;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kdc ~]# slappasswd -s adm000000</span><br><span class="line">&#123;SSHA&#125;mAlCWsXBNyRzA+Ah/yFGjAX7A10bZKV2</span><br><span class="line">[root@kdc ~]# slappasswd -s kdc000000</span><br><span class="line">&#123;SSHA&#125;N+zBdLzinTQ652GaMehC0xzuQTQiIT1/</span><br></pre></td></tr></table></figure>
 
 <p>修改 kerberos 管理密码</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;- EOF&gt;/root/kopenldap/changes.ldif</span><br><span class="line">dn: cn=adm-srv,dc=kevin,dc=com</span><br><span class="line">changetype: modify</span><br><span class="line">replace: userPassword</span><br><span class="line">userPassword: &#123;SSHA&#125;mAlCWsXBNyRzA+Ah/yFGjAX7A10bZKV2</span><br><span class="line"></span><br><span class="line">dn: cn=kdc-srv,dc=kevin,dc=com</span><br><span class="line">changetype: modify</span><br><span class="line">replace: userPassword</span><br><span class="line">userPassword: &#123;SSHA&#125;N+zBdLzinTQ652GaMehC0xzuQTQiIT1/</span><br><span class="line">EOF</span><br><span class="line">ldapadd -x -w 000001 -D &quot;cn=ldapadmin,dc=kevin,dc=com&quot; -f /root/kopenldap/changes.ldif</span><br></pre></td></tr></table></figure>
@@ -517,14 +470,14 @@
 <p>里面就存放的 kerberos 的数据</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kdb5_ldap_util -D cn=ldapadmin,dc=kevin,dc=com -w 000001 -H ldapi:///  create  -r KEVIN.COM</span><br></pre></td></tr></table></figure>
 
-<h4 id="8-7-add-kerberos-user"><a href="#8-7-add-kerberos-user" class="headerlink" title="8.7 add kerberos user"></a>8.7 add kerberos user</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@kdc ~]# kadmin.local</span><br><span class="line">kadmin.local:  addprinc root&#x2F;admin</span><br><span class="line">kadmin.local:  addprinc user1</span><br><span class="line">kadmin.local:  ktadd -k &#x2F;var&#x2F;kerberos&#x2F;krb5kdc&#x2F;kadm5.keytab kadmin&#x2F;admin</span><br><span class="line">kadmin.local:  ktadd -k &#x2F;var&#x2F;kerberos&#x2F;krb5kdc&#x2F;kadm5.keytab kadmin&#x2F;changepw</span><br><span class="line">kadmin.local:  exit</span><br></pre></td></tr></table></figure>
+<h4 id="8-7-add-kerberos-user"><a href="#8-7-add-kerberos-user" class="headerlink" title="8.7 add kerberos user"></a>8.7 add kerberos user</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@kdc ~]# kadmin.local</span><br><span class="line">kadmin.local:  addprinc root/admin</span><br><span class="line">kadmin.local:  addprinc user1</span><br><span class="line">kadmin.local:  ktadd -k /var/kerberos/krb5kdc/kadm5.keytab kadmin/admin</span><br><span class="line">kadmin.local:  ktadd -k /var/kerberos/krb5kdc/kadm5.keytab kadmin/changepw</span><br><span class="line">kadmin.local:  exit</span><br></pre></td></tr></table></figure>
 
 <h4 id="8-8-satrt-KDC"><a href="#8-8-satrt-KDC" class="headerlink" title="8.8 satrt KDC"></a>8.8 satrt KDC</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start krb5kdc.service</span><br><span class="line">systemctl enable krb5kdc.service</span><br></pre></td></tr></table></figure>
 
 <p>到这里通过 Apache Directory Studio 查看 Openldap 可以发现  kerberos 数据已经在里面了</p>
 <h4 id="8-9-config-kerberos"><a href="#8-9-config-kerberos" class="headerlink" title="8.9 config kerberos"></a>8.9 config kerberos</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;- EOF &gt;/etc/krb5.conf</span><br><span class="line">includedir /etc/krb5.conf.d/</span><br><span class="line"></span><br><span class="line">[logging]</span><br><span class="line">    default = FILE:/var/log/kerberos/krb5libs.log</span><br><span class="line">    kdc = FILE:/var/log/kerberos/krb5kdc.log</span><br><span class="line">    admin_server = FILE:/var/log/kerberos/kadmind.log</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line">    KEVIN.COM = &#123;</span><br><span class="line">        kdc = kdc.kevin.com</span><br><span class="line">        admin_server = kdc.kevin.com</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">[domain_realm]</span><br><span class="line">    .kevin.com = KEVIN.COM</span><br><span class="line">    kevin.com = KEVIN.COM</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
 
-<h4 id="8-10-start-Kerberos"><a href="#8-10-start-Kerberos" class="headerlink" title="8.10 start Kerberos"></a>8.10 start Kerberos</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start kadmin.service</span><br><span class="line">systemctl enable kadmin.service</span><br></pre></td></tr></table></figure>
+<h4 id="8-10-start-Kerberos"><a href="#8-10-start-Kerberos" class="headerlink" title="8.10 start Kerberos"></a>8.10 start Kerberos</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start kadmin.service</span><br><span class="line">systemctl enable kadmin.service</span><br></pre></td></tr></table></figure>
 
 <h4 id="8-11-setup-Kerberos-client"><a href="#8-11-setup-Kerberos-client" class="headerlink" title="8.11 setup Kerberos client"></a>8.11 setup Kerberos client</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">yum -y install krb5-workstation</span><br><span class="line">cat &lt;&lt;- EOF &gt;/etc/krb5.conf</span><br><span class="line">includedir /etc/krb5.conf.d/</span><br><span class="line"></span><br><span class="line">[logging]</span><br><span class="line">    default = FILE:/var/log/kerberos/krb5libs.log</span><br><span class="line">    kdc = FILE:/var/log/kerberos/krb5kdc.log</span><br><span class="line">    admin_server = FILE:/var/log/kerberos/kadmind.log</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line">    KEVIN.COM = &#123;</span><br><span class="line">        kdc = kdc.kevin.com</span><br><span class="line">        admin_server = kdc.kevin.com</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">[domain_realm]</span><br><span class="line">    .kevin.com = KEVIN.COM</span><br><span class="line">    kevin.com = KEVIN.COM</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">kinit -kt user1.keytab user1@TENDATA.COM</span><br></pre></td></tr></table></figure>
 
@@ -566,29 +519,7 @@
 
 
 
-
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
+<script src="/js/comments.js"></script>
 </div>
   </main>
 
@@ -605,7 +536,7 @@
   <span class="author" itemprop="copyrightHolder">huagang</span>
 </div>
 <div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
@@ -613,7 +544,7 @@
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>

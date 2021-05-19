@@ -16,13 +16,10 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.iclouds.work","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
-  </script>
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;blog.iclouds.work&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Mist&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;}}</script>
 <meta name="description" content="本文主要介绍客户端在使用 Kerberos 的时候如何连接 Kerberos 集群，使用 Kerberos 安全认证。其中包含 Windows 客户端， Linux 客户端安装使用记录。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="连接 Kerberos 集群指南">
@@ -49,65 +46,21 @@
 <link rel="canonical" href="http://blog.iclouds.work/2019/05/06/operations/%E8%BF%9E%E6%8E%A5%20Kerberos%20%E9%9B%86%E7%BE%A4%E6%8C%87%E5%8D%97/">
 
 
-<script class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
-<title>连接 Kerberos 集群指南 | Myblog</title>
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;blog.iclouds.work&#x2F;2019&#x2F;05&#x2F;06&#x2F;operations&#x2F;%E8%BF%9E%E6%8E%A5%20Kerberos%20%E9%9B%86%E7%BE%A4%E6%8C%87%E5%8D%97&#x2F;&quot;,&quot;path&quot;:&quot;2019&#x2F;05&#x2F;06&#x2F;operations&#x2F;连接 Kerberos 集群指南&#x2F;&quot;,&quot;title&quot;:&quot;连接 Kerberos 集群指南&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>连接 Kerberos 集群指南 | Myblog</title><script src="/js/config.js"></script>
   
 
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a"></script>
 
 
 
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -193,7 +146,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -206,7 +159,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -232,7 +185,7 @@
     </header>
 
     
-  <div class="back-to-top" role="button">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -299,7 +252,7 @@
     </span>
 
   
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
@@ -359,22 +312,22 @@
 <li>修改配置</li>
 </ol>
 <p>修改 <code>/etc/krb5.conf</code> ，配置如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[libdefaults]</span><br><span class="line">  renew_lifetime &#x3D; 7d</span><br><span class="line">  forwardable &#x3D; true</span><br><span class="line">  default_realm &#x3D; TENDATA.CN</span><br><span class="line">  ticket_lifetime &#x3D; 24h</span><br><span class="line">  dns_lookup_realm &#x3D; false</span><br><span class="line">  dns_lookup_kdc &#x3D; false</span><br><span class="line">  default_ccache_name &#x3D; &#x2F;tmp&#x2F;krb5cc_%&#123;uid&#125;</span><br><span class="line">  #default_tgs_enctypes &#x3D; aes des3-cbc-sha1 rc4 des-cbc-md5</span><br><span class="line">  #default_tkt_enctypes &#x3D; aes des3-cbc-sha1 rc4 des-cbc-md5</span><br><span class="line"></span><br><span class="line">[logging]</span><br><span class="line">  default &#x3D; FILE:&#x2F;var&#x2F;log&#x2F;krb5kdc.log</span><br><span class="line">  admin_server &#x3D; FILE:&#x2F;var&#x2F;log&#x2F;kadmind.log</span><br><span class="line">  kdc &#x3D; FILE:&#x2F;var&#x2F;log&#x2F;krb5kdc.log</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line">  TENDATA.CN &#x3D; &#123;</span><br><span class="line">    admin_server &#x3D; m1.node.hadoop</span><br><span class="line">    kdc &#x3D; 192.168.10.1</span><br><span class="line">    kdc &#x3D; 192.168.10.2</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[libdefaults]</span><br><span class="line">  renew_lifetime = 7d</span><br><span class="line">  forwardable = true</span><br><span class="line">  default_realm = TENDATA.CN</span><br><span class="line">  ticket_lifetime = 24h</span><br><span class="line">  dns_lookup_realm = false</span><br><span class="line">  dns_lookup_kdc = false</span><br><span class="line">  default_ccache_name = /tmp/krb5cc_%&#123;uid&#125;</span><br><span class="line">  #default_tgs_enctypes = aes des3-cbc-sha1 rc4 des-cbc-md5</span><br><span class="line">  #default_tkt_enctypes = aes des3-cbc-sha1 rc4 des-cbc-md5</span><br><span class="line"></span><br><span class="line">[logging]</span><br><span class="line">  default = FILE:/var/log/krb5kdc.log</span><br><span class="line">  admin_server = FILE:/var/log/kadmind.log</span><br><span class="line">  kdc = FILE:/var/log/krb5kdc.log</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line">  TENDATA.CN = &#123;</span><br><span class="line">    admin_server = m1.node.hadoop</span><br><span class="line">    kdc = 192.168.10.1</span><br><span class="line">    kdc = 192.168.10.2</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
 <ol start="3">
 <li>配置域名解析</li>
 </ol>
 <p>修改 hosts 文件，增加如下解析记录。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">192.168.10.1  m1.node.hadoop</span><br><span class="line">192.168.10.2  m2.node.hadoop</span><br><span class="line">192.168.10.3  m3.node.hadoop</span><br><span class="line"></span><br><span class="line">192.168.10.10 d1.node.hadoop</span><br><span class="line">192.168.10.11 d2.node.hadoop</span><br><span class="line">192.168.10.12 d3.node.hadoop</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">192.168.10.1  m1.node.hadoop</span><br><span class="line">192.168.10.2  m2.node.hadoop</span><br><span class="line">192.168.10.3  m3.node.hadoop</span><br><span class="line"></span><br><span class="line">192.168.10.10 d1.node.hadoop</span><br><span class="line">192.168.10.11 d2.node.hadoop</span><br><span class="line">192.168.10.12 d3.node.hadoop</span><br></pre></td></tr></table></figure>
 
 <ol start="4">
 <li>使用 Kerberos Client</li>
 </ol>
 <p>使用 <code>kinit</code> 获取 tgt </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">kevin@ubuntu-kevin:~$ kinit whg</span><br><span class="line">Password for whg@TENDATA.CN: </span><br><span class="line"></span><br><span class="line">kevin@ubuntu-kevin:~$ klist</span><br><span class="line">Ticket cache: FILE:&#x2F;tmp&#x2F;krb5cc_1000</span><br><span class="line">Default principal: whg@TENDATA.CN</span><br><span class="line"></span><br><span class="line">Valid starting       Expires              Service principal</span><br><span class="line">2019-05-06T09:45:56  2019-05-07T09:45:55  krbtgt&#x2F;TENDATA.CN@TENDATA.CN</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">kevin@ubuntu-kevin:~$ kinit whg</span><br><span class="line">Password for whg@TENDATA.CN: </span><br><span class="line"></span><br><span class="line">kevin@ubuntu-kevin:~$ klist</span><br><span class="line">Ticket cache: FILE:/tmp/krb5cc_1000</span><br><span class="line">Default principal: whg@TENDATA.CN</span><br><span class="line"></span><br><span class="line">Valid starting       Expires              Service principal</span><br><span class="line">2019-05-06T09:45:56  2019-05-07T09:45:55  krbtgt/TENDATA.CN@TENDATA.CN</span><br></pre></td></tr></table></figure>
 
 <p>使用 <code>kdestroy</code> 销毁 tgt</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kevin@ubuntu-kevin:~$ kdestroy </span><br><span class="line"></span><br><span class="line">kevin@ubuntu-kevin:~$ klist </span><br><span class="line">klist: No credentials cache found (filename: &#x2F;tmp&#x2F;krb5cc_1000)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kevin@ubuntu-kevin:~$ kdestroy </span><br><span class="line"></span><br><span class="line">kevin@ubuntu-kevin:~$ klist </span><br><span class="line">klist: No credentials cache found (filename: /tmp/krb5cc_1000)</span><br></pre></td></tr></table></figure>
 
 <p>命令使用参数和其他命令请阅读 <a target="_blank" rel="noopener" href="https://web.mit.edu/kerberos/krb5-latest/doc/user/user_commands/index.html">Kerberos 用户命令</a> </p>
 <ol start="5">
@@ -382,7 +335,7 @@
 </ol>
 <p>使用 <code>curl</code> 访问 Kerberos 认证的页面。</p>
 <p>正常访问不会出现 <code>Error 401 Authentication required</code> 。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">kevin@ubuntu-kevin:~$ curl -k --negotiate -u: -H &quot;Content-Type: application&#x2F;json&quot; -X GET http:&#x2F;&#x2F;m1.node.hadoop:50070&#x2F;</span><br><span class="line">&lt;!--</span><br><span class="line">   Licensed to the Apache Software Foundation (ASF) under one or more</span><br><span class="line">   contributor license agreements.  See the NOTICE file distributed with</span><br><span class="line">   this work for additional information regarding copyright ownership.</span><br><span class="line">   The ASF licenses this file to You under the Apache License, Version 2.0</span><br><span class="line">   (the &quot;License&quot;); you may not use this file except in compliance with</span><br><span class="line">   the License.  You may obtain a copy of the License at</span><br><span class="line"></span><br><span class="line">       http:&#x2F;&#x2F;www.apache.org&#x2F;licenses&#x2F;LICENSE-2.0</span><br><span class="line"></span><br><span class="line">   Unless required by applicable law or agreed to in writing, software</span><br><span class="line">   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span><br><span class="line">   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line">   See the License for the specific language governing permissions and</span><br><span class="line">   limitations under the License.</span><br><span class="line">--&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-&#x2F;&#x2F;W3C&#x2F;&#x2F;DTD XHTML 1.0 Strict&#x2F;&#x2F;EN&quot;</span><br><span class="line">    &quot;http:&#x2F;&#x2F;www.w3.org&#x2F;TR&#x2F;xhtml1&#x2F;DTD&#x2F;xhtml1-strict.dtd&quot;&gt;</span><br><span class="line">&lt;html xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;1999&#x2F;xhtml&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv&#x3D;&quot;REFRESH&quot; content&#x3D;&quot;0;url&#x3D;dfshealth.html&quot; &#x2F;&gt;</span><br><span class="line">&lt;title&gt;Hadoop Administration&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">kevin@ubuntu-kevin:~$ curl -k --negotiate -u: -H &quot;Content-Type: application/json&quot; -X GET http://m1.node.hadoop:50070/</span><br><span class="line">&lt;!--</span><br><span class="line">   Licensed to the Apache Software Foundation (ASF) under one or more</span><br><span class="line">   contributor license agreements.  See the NOTICE file distributed with</span><br><span class="line">   this work for additional information regarding copyright ownership.</span><br><span class="line">   The ASF licenses this file to You under the Apache License, Version 2.0</span><br><span class="line">   (the &quot;License&quot;); you may not use this file except in compliance with</span><br><span class="line">   the License.  You may obtain a copy of the License at</span><br><span class="line"></span><br><span class="line">       http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line"></span><br><span class="line">   Unless required by applicable law or agreed to in writing, software</span><br><span class="line">   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span><br><span class="line">   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line">   See the License for the specific language governing permissions and</span><br><span class="line">   limitations under the License.</span><br><span class="line">--&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;</span><br><span class="line">    &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;</span><br><span class="line">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;REFRESH&quot; content=&quot;0;url=dfshealth.html&quot; /&gt;</span><br><span class="line">&lt;title&gt;Hadoop Administration&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
 <p>或者访问 <code>curl -L -k --negotiate -u: -H &quot;Content-Type: application/json&quot; -X GET http://m1.node.hadoop:50070/webhdfs/v1/?op=LISTSTATUS</code> 正常出现 HDFS 文件列表(JSON 格式数据)，没有 401 错误即代表正常访问</p>
 <p><strong>Error 401 Authentication required</strong></p>
@@ -416,7 +369,7 @@
 <p><code>ProgramData</code> 目录默认是隐藏的。</p>
 </blockquote>
 <p>修改该配置文件内容为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[libdefaults]</span><br><span class="line">  renew_lifetime &#x3D; 7d</span><br><span class="line">  forwardable &#x3D; true</span><br><span class="line">  default_realm &#x3D; TENDATA.CN</span><br><span class="line">  ticket_lifetime &#x3D; 24h</span><br><span class="line">  dns_lookup_realm &#x3D; false</span><br><span class="line">  dns_lookup_kdc &#x3D; false</span><br><span class="line">  default_ccache_name &#x3D; &#x2F;tmp&#x2F;krb5cc_%&#123;uid&#125;</span><br><span class="line">  #default_tgs_enctypes &#x3D; aes des3-cbc-sha1 rc4 des-cbc-md5</span><br><span class="line">  #default_tkt_enctypes &#x3D; aes des3-cbc-sha1 rc4 des-cbc-md5</span><br><span class="line"></span><br><span class="line">[logging]</span><br><span class="line">  default &#x3D; FILE:&#x2F;var&#x2F;log&#x2F;krb5kdc.log</span><br><span class="line">  admin_server &#x3D; FILE:&#x2F;var&#x2F;log&#x2F;kadmind.log</span><br><span class="line">  kdc &#x3D; FILE:&#x2F;var&#x2F;log&#x2F;krb5kdc.log</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line">  TENDATA.CN &#x3D; &#123;</span><br><span class="line">    admin_server &#x3D; m1.node.hadoop</span><br><span class="line">    kdc &#x3D; 192.168.10.1</span><br><span class="line">    kdc &#x3D; 192.168.10.2</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[libdefaults]</span><br><span class="line">  renew_lifetime = 7d</span><br><span class="line">  forwardable = true</span><br><span class="line">  default_realm = TENDATA.CN</span><br><span class="line">  ticket_lifetime = 24h</span><br><span class="line">  dns_lookup_realm = false</span><br><span class="line">  dns_lookup_kdc = false</span><br><span class="line">  default_ccache_name = /tmp/krb5cc_%&#123;uid&#125;</span><br><span class="line">  #default_tgs_enctypes = aes des3-cbc-sha1 rc4 des-cbc-md5</span><br><span class="line">  #default_tkt_enctypes = aes des3-cbc-sha1 rc4 des-cbc-md5</span><br><span class="line"></span><br><span class="line">[logging]</span><br><span class="line">  default = FILE:/var/log/krb5kdc.log</span><br><span class="line">  admin_server = FILE:/var/log/kadmind.log</span><br><span class="line">  kdc = FILE:/var/log/krb5kdc.log</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line">  TENDATA.CN = &#123;</span><br><span class="line">    admin_server = m1.node.hadoop</span><br><span class="line">    kdc = 192.168.10.1</span><br><span class="line">    kdc = 192.168.10.2</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
 <ol start="3">
 <li>配置系统属性：</li>
@@ -437,7 +390,7 @@
 <p>由于 Java 也实现了 kerberos client 认证机制，在 JDK 的 <code>bin</code> 目录提供了 <code>kinit</code> 、 <code>klist</code> 等相关命令，在配置Path 环境变量时，Kerberos 的优先级应该比 JDK 的要高。</p>
 <p>**403 ** 分析：</p>
 <p>在没有安装 kfw 时，系统已经具有 <code>klist</code> 命令，该命令位于 <code>C:\WINDOWS\system32</code> 。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">C:\WINDOWS\system32&gt;klist</span><br><span class="line"></span><br><span class="line">当前登录 ID 是 0:0x73218</span><br><span class="line"></span><br><span class="line">缓存的票证: (0)</span><br><span class="line"></span><br><span class="line">C:\WINDOWS\system32&gt;klist sessions</span><br><span class="line"></span><br><span class="line">当前登录 ID 是 0:0x73218</span><br><span class="line">[0] 会话 0 0:0x136dc999 DESKTOP-5KM5T43\Administrator NTLM:Network</span><br><span class="line">[1] 会话 0 0:0x134bf7a2 DESKTOP-5KM5T43\Administrator NTLM:Network</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">C:\WINDOWS\system32&gt;klist</span><br><span class="line"></span><br><span class="line">当前登录 ID 是 0:0x73218</span><br><span class="line"></span><br><span class="line">缓存的票证: (0)</span><br><span class="line"></span><br><span class="line">C:\WINDOWS\system32&gt;klist sessions</span><br><span class="line"></span><br><span class="line">当前登录 ID 是 0:0x73218</span><br><span class="line">[0] 会话 0 0:0x136dc999 DESKTOP-5KM5T43\Administrator NTLM:Network</span><br><span class="line">[1] 会话 0 0:0x134bf7a2 DESKTOP-5KM5T43\Administrator NTLM:Network</span><br></pre></td></tr></table></figure>
 
 <p>相关命令使用前查看 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/klist">klist</a> </p>
 <h3 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h3><p>根据 <a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/10/security/introduction-jaas-and-java-gss-api-tutorials1.htm#JSSEC-GUID-202DE2FD-E2CA-44D1-9391-50127913538E">Java Platform, Standard Edition Security Developer’s Guide</a> 描述，Java 为开发人员提供了 JAAS 和 Java GSS-API 来使用 Kerberos 认证。前者是直接认证，后者是使用调用底层认证。</p>
@@ -502,26 +455,26 @@
 <p>然后使用 <code>kinit</code> 获取认证 tgt 之后，打开 Chrome 访问服务页面。没有出现 401 即为正常。</p>
 <h4 id="Windows-1"><a href="#Windows-1" class="headerlink" title="Windows"></a>Windows</h4><p>注意：Firefox 浏览器版本应与前面安装的 kfw 版本一致，否则会出现 401 。如果 kfw 为 64bit 则不用关注这一点。</p>
 <p>和 Linux 相同，修改 Firefox 配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">network.negotiate-auth.trusted-uris</span><br><span class="line">network.auth.use-sspi</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">network.negotiate-auth.trusted-uris</span><br><span class="line">network.auth.use-sspi</span><br></pre></td></tr></table></figure>
 
 <p>然后使用 <code>kinit</code> 获取认证 tgt 之后，打开 Chrome 访问服务页面。没有出现 401 即为正常。</p>
 <h3 id="Chrome"><a href="#Chrome" class="headerlink" title="Chrome"></a>Chrome</h3><h4 id="Linux-1"><a href="#Linux-1" class="headerlink" title="Linux"></a>Linux</h4><p>根据 [Chrome HTTP authentication(<a target="_blank" rel="noopener" href="https://www.chromium.org/developers/design-documents/http-authentication">https://www.chromium.org/developers/design-documents/http-authentication</a>) 中 <strong>Integrated Authentication</strong> 描述 Chrome 是支持 Kerberos 和 NTLM 认证的。默认不会启用，只有从代理接收身份验证协商或者在白名单的服务器协商时，才会启用继承身份验证。</p>
 <h5 id="Chrome-策略组启用白名单"><a href="#Chrome-策略组启用白名单" class="headerlink" title="Chrome 策略组启用白名单"></a>Chrome 策略组启用白名单</h5><p>添加白名单可以通过 <a target="_blank" rel="noopener" href="https://dev.chromium.org/administrators/policy-list-3#AuthServerWhitelist">AuthServerWhitelist</a> 策略设置。多个白名单用以逗号分隔。</p>
 <p>参考：<a target="_blank" rel="noopener" href="https://dev.chromium.org/administrators/linux-quick-start">Linux Quick Start</a> </p>
 <p>对于Chromium，策略配置文件位于/etc/chromium之下，对于谷歌Chrome，策略配置文件位于/etc/opt/chrome之下。在这些目录中保存着两组策略:一组是管理员需要并强制执行的，另一组是推荐给用户但不是必需的。这两组在:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies&#x2F;managed&#x2F;</span><br><span class="line">&#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies&#x2F;recommended&#x2F;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/opt/chrome/policies/managed/</span><br><span class="line">/etc/opt/chrome/policies/recommended/</span><br></pre></td></tr></table></figure>
 
 <p>如果这些目录不存在，请创建它们:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;mkdir &#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies</span><br><span class="line">&gt;mkdir &#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies&#x2F;managed</span><br><span class="line">&gt;mkdir &#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies&#x2F;recommended</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;mkdir /etc/opt/chrome/policies</span><br><span class="line">&gt;mkdir /etc/opt/chrome/policies/managed</span><br><span class="line">&gt;mkdir /etc/opt/chrome/policies/recommended</span><br></pre></td></tr></table></figure>
 
 <p>确保非管理员用户无法写入/托管下的文件;否则，他们可能只是覆盖您的策略来获得他们想要的配置!</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;chmod -w &#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies&#x2F;managed</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;chmod -w /etc/opt/chrome/policies/managed</span><br></pre></td></tr></table></figure>
 
 <p>要设置所需的策略，请在 <code>/etc/opt/chrome/policies/managed/</code> 下创建一个名为 <code>test_policy.json</code> 的文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;touch &#x2F;etc&#x2F;opt&#x2F;chrome&#x2F;policies&#x2F;managed&#x2F;test_policy.json</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;touch /etc/opt/chrome/policies/managed/test_policy.json</span><br></pre></td></tr></table></figure>
 
 <p>在这个文件中，放入以下内容:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">          &quot;AuthServerWhitelist&quot;: &quot;.node.hadoop&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">          &quot;AuthServerWhitelist&quot;: &quot;.node.hadoop&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>就是这样!下次在该机器上启动谷歌Chrome时，主页将被锁定到这个值。</p>
 <p>在地址栏输入 <code>chrome:policy</code> 查看当前策略</p>
@@ -567,29 +520,7 @@
 
 
 
-
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
+<script src="/js/comments.js"></script>
 </div>
   </main>
 
@@ -606,7 +537,7 @@
   <span class="author" itemprop="copyrightHolder">huagang</span>
 </div>
 <div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
@@ -614,7 +545,7 @@
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
