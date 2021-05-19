@@ -180,7 +180,7 @@ with open('/path/to/some/file/you/want/to/read') as file_1, \
 ```
 
 （请参阅前面关于多行[if-语句]()的讨论，以获得关于这种多行with-语句缩进的进一步想法。） 
-另一种类似情况是使用assert语句。 
+另一种类似情况是使用assert语句。
 确保在续行进行适当的缩进。
 
 ### 在二元运算符之前应该换行吗？
