@@ -15,7 +15,7 @@ categories: Documents
 
 后期我会不定期优化文档，补全文档。
 
-The OpenLDAP Project <<http://www.openldap.org/>> 
+The OpenLDAP Project <<http://www.openldap.org/>>
 
 ## 2 快速入门指南
 
@@ -29,7 +29,7 @@ The OpenLDAP Project <<http://www.openldap.org/>>
 
 ### 2.1 获取软件
 
-您可以按照OpenLDAP软件下载页面（<http://www.openldap.org/software/download/>）上的说明**获取软件**副本。建议新用户从最新*版本*开始。 
+您可以按照OpenLDAP软件下载页面（<http://www.openldap.org/software/download/>）上的说明**获取软件**副本。建议新用户从最新*版本*开始。
 
 ### 2.2 打开分发包打开
 
@@ -45,13 +45,13 @@ gunzip -c openldap-VERSION.tgz | tar xvfB -
 cd openldap-VERSION
 ```
 
-您必须使用版本名称替换`VERSION`。 
+您必须使用版本名称替换`VERSION`。
 
-### 2.3 审查文件 
+### 2.3 审查文件
 
-您现在应该查看发行版`随附`的`版权`，`许可证`，`自述`文件和`INSTALL`文档。该`版权`和`许可`提供可接受的使用，复制和OpenLDAP软件的保修期限制信息。 
+您现在应该查看发行版`随附`的`版权`，`许可证`，`自述`文件和`INSTALL`文档。该`版权`和`许可`提供可接受的使用，复制和OpenLDAP软件的保修期限制信息。
 
-您还应该查看本文档的其他章节。特别是，本文档的“ [构建和安装OpenLDAP软件”](http://www.openldap.org/doc/admin24/install.html)一章提供了有关必备软件和安装步骤的详细信息。 
+您还应该查看本文档的其他章节。特别是，本文档的“ [构建和安装OpenLDAP软件”](http://www.openldap.org/doc/admin24/install.html)一章提供了有关必备软件和安装步骤的详细信息。
 
 ### 2.4 运行配置
 
@@ -67,7 +67,8 @@ cd openldap-VERSION
 ./configure
 ```
 
-假设`configure`不会不喜欢你的系统，你可以继续构建软件。如果`configure`没有抱怨，那么您可能需要去软件常见问题解答*安装* 部分（<http://www.openldap.org/faq/?file=8>）和/或实际阅读“ [构建和安装OpenLDAP软件”](http://www.openldap.org/doc/admin24/install.html)一章的文件。 
+假设`configure`不会不喜欢你的系统，你可以继续构建软件。如果`configure`没有抱怨，那么您可能需要去软件常见问题解答*安装* 部分
+（<http://www.openldap.org/faq/?file=8>）和/或实际阅读“ [构建和安装OpenLDAP软件”](http://www.openldap.org/doc/admin24/install.html)一章的文件。
 
 ### 2.5 构建软件
 
@@ -78,7 +79,7 @@ make depend
 make
 ```
 
-两个都应该完成没有错误。 
+两个都应该完成没有错误。
 
 2.6 测试构建
 
@@ -88,7 +89,7 @@ make
 make test
 ```
 
-适用于您的配置的测试将运行，它们应该通过。可能会跳过某些测试，如复制测试。 
+适用于您的配置的测试将运行，它们应该通过。可能会跳过某些测试，如复制测试。
 
 ### 2.7 安装软件
 
@@ -98,13 +99,13 @@ make test
 su root -c 'make install'
 ```
 
-现在应该将所有内容安装在`/ usr / local下`（或者`configure`使用的任何安装前缀）。 
+现在应该将所有内容安装在`/ usr / local下`（或者`configure`使用的任何安装前缀）。
 
 ### 2.8 编辑配置文件
 
 使用您喜欢的编辑器编辑提供的*slapd.ldif*示例（通常安装为`/usr/local/etc/openldap/slapd.ldif`）以包含MDB数据库定义的形式：
 
-```
+```text
 dn: olcDatabase=mdb,cn=config
 objectClass: olcDatabaseConfig
 objectClass: olcMdbConfig
@@ -119,7 +120,7 @@ olcDbIndex: objectClass eq
 
 请务必使用您域名的相应网域组件替换`<MY-DOMAIN>`和`<COM>`。例如，对于`example.com`，请使用：
 
-```
+```text
 dn: olcDatabase=mdb,cn=config
 objectClass: olcDatabaseConfig
 objectClass: olcMdbConfig
@@ -134,7 +135,7 @@ olcDbIndex: objectClass eq
 
 如果您的域包含其他组件，例如`eng.uni.edu.eu`，请使用：
 
-```
+```text
 dn: olcDatabase=mdb,cn=config
 objectClass: olcDatabaseConfig
 objectClass: olcMdbConfig
@@ -165,18 +166,18 @@ su root -c /usr/local/libexec/slapd -F /usr/local/etc/slapd.d
 
 要检查服务器是否正在运行和配置，您可以使用*ldapsearch*（1）运行搜索。默认情况下，*ldapsearch*安装为`/usr/local/bin/ldapsearch`：
 
-```
+```text
 ldapsearch -x -b '' -s base '(objectclass=*)' namingContexts
 ```
 
 请注意在命令参数周围使用单引号来防止shell解释特殊字符。这应该返回：
 
-```
+```text
 dn:
 namingContexts: dc=example,dc=com
 ```
 
-有关运行*slapd*（8）的详细信息，请参见*slapd*（8）手册页和本文档的[Running slapd](http://www.openldap.org/doc/admin24/runningslapd.html)章节。 
+有关运行*slapd*（8）的详细信息，请参见*slapd*（8）手册页和本文档的[Running slapd](http://www.openldap.org/doc/admin24/runningslapd.html)章节。
 
 ### 2.11 将初始条目添加到您的目录
 
@@ -187,7 +188,7 @@ namingContexts: dc=example,dc=com
 
 使用您喜欢的编辑器并创建一个包含以下内容的LDIF文件：
 
-```
+```text
 dn: dc=<MY-DOMAIN>,dc=<COM>
 objectclass: dcObject
 objectclass: organization
@@ -201,7 +202,7 @@ cn: Manager
 
 请务必使用您域名的相应网域组件替换`<MY-DOMAIN>`和`<COM>`。 应以组织名称替换`<我的组织>`。剪切和粘贴时，请确保从示例中修剪任何前导和尾随空格。
 
-```
+```text
 dn: dc=example,dc=com
 objectclass: dcObject
 objectclass: organization
@@ -215,25 +216,25 @@ cn: Manager
 
 现在，您可以运行*ldapadd*（1）将这些条目插入到目录中。
 
-```
+```text
 ldapadd -x -D "cn=Manager,dc=<MY-DOMAIN>,dc=<COM>" -W -f example.ldif
 ```
 
-请务必使用您域名的相应网域组件替换`<MY-DOMAIN>`和`<COM>`。系统将提示您输入`slapd.conf中`指定的“ `secret` ” 。例如，对于`example.com`，请使用：
+请务必使用您域名的相应网域组件替换`<MY-DOMAIN>`和`<COM>`。系统将提示您输入`slapd.conf中`指定的“`secret` ” 。例如，对于`example.com`，请使用：
 
-```
+```text
 ldapadd -x -D "cn=Manager,dc=example,dc=com" -W -f example.ldif
 ```
 
 其中`example.ldif`是您上面创建的文件。
 
-有关目录创建的其他信息，请参见本文档的“ [数据库创建和维护工具”](http://www.openldap.org/doc/admin24/dbtools.html)一章。 
+有关目录创建的其他信息，请参见本文档的“ [数据库创建和维护工具”](http://www.openldap.org/doc/admin24/dbtools.html)一章。
 
 ### 2.12 看看它是否工作
 
 现在我们准备好验证添加的条目在您的目录中。您可以使用任何LDAP客户端来执行此操作，但我们的示例使用*ldapsearch*（1）工具。请记住将`dc=example,dc=com`替换为您网站的正确值：
 
-```
+```text
 ldapsearch -x -b 'dc=example,dc=com' '(objectclass=*)'
 ```
 
@@ -275,20 +276,20 @@ slapd配置存储为具有预定义模式和DIT的特殊LDAP目录。有特定�
 - 动态加载的模块
   - 只有使用`--enable-modules`选项来配置软件时，才可以使用这些。
 - 模式定义
-  - 该`cn=schema，cn=config`条目包含了系统架构（所有架构是硬编码的slapd）。 `cn=schema` 的
+  - 该`cn=schema，cn=config`条目包含了系统架构（所有架构是硬编码的slapd）。`cn=schema` 的
     子条目，`cn=config`包含从配置文件加载或在运行时添加的用户模式。
 - 后端特定配置
 - 数据库特定配置
   - 数据库条目的子节点定义了覆盖。
   - 数据库和叠加也可能有其他杂项的子项。
 
-LDIF文件的常规规则适用于配置信息：以 `＃` 字符开头的注释行将被忽略。如果一行以单个空格开始，它被认为是前一行的延续（即使前一行是注释），并且单个前导空格被删除。条目用空白行分隔。
+LDIF文件的常规规则适用于配置信息：以`＃` 字符开头的注释行将被忽略。如果一行以单个空格开始，它被认为是前一行的延续（即使前一行是注释），并且单个前导空格被删除。条目用空白行分隔。
 
 
 
 配置LDIF的一般布局如下：
 
-```
+```text
 # global configuration settings
 dn: cn=config
 objectClass: olcGlobal
@@ -349,7 +350,7 @@ olcDatabase: {X}<typeA>
 
 ##### 5.2.1.2 olcLogLevel: \<integer&gt;
 
-此指令指定调试语句和操作统计信息应该被syslog的级别（当前记录到*syslogd*（8）`LOG_LOCAL4`设施）。您必须配置OpenLDAP `--enable-debug`（默认值）才能工作（除了始终启用的两个统计级别之外）。日志级别可以被指定为整数或关键字。可以使用多个日志级别，并且级别是相加的。要显示什么级别对应于什么样的调试，用`-d?`调用slapd 或查阅下表。\<level\>的可能值为：
+此指令指定调试语句和操作统计信息应该被syslog的级别（当前记录到*syslogd*（8）`LOG_LOCAL4`设施）。您必须配置OpenLDAP`--enable-debug`（默认值）才能工作（除了始终启用的两个统计级别之外）。日志级别可以被指定为整数或关键字。可以使用多个日志级别，并且级别是相加的。要显示什么级别对应于什么样的调试，用`-d?`调用slapd 或查阅下表。\<level\>的可能值为：
 
 表5.1：调试级别
 
@@ -374,7 +375,7 @@ olcDatabase: {X}<typeA>
 
 期望的日志级别可以作为单个整数输入，该整数将（ORed）所需的级别（十进制或十六进制符号）组合为整数列表（在内部进行ORed操作），或作为显示的名称列表在括号之间，
 
-```
+```text
 olcLogLevel 129
 olcLogLevel 0x81
 olcLogLevel 128 1
@@ -386,27 +387,27 @@ olcLogLevel acl trace
 
 **例子：**
 
-```
+```text
 olcLogLevel -1
 ```
 
 这将导致大量的调试信息被记录。
 
-```
+```text
 olcLogLevel conns filter
 ```
 
 只需记录连接并搜索过滤器处理。
 
-```
+```text
 olcLogLevel none
 ```
 
-记录无论配置的日志级别如何记录的消息。这不同于在不发生日志记录时将日志级别设置为0。至少需要“ `无”`级才能记录高优先级消息。
+记录无论配置的日志级别如何记录的消息。这不同于在不发生日志记录时将日志级别设置为0。至少需要“`无”`级才能记录高优先级消息。
 
 **默认：**
 
-```
+```text
 olcLogLevel stats
 ```
 
@@ -418,7 +419,7 @@ olcLogLevel stats
 
 **例：**
 
-```
+```text
 olcReferral: ldap://root.openldap.org
 ```
 
@@ -426,7 +427,7 @@ olcReferral: ldap://root.openldap.org
 
 ##### 5.2.1.4 条目样例
 
-```
+```text
 dn: cn=config
 objectClass: olcGlobal
 cn: config
@@ -449,7 +450,7 @@ olcReferral: ldap://root.openldap.org
 
 ##### 5.2.2.3 条目样例
 
-```
+```text
 dn: cn=module{0},cn=config
 objectClass: olcModuleList
 cn: module{0}
@@ -467,17 +468,21 @@ olcModuleLoad: pcache.la
 
 `cn=schema` 条目包含在slapd中硬编码的所有模式定义。因此，此条目中的值由slapd生成，因此在配置文件中不需要提供模式值。仍然必须定义该条目，以作为用户定义的模式添加到底部的基础。模式条目必须具有`olcSchemaConfig objectClass`。
 
-##### 5.2.3.1 olcAttributeTypes: <[RFC4512](http://www.rfc-editor.org/rfc/rfc4512.txt) Attribute Type Description>
+##### 5.2.3.1 olcAttributeTypes
+
+<[RFC4512](http://www.rfc-editor.org/rfc/rfc4512.txt) Attribute Type Description>
 
 此指令定义属性类型。有关如何使用此指令的信息，请参阅“ [模式规范”](http://www.openldap.org/doc/admin24/schema.html)一章。
 
-##### 5.2.3.2 olcObjectClasses: <[RFC4512](http://www.rfc-editor.org/rfc/rfc4512.txt) Object Class Description>
+##### 5.2.3.2 olcObjectClasses
+
+<[RFC4512](http://www.rfc-editor.org/rfc/rfc4512.txt) Object Class Description>
 
 该指令定义了一个对象类。有关如何使用此指令的信息，请参阅“ [模式规范”](http://www.openldap.org/doc/admin24/schema.html)一章。
 
 ##### 5.2.3.3 条目样例
 
-```
+```text
 dn: cn=schema,cn=config
 objectClass: olcSchemaConfig
 cn: schema
@@ -503,7 +508,7 @@ olcObjectClasses: ( 1.1.3 NAME 'testObject'
 
 该指令命名后端特定的配置条目。`<type>`应于表5.2中列出的支持的后端类型之一。
 
-**表5.2：数据库后端**
+**表5.2：数据库后端:**
 
 | **类型**  | **描述**               |
 | ------- | -------------------- |
@@ -523,7 +528,7 @@ olcObjectClasses: ( 1.1.3 NAME 'testObject'
 
 **例：**
 
-```
+```text
 olcBackend：bdb
 ```
 
@@ -531,7 +536,7 @@ olcBackend：bdb
 
 ##### 5.2.4.2 条目样例
 
-```
+```text
 dn：olcBackend=bdb，cn=config
 objectClass:olcBackendConfig
 olcBackend:bdb
@@ -551,13 +556,15 @@ olcBackend:bdb
 
 例：
 
-```
+```text
 olcDatabase: bdb
 ```
 
 这标志着一个新的开始 BDB 数据库实例。
 
-##### 5.2.5.2 olcAccess: to \<what\> [ by &lt;who&gt; [&lt;accesslevel&gt;\] [&lt;control&gt;] ]+
+##### 5.2.5.2 olcAccess
+
+: to \<what\> [ by &lt;who&gt; [&lt;accesslevel&gt;\] [&lt;control&gt;] ]+
 
 该指令通过一个或多个请求者（由\<who>指定）向一组条目和/或属性（由\<what>指定）访问（由\<accesslevel>指定）。有关基本用途，请参阅本指南的[访问控制](http://www.openldap.org/doc/admin24/access-control.html)部分。
 
@@ -571,7 +578,7 @@ olcDatabase: bdb
 
 默认：
 
-```
+```text
 olcReadonly：FALSE
 ```
 
@@ -581,17 +588,18 @@ olcReadonly：FALSE
 
 基于入门的示例：
 
-```
+```text
 olcRootDN: "cn=Manager,dc=example,dc=com"
 ```
 
 基于SASL的示例：
 
-```
+```text
 olcRootDN: "uid=root,cn=example.com,cn=digest-md5,cn=auth"
 ```
 
-有关[SASL认证身份](http://www.openldap.org/doc/admin24/sasl.html#SASL Authentication)的信息，请参阅[SASL认证](http://www.openldap.org/doc/admin24/sasl.html#SASL Authentication)部分。
+有关[SASL认证身份]([https://www.openldap.org/doc/admin24/sasl.html#SASL%20Authentication](https://www.openldap.org/doc/admin24/sasl.html#SASL%20Authentication))的信息，
+请参阅[SASL认证]([https://www.openldap.org/doc/admin24/sasl.html#SASL%20Authentication](https://www.openldap.org/doc/admin24/sasl.html#SASL%20Authentication))部分。
 
 ##### 5.2.5.5 olcRootPW: &lt;password&gt;
 
@@ -599,7 +607,7 @@ olcRootDN: "uid=root,cn=example.com,cn=digest-md5,cn=auth"
 
 例：
 
-```
+```text
 olcRootPW: secret
 ```
 
@@ -607,7 +615,7 @@ olcRootPW: secret
 
 例：
 
-```
+```text
 olcRootPW: {SSHA}ZKKuqbEKJfKSXhUbHG3fG8MDn9j1v4QN
 ```
 
@@ -619,7 +627,7 @@ olcRootPW: {SSHA}ZKKuqbEKJfKSXhUbHG3fG8MDn9j1v4QN
 
 默认：
 
-```
+```text
 olcSizeLimit: 500
 ```
 
@@ -631,7 +639,7 @@ olcSizeLimit: 500
 
 例：
 
-```
+```text
 olcSuffix："dc=example,dc=com"
 ```
 
@@ -643,7 +651,7 @@ olcSuffix："dc=example,dc=com"
 
 ##### 5.2.5.8. olcSyncrepl
 
-```
+```text
 olcSyncrepl: rid=<replica ID>
                 provider=ldap[s]://<hostname>[:port]
                 [type=refreshOnly|refreshAndPersist]
@@ -678,23 +686,32 @@ olcSyncrepl: rid=<replica ID>
                 [syncdata=default|accesslog|changelog]
 ```
 
-该指令通过将当前的*slapd*（8）建立为运行syncrepl复制引擎的复制用户站点来将当前数据库指定为主内容的副本。主数据库位于由`provider`参数指定的复制提供程序站点。使用LDAP内容同步协议，副本数据库与主内容保持最新。有关[协议](http://www.rfc-editor.org/rfc/rfc4533.txt)的更多信息，请参阅[RFC4533](http://www.rfc-editor.org/rfc/rfc4533.txt)。
+该指令通过将当前的*slapd*（8）建立为运行syncrepl复制引擎的复制用户站点来将当前数据库指定为主内容的副本。主数据库位于由`provider`参数指定的复制提供程序站点。
+使用LDAP内容同步协议，副本数据库与主内容保持最新。有关[协议](http://www.rfc-editor.org/rfc/rfc4533.txt)的更多信息，请参阅[RFC4533](http://www.rfc-editor.org/rfc/rfc4533.txt)。
 
 `RID`参数用于当前的识别`的syncrepl`复制消费者服务器内的指令，其中`<replica ID>`唯一地识别由当前所描述的的syncrepl规范`的syncrepl`指令。`<replica ID>`为非负数，长度不超过三位十进制数字。
 
-`provider `参数指定包含主内容作为LDAP URI复制提供者站点。`provider `参数指定的方案，主机和可选地其中该提供者的slapd实例可以发现一个端口。域名或IP地址可以用于\<hostname>。示例是`ldap://provider.example.com：389`或`ldaps://192.168.1.1：636`。如果未指定\<port>，则使用标准LDAP端口号（389或636）。请注意，syncrepl使用消费者启动的协议，因此其规范位于消费者站点，而`replica `规范位于提供者站点。`syncrepl`和`replica `指令定义了两个独立的复制机制。它们不代表彼此的复制对等体。
+`provider`参数指定包含主内容作为LDAP URI复制提供者站点。`provider`参数指定的方案，主机和可选地其中该提供者的slapd实例可以发现一个端口。
+域名或IP地址可以用于\<hostname>。示例是`ldap://provider.example.com：389`或`ldaps://192.168.1.1：636`。如果未指定\<port>，则使用标准LDAP端口号（389或636）。
+请注意，syncrepl使用消费者启动的协议，因此其规范位于消费者站点，而`replica`规范位于提供者站点。`syncrepl`和`replica`指令定义了两个独立的复制机制。它们不代表彼此的复制对等体。
 
-使用搜索规范作为其结果集定义syncrepl副本的内容。消费者slapd将根据搜索规范将搜索请求发送给提供商slapd。搜索规范包括`searchbase`，`scope`，`filter`，`attrs `，`attrsonly`，`sizeLimit`和`timelimit `参数如在正常搜索规范。该`searchbase`参数没有默认值，必须指定。的`scope `默认为`sub`中，`filter `默认为`（objectclass=*） `，`attrs `默认为`“*，+”`来复制所有用户和操作属性，默认情况下，`attrsonly`未设置。双方的`sizeLimit`和`timelimit`默认为“无限制”，只有正整数或“无限制”可能被指定。
+使用搜索规范作为其结果集定义syncrepl副本的内容。消费者slapd将根据搜索规范将搜索请求发送给提供商slapd。
+搜索规范包括`searchbase`，`scope`，`filter`，`attrs`，`attrsonly`，`sizeLimit`和`timelimit`参数如在正常搜索规范。该`searchbase`参数没有默认值，
+必须指定。的`scope`默认为`sub`中，`filter`默认为`（objectclass=*）`，`attrs`默认为`“*，+”`来复制所有用户和操作属性，
+默认情况下，`attrsonly`未设置。双方的`sizeLimit`和`timelimit`默认为“无限制”，只有正整数或“无限制”可能被指定。
 
-该 LDAP内容同步协议有两种操作类型：`refreshOnly`和`refreshAndPersist`。操作类型由`type`参数指定。在`refreshOnly`操作中，在每次同步操作结束之后的间隔时间周期性地重新调度下一个同步搜索操作。间隔由`interval`参数指定。默认设置为一天。在`refreshAndPersist`操作中，同步搜索在提供者*slapd*实例中保持不变。对主副本的进一步更新将生成`searchResultEntry` 到消费者slapd作为搜索响应的持续同步搜索。
+该 LDAP内容同步协议有两种操作类型：`refreshOnly`和`refreshAndPersist`。操作类型由`type`参数指定。在`refreshOnly`操作中，
+在每次同步操作结束之后的间隔时间周期性地重新调度下一个同步搜索操作。间隔由`interval`参数指定。默认设置为一天。在`refreshAndPersist`操作中，
+同步搜索在提供者*slapd*实例中保持不变。对主副本的进一步更新将生成`searchResultEntry` 到消费者slapd作为搜索响应的持续同步搜索。
 
-如果在复制期间发生错误，消费者将尝试根据重试参数重新连接，该重试参数是\<retry interval>和<＃of retries> 的列表。例如，retry =“60 10 300 3”可让消费者重新开始前10次，每60秒重试一次，然后在停止重试之前每300秒重试三次。+在<＃重试次数>中意味着无限期的重试，直到成功。
+如果在复制期间发生错误，消费者将尝试根据重试参数重新连接，该重试参数是\<retry interval>和<＃of retries> 的列表。例如，`retry ="60 10 300 3"`可让消费者重新开始前10次，
+每60秒重试一次，然后在停止重试之前每300秒重试三次。+在<＃重试次数>中意味着无限期的重试，直到成功。
 
 可以通过打开`schemachecking`参数，在LDAP Sync使用者站点上强制执行模式检查。如果它被打开，则每个复制的条目将被检查其模式，因为条目存储在副本内容中。副本中的每个条目都应包含模式定义所需的属性。如果它被关闭，条目将被存储，而不检查模式一致性。默认是关闭。
 
 该`binddn`参数给出了DN绑定为进行syncrepl搜索到提供者的slapd。它应该是具有对主数据库中的复制内容的读取访问权限的DN。
 
-该`bindmethod`是`simple `还是`SASL`，取决于是否简单基于密码的认证或SASL连接到提供商*slapd*实例时要使用身份验证。
+该`bindmethod`是`simple`还是`SASL`，取决于是否简单基于密码的认证或SASL连接到提供商*slapd*实例时要使用身份验证。
 
 除非有足够的数据完整性和机密性保护（例如TLS或IPsec），否则不应使用简单认证。简单的身份验证需要指定`binddn`和`credentials`参数。
 
@@ -702,13 +719,15 @@ olcSyncrepl: rid=<replica ID>
 
 `realm`参数指定其中的某些机制认证中的身份的境界。该`secprops`参数指定Cyrus  SASL安全属性。
 
-该`STARTTLS`参数指定使用扩展操作认证的供应商之前建立TLS会话启动TLS的。如果提供了`critical `参数，则如果StartTLS请求失败，则该会话将中止。否则syncrepl会话继续而不使用TLS。tls_reqcert设置默认为`“demand”`，其他TLS设置默认与主slapd TLS设置相同。
+该`STARTTLS`参数指定使用扩展操作认证的供应商之前建立TLS会话启动TLS的。如果提供了`critical`参数，则如果StartTLS请求失败，则该会话将中止。
+否则syncrepl会话继续而不使用TLS。tls_reqcert设置默认为`“demand”`，其他TLS设置默认与主slapd TLS设置相同。
 
-消费者不是复制整个条目，而是可以查询数据修改的日志。这种操作模式称为*delta syncrepl*。除了上述参数之外，必须对要使用的日志适当地设置`logbase`和`logfilter`参数。所述`syncdata`参数必须设置为`“accesslog”`如果日志符合*slapo-ACCESSLOG*（5）日志格式，或`“更改日志”`如果日志符合过时的*更改日志*的格式。如果`syncdata`参数被省略或设置为`“default”，`则日志参数将被忽略。
+消费者不是复制整个条目，而是可以查询数据修改的日志。这种操作模式称为*delta syncrepl*。除了上述参数之外，必须对要使用的日志适当地设置`logbase`和`logfilter`参数。
+所述`syncdata`参数必须设置为`“accesslog”`如果日志符合*slapo-ACCESSLOG*（5）日志格式，或`“更改日志”`如果日志符合过时的*更改日志*的格式。如果`syncdata`参数被省略或设置为`“default”，`则日志参数将被忽略。
 
 *syncrepl* 复制机制是由支持*BDB*，*hdb*，以及 *mdb*后端。
 
-有关如何使用此指令的详细信息，请参阅本指南的“ [LDAP同步复制”](http://www.openldap.org/doc/admin24/replication.html#LDAP Sync Replication)一章。
+有关如何使用此指令的详细信息，请参阅本指南的“ [LDAP同步复制”]([http://www.openldap.org/doc/admin24/replication.html#LDAP Sync Replication](https://www.openldap.org/doc/admin24/replication.html#LDAP%20Sync%20Replication))一章。
 
 ##### 5.2.5.9 olcTimeLimit: &lt;integer&gt;
 
@@ -716,7 +735,7 @@ olcSyncrepl: rid=<replica ID>
 
 默认：
 
-```
+```text
 olcTimeLimit: 3600
 ```
 
@@ -728,13 +747,13 @@ olcTimeLimit: 3600
 
 例：
 
-```
+```text
 olcUpdateref: ldap://master.example.net
 ```
 
 ##### 5.2.5.11 条目案例
 
-```
+```text
 dn: olcDatabase=frontend,cn=config
 objectClass: olcDatabaseConfig
 objectClass: olcFrontendConfig
@@ -749,7 +768,8 @@ olcRootDN: cn=Manager,dc=example,dc=com
 
 #### 5.2.6 BDB and HDB Database Directives
 
-此类别中的指令适用于 BDB 和 HDB 两个数据库。除了上面定义的通用数据库指令之外，它们还用于olcDatabase条目。有关BDB / HDB配置指令的完整参考，请参见*slapd-bdb*（5）。除了`olcDatabaseConfig objectClass`之外，BDB和HDB数据库条目必须分别具有`olcBdbConfig`和`olcHdbConfig objectClass`。
+此类别中的指令适用于 BDB 和 HDB 两个数据库。除了上面定义的通用数据库指令之外，它们还用于olcDatabase条目。有关BDB / HDB配置指令的完整参考，请参见*slapd-bdb*（5）。
+除了`olcDatabaseConfig objectClass`之外，BDB和HDB数据库条目必须分别具有`olcBdbConfig`和`olcHdbConfig objectClass`。
 
 ##### 5.2.6.1. olcDbDirectory: &lt;directory&gt;
 
@@ -757,7 +777,7 @@ olcRootDN: cn=Manager,dc=example,dc=com
 
 默认：
 
-```
+```text
 olcDbDirectory: /usr/local/var/openldap-data
 ```
 
@@ -767,7 +787,7 @@ olcDbDirectory: /usr/local/var/openldap-data
 
 默认：
 
-```
+```text
 olcDbCachesize: 1000
 ```
 
@@ -777,7 +797,7 @@ olcDbCachesize: 1000
 
 例：
 
-```
+```text
 olcDbCheckpoint: 1024 10
 ```
 
@@ -789,14 +809,16 @@ olcDbCheckpoint: 1024 10
 
 例：
 
-```
+```text
 olcDbConfig: set_cachesize 0 10485760 0
 olcDbConfig: set_lg_bsize 2097512
 olcDbConfig: set_lg_dir /var/tmp/bdb-log
 olcDbConfig: set_flags DB_LOG_AUTOREMOVE
 ```
 
-在本示例中，BDB缓存设置为10MB，BDB事务日志缓冲区大小设置为2MB，并将事务日志文件存储在`/var/tmp/bdb-log`目录中。另外还设置一个标志来告知BDB一旦它们的内容被检查点并且不再需要就删除事务日志文件。没有此设置，事务日志文件将继续累积，直到其他一些清除过程删除它们。有关详细信息，请参见`db_archive`命令的Berkeley DB文档。有关Berkeley DB标志的完整列表，请参阅 - <http://www.oracle.com/technology/documentation/berkeley-db/db/api_c/env_set_flags.html>
+在本示例中，BDB缓存设置为10MB，BDB事务日志缓冲区大小设置为2MB，并将事务日志文件存储在`/var/tmp/bdb-log`目录中。
+另外还设置一个标志来告知BDB一旦它们的内容被检查点并且不再需要就删除事务日志文件。没有此设置，事务日志文件将继续累积，直到其他一些清除过程删除它们。
+有关详细信息，请参见`db_archive`命令的Berkeley DB文档。有关Berkeley DB标志的完整列表，请参阅 - <http://www.oracle.com/technology/documentation/berkeley-db/db/api_c/env_set_flags.html>
 
 理想情况下，BDB缓存必须至少与数据库的工作集一样大，日志缓冲区大小应足够大以适应大多数事务而不会溢出，并且日志目录必须与主数据库文件在单独的物理磁盘上。数据库目录和日志目录应与用于常规系统活动（例如根，引导或交换文件系统）的磁盘分开。有关更多详细信息，请参阅FAQ-o-Matic和Berkeley DB文档。
 
@@ -804,7 +826,7 @@ olcDbConfig: set_flags DB_LOG_AUTOREMOVE
 
 此选项会导致磁盘数据库内容在更改时不会立即与内存更改同步。将此选项设置为`TRUE`可能会牺牲数据完整性来提高性能。该指令与使用具有相同的效果
 
-```
+```text
 olcDbConfig: set_flags DB_TXN_NOSYNC
 ```
 
@@ -814,7 +836,7 @@ olcDbConfig: set_flags DB_TXN_NOSYNC
 
 例：
 
-```
+```text
 olcDbIDLcacheSize: 3000
 ```
 
@@ -824,7 +846,7 @@ olcDbIDLcacheSize: 3000
 
 例：
 
-```
+```text
 olcDbIndex: default pres,eq
 olcDbIndex: uid
 olcDbIndex: cn,sn pres,eq,sub
@@ -841,7 +863,7 @@ olcDbIndex: objectClass eq
 
 缺省情况下，没有维护索引。通常建议保持对象类的最小等同索引。
 
-```
+```text
 olcDbindex: objectClass eq
 ```
 
@@ -859,17 +881,17 @@ olcDbindex: objectClass eq
 
 默认：
 
-```
+```text
 olcDbMode：0600
 ```
 
 ##### 5.2.6.10 olcDbSearchStack: &lt;integer&gt;
 
-指定用于搜索过滤器评估的堆栈的深度。搜索过滤器在堆栈中进行评估，以适应嵌套的`AND` / `OR`条款。为每个服务器线程分配单个堆栈。堆栈的深度决定了如何复杂的过滤器可以被评估，而不需要额外的内存分配。比搜索堆栈深度嵌套的过滤器将导致为该特定搜索操作分配单独的堆栈。这些单独的分配可能对服务器性能造成严重的负面影响，但是指定太多堆栈也将消耗大量内存。每个搜索在32位计算机上每级使用512K字节，或64位计算机上每级的1024K字节。默认堆栈深度为16，因此在32位和64位机器上分别使用每个线程8MB或16MB。同样512KB大小的单个堆栈槽由编译时常数设置，如果需要可以更改;
+指定用于搜索过滤器评估的堆栈的深度。搜索过滤器在堆栈中进行评估，以适应嵌套的`AND` /`OR`条款。为每个服务器线程分配单个堆栈。堆栈的深度决定了如何复杂的过滤器可以被评估，而不需要额外的内存分配。比搜索堆栈深度嵌套的过滤器将导致为该特定搜索操作分配单独的堆栈。这些单独的分配可能对服务器性能造成严重的负面影响，但是指定太多堆栈也将消耗大量内存。每个搜索在32位计算机上每级使用512K字节，或64位计算机上每级的1024K字节。默认堆栈深度为16，因此在32位和64位机器上分别使用每个线程8MB或16MB。同样512KB大小的单个堆栈槽由编译时常数设置，如果需要可以更改;
 
 默认：
 
-```
+```text
 olcDbSearchStack: 16
 ```
 
@@ -879,13 +901,13 @@ olcDbSearchStack: 16
 
 例：
 
-```
+```text
 olcDbShmKey: 42
 ```
 
 ##### 5.2.6.12 输出样例
 
-```
+```text
 dn: olcDatabase=hdb,cn=config
 objectClass: olcDatabaseConfig
 objectClass: olcHdbConfig
@@ -906,7 +928,7 @@ olcDbIndex: objectClass eq
 
 以下是一个示例配置，散布说明文字。它定义了两个数据库来处理不同的部分X.500树; 两者都是BDB数据库实例。显示的行号仅供参考，不包括在实际文件中。首先，全局配置部分：
 
-```
+```text
 1.    # example config file - global configuration entry
 2.    dn: cn=config
 3.    objectClass: olcGlobal
@@ -917,7 +939,7 @@ olcDbIndex: objectClass eq
 
 第1行是一条评论。第2-4行将其标识为全局配置条目。第5行上的`olcReferral：`指令意味着不属于下面定义的数据库之一的查询将被引用到在主机`root.openldap.org`上的标准端口（389）上运行的LDAP服务器。第6行是空白行，表示此条目的结尾。
 
-```
+```text
  7.    # internal schema
  8.    dn: cn=schema,cn=config
  9.    objectClass: olcSchemaConfig
@@ -927,7 +949,7 @@ olcDbIndex: objectClass eq
 
 第7行是一条评论。第8-10行将此标识为模式子树的根。此条目中的实际模式定义将被硬编码为slapd，因此在此处未指定其他属性。第11行是空白行，表示此条目的结尾。
 
-```
+```text
 12.    # include the core schema
 13.    include: file:///usr/local/etc/openldap/schema/core.ldif
 14.
@@ -937,7 +959,7 @@ olcDbIndex: objectClass eq
 
 接下来是数据库定义。第一个数据库是其全局应用于所有其他数据库的特殊`前端`数据库。
 
-```
+```text
 15.    # global database parameters
 16.    dn: olcDatabase=frontend,cn=config
 17.    objectClass: olcDatabaseConfig
@@ -950,7 +972,7 @@ olcDbIndex: objectClass eq
 
 下一个条目定义了配置后端。
 
-```
+```text
 21.    # set a rootpw for the config database so we can bind.
 22.    # deny access to everyone else.
 23.    dn: olcDatabase=config,cn=config
@@ -967,7 +989,7 @@ olcDbIndex: objectClass eq
 
 下一个条目定义了一个BDB后端，它将处理对树的“dc = example，dc = com”部分中的事物的查询。指数将被维护为几个属性，并且`userPassword`属性被保护免受未经授权的访问。
 
-```
+```text
 29.    # BDB definition for example.com
 30.    dn: olcDatabase=bdb,cn=config
 31.    objectClass: olcDatabaseConfig
@@ -1003,7 +1025,7 @@ olcDbIndex: objectClass eq
 
 下一个条目定义另一个BDB数据库。这个处理涉及`dc=example,dc=net` subtree的查询，但是由与第一个数据库相同的实体进行管理。请注意，没有第60行，由于第19行的全局访问规则，读访问将被允许。
 
-```
+```text
 51.    # BDB definition for example.net
 52.    dn: olcDatabase=bdb,cn=config
 53.    objectClass: olcDatabaseConfig
@@ -1022,7 +1044,7 @@ olcDbIndex: objectClass eq
 
 如果您还没有`database config`部分，请在`slapd.conf`的末尾添加如下内容
 
-```
+```text
 database config
 rootpw VerySecret
 ```
@@ -1031,13 +1053,13 @@ rootpw VerySecret
 
 现有的*slapd.conf*（5）文件可以使用*slaptest*（8）或任何照片工具转换为新格式：
 
-```
+```text
 slaptest -f /usr/local/etc/openldap/slapd.conf -F /usr/local/etc/openldap/slapd.d
 ```
 
 测试您可以使用默认*rootdn*和*上面*配置的*rootpw*访问`cn=config`下的条目：
 
-```
+```text
 ldapsearch -x -D cn=config -w VerySecret -b cn=config
 ```
 
@@ -1055,11 +1077,11 @@ ldapsearch -x -D cn=config -w VerySecret -b cn=config
 
 在*slapd.conf*（5）文件由三种类型的配置信息：全局的，特定后台和特定数据库的。首先指定全局信息，然后指定与特定后端类型相关联的信息，然后跟随特定数据库实例关联的信息。可以在后端和 / 或数据库指令中覆盖全局伪指令，并且数据库伪指令可以覆盖后端伪指令。
 
-以“ `＃` ”字符开头的空行和注释行将被忽略。如果一行以空格开头，则被认为是上一行的延续（即使上一行是注释）。
+以“`＃` ”字符开头的空行和注释行将被忽略。如果一行以空格开头，则被认为是上一行的延续（即使上一行是注释）。
 
 slapd.conf的一般格式如下：
 
-```
+```text
 # global configuration directives
 <global config directives>
 
@@ -1083,7 +1105,7 @@ database <typeA>
 ...
 ```
 
-配置指令可能会引用参数。如果是这样，他们被空白分隔开来。如果一个参数包含空格，参数应该用双引号括起来`“像这样”`。如果参数包含双引号或反斜杠字符“ `\` ”，则该字符前面应该有一个反斜杠字符“ `\` ”。
+配置指令可能会引用参数。如果是这样，他们被空白分隔开来。如果一个参数包含空格，参数应该用双引号括起来`“像这样”`。如果参数包含双引号或反斜杠字符“`\` ”，则该字符前面应该有一个反斜杠字符“`\` ”。
 
 该分发包含将安装在`/usr/local/etc/openldap`目录中的示例配置文件。`/usr/local/etc/openldap/schema`目录中也提供了一些包含模式定义（属性类型和对象类）的文件。
 
@@ -1095,13 +1117,17 @@ database <typeA>
 
 本节中描述的指令适用于所有后端和数据库，除非在后端或数据库定义中特别覆盖。应该用实际文本替换的参数显示在括号`<>`中。
 
-##### 6.2.1.1 access to  [ by &lt;who&gt; [&lt;accesslevel&gt;\] [&lt;control&gt;] ]+
+##### 6.2.1.1 access to
+
+[ by &lt;who&gt; [&lt;accesslevel&gt;\] [&lt;control&gt;] ]+
 
 该指令通过一个或多个请求者（由&lt;who&gt;指定）向一组条目和/或属性（由&lt;what&gt;指定）访问（由&lt;accesslevel&gt;指定）。有关基本用途，请参阅本指南的[访问控制](http://www.openldap.org/doc/admin24/access-control.html)部分。
 
 **注意：**如果没有指定`访问`指令，则默认访问控制策略`access to * by * read`，允许所有身份验证和匿名用户都可以读取访问权限。
 
-#### 6.2.1.2 attributetype &lt;[RFC4512](http://www.rfc-editor.org/rfc/rfc4512.txt) Attribute Type Description&gt;
+#### 6.2.1.2 attributetype &lt;
+
+[RFC4512](http://www.rfc-editor.org/rfc/rfc4512.txt) Attribute Type Description&gt;
 
 此指令定义属性类型。有关如何使用此指令的信息，请参阅“ [模式规范”](http://www.openldap.org/doc/admin24/schema.html)一章
 
@@ -1117,9 +1143,9 @@ database <typeA>
 
 #### 6.2.1.5. loglevel &lt;level&gt;
 
-此指令指定调试语句和操作统计信息应该被syslog的级别（当前记录到*syslogd*（8）`LOG_LOCAL4`设施）。您必须配置OpenLDAP `--enable-debug`（默认值）才能工作（除了始终启用的两个统计级别之外）。日志级别可以被指定为整数或关键字。可以使用多个日志级别，并且级别是相加的。要显示什么号码对应于什么样的调试，用`-d?`调用slapd 或查阅下表。\<integer>的可能值为：
+此指令指定调试语句和操作统计信息应该被syslog的级别（当前记录到*syslogd*（8）`LOG_LOCAL4`设施）。您必须配置OpenLDAP`--enable-debug`（默认值）才能工作（除了始终启用的两个统计级别之外）。日志级别可以被指定为整数或关键字。可以使用多个日志级别，并且级别是相加的。要显示什么号码对应于什么样的调试，用`-d?`调用slapd 或查阅下表。\<integer>的可能值为：
 
-**表6.1：调试级别**
+**表6.1：调试级别:**
 
 | **水平** | **描述**         | **关键词**        |
 | ------ | -------------- | -------------- |
@@ -1142,7 +1168,7 @@ database <typeA>
 
 期望的日志级别可以作为单个整数输入，该整数将（ORed）所需的级别（十进制或十六进制符号）组合为整数列表（在内部进行ORed操作），或作为显示的名称列表在括号之间，
 
-```
+```text
 loglevel 129
 loglevel 0x81
 loglevel 128 1
@@ -1154,33 +1180,35 @@ loglevel acl跟踪
 
 例子：
 
-```
+```text
 loglevel -1
 ```
 
 这将导致大量的调试信息被记录。
 
-```
+```text
 loglevel conns filter
 ```
 
 只需记录连接并搜索过滤器处理。
 
-```
+```text
 loglevel none
 ```
 
-记录无论配置的日志级别如何记录的消息。这不同于在不发生日志记录时将日志级别设置为0。至少需要“ `None ”`级才能记录高优先级消息。
+记录无论配置的日志级别如何记录的消息。这不同于在不发生日志记录时将日志级别设置为0。至少需要“`None ”`级才能记录高优先级消息。
 
 默认：
 
-```
+```text
 loglevel stats
 ```
 
 默认情况下配置基本统计记录。但是，如果未定义日志级别，则不会发生日志记录（相当于0级别）。
 
-#### 6.2.1.6 objectclass &lt;[RFC4512](http://www.rfc-editor.org/rfc/rfc4512.txt) Object Class Description&gt;
+#### 6.2.1.6 objectclass &lt;
+
+[RFC4512](http://www.rfc-editor.org/rfc/rfc4512.txt) Object Class Description&gt;
 
 该指令定义了一个对象类。有关如何使用此指令的信息，请参阅“ [模式规范”](http://www.openldap.org/doc/admin24/schema.html)一章。
 
@@ -1190,7 +1218,7 @@ loglevel stats
 
 例：
 
-```
+```text
 referral ldap://root.openldap.org
 ```
 
@@ -1202,7 +1230,7 @@ referral ldap://root.openldap.org
 
 默认：
 
-```
+```text
 sizelimit 500
 ```
 
@@ -1214,7 +1242,7 @@ sizelimit 500
 
 默认：
 
-```
+```text
 timelimit 3600
 ```
 
@@ -1228,7 +1256,7 @@ timelimit 3600
 
 后端该指令标志着后端声明的开始。`<type>`应于表6.2中列出的支持的后端类型之一。
 
-**表6.2：数据库后端**
+**表6.2：数据库后端:**
 
 | **类型**  | **描述**               |
 | ------- | -------------------- |
@@ -1246,7 +1274,7 @@ timelimit 3600
 
 例：
 
-```
+```text
 backend bdb
 ```
 
@@ -1262,7 +1290,7 @@ backend bdb
 
 例：
 
-```
+```text
 database bdb
 ```
 
@@ -1278,7 +1306,7 @@ database bdb
 
 默认：
 
-```
+```text
 readonly off
 ```
 
@@ -1288,17 +1316,17 @@ readonly off
 
 基于入门的示例：
 
-```
+```text
 rootdn "cn=Manager,dc=example,dc=com"
 ```
 
 基于SASL的示例：
 
-```
+```text
 rootdn "uid=root,cn=example.com,cn=digest-md5,cn=auth"
 ```
 
-有关[SASL认证身份](http://www.openldap.org/doc/admin24/sasl.html#SASL Authentication)的信息，请参阅[SASL认证](http://www.openldap.org/doc/admin24/sasl.html#SASL Authentication)部分。
+有关[SASL认证身份](https://www.openldap.org/doc/admin24/sasl.html#SASL%20Authentication)的信息，请参阅[SASL认证](https://www.openldap.org/doc/admin24/sasl.html#SASL%20Authentication)部分。
 
 #### 6.2.3.5 rootpw &lt;password&gt;
 
@@ -1306,7 +1334,7 @@ rootdn "uid=root,cn=example.com,cn=digest-md5,cn=auth"
 
 例：
 
-```
+```text
 rootpw secret
 ```
 
@@ -1314,7 +1342,7 @@ rootpw secret
 
 例：
 
-```
+```text
 rootpw {SSHA}ZKKuqbEKJfKSXhUbHG3fG8MDn9j1v4QN
 ```
 
@@ -1326,7 +1354,7 @@ rootpw {SSHA}ZKKuqbEKJfKSXhUbHG3fG8MDn9j1v4QN
 
 例：
 
-```
+```text
 suffix "dc=example,dc=com"
 ```
 
@@ -1336,7 +1364,7 @@ suffix "dc=example,dc=com"
 
 #### 6.2.3.7 syncrepl
 
-```
+```text
 syncrepl rid=<replica ID>
                 provider=ldap[s]://<hostname>[:port]
                 searchbase=<base DN>
@@ -1383,9 +1411,13 @@ syncrepl rid=<replica ID>
 
 `provider`参数指定包含主内容作为LDAP URI复制提供者站点。`provider`参数指定的方案，主机和可选地其中该提供者的slapd实例可以发现一个端口。域名或IP地址可以用于\<hostname>。示例是`ldap://provider.example.com:389`或`ldaps://192.168.1.1:636`。如果未指定\<port>，则使用标准LDAP端口号（389或636）。请注意，syncrepl使用消费者启动的协议，因此其规范位于消费者站点，而`副本`规范位于提供者站点。`syncrepl`和`副本`指令定义了两个独立的复制机制。它们不代表彼此的复制对等体。
 
-使用搜索规范作为其结果集定义syncrepl副本的内容。消费者slapd将根据搜索规范将搜索请求发送给提供商slapd。搜索规范包括`searchbase`，`scope`，`filter`，`attrs`，`exattrs`，`attrsonly`，`sizeLimit`和`timelimit `参数如在正常搜索规范。该`searchbase`参数没有默认值，必须指定。scope 默认为`sub`中，`filter `默认为`（objectclass= *） `，`attrs`默认为`“*，+”`来复制所有用户和操作属性，默认情况下`attrsonly`是未设置的。双方`的sizeLimit`和`时限`默认为“无限制”，只有正整数或“无限制”可能被指定。该`exattrs`选项也可被用来指定应该从输入的条目被省略属性。
+使用搜索规范作为其结果集定义syncrepl副本的内容。消费者slapd将根据搜索规范将搜索请求发送给提供商slapd。
+搜索规范包括`searchbase`，`scope`，`filter`，`attrs`，`exattrs`，`attrsonly`，`sizeLimit`和`timelimit`参数如在正常搜索规范。该`searchbase`参数没有默认值，
+必须指定。scope 默认为`sub`中，`filter`默认为`（objectclass= *）`，`attrs`默认为`“*，+”`来复制所有用户和操作属性，默认情况下`attrsonly`是未设置的。双方`的sizeLimit`和`时限`默认为“无限制”，只有正整数或“无限制”可能被指定。该`exattrs`选项也可被用来指定应该从输入的条目被省略属性。
 
-该 LDAP内容同步协议有两种操作类型：`refreshOnly`和`refreshAndPersist`。操作类型由`type`参数指定。在`refreshOnly`操作中，在每次同步操作结束之后的间隔时间周期性地重新调度下一个同步搜索操作。间隔由`interval`参数指定。默认设置为一天。在`refreshAndPersist`操作中，同步搜索在提供者*slapd*实例中保持不变。对主副本的进一步更新将生成`searchResultEntry` 到消费者slapd作为搜索响应的持续同步搜索。
+该 LDAP内容同步协议有两种操作类型：`refreshOnly`和`refreshAndPersist`。操作类型由`type`参数指定。
+在`refreshOnly`操作中，在每次同步操作结束之后的间隔时间周期性地重新调度下一个同步搜索操作。间隔由`interval`参数指定。默认设置为一天。
+在`refreshAndPersist`操作中，同步搜索在提供者*slapd*实例中保持不变。对主副本的进一步更新将生成`searchResultEntry` 到消费者slapd作为搜索响应的持续同步搜索。
 
 如果在复制期间发生错误，消费者将尝试根据重试参数重新连接，该重试参数是\<retry interval>和<＃of retries> pair的列表。例如，retry =“60 10 300 3”可让消费者重新开始前10次，每60秒重试一次，然后在停止重试之前每300秒重试三次。+在<＃重试次数>中意味着无限期的重试，直到成功。
 
@@ -1403,17 +1435,20 @@ syncrepl rid=<replica ID>
 
 `realm`参数指定其中的某些机制认证中的身份的境界。该`secprops`参数指定赛勒斯SASL安全属性。
 
-`keepalive `参数设定空闲，探针和间隔用于检查套接字是否是活的值; 空闲是TCP开始发送keepalive探测之前连接需要保持空闲的秒数; 探测器是TCP连接之前应发送的Keepalive探测器的最大数量; 间隔是个体保持性探测之间的间隔（以秒为单位）。只有一些系统支持定制这些值; 否则将忽略keepalive参数，并使用系统范围的设置。例如，在240秒的空闲活动之后，keepalive =“240：10：30”将发送10次，每30秒钟一次Keepalive。如果没有收到对探测器的响应，则连接将被丢弃。
+`keepalive`参数设定空闲，探针和间隔用于检查套接字是否是活的值; 空闲是TCP开始发送keepalive探测之前连接需要保持空闲的秒数;
+探测器是TCP连接之前应发送的Keepalive探测器的最大数量; 间隔是个体保持性探测之间的间隔（以秒为单位）。只有一些系统支持定制这些值; 否则将忽略keepalive参数，并使用系统范围的设置。例如，在240秒的空闲活动之后，keepalive =“240：10：30”将发送10次，每30秒钟一次Keepalive。如果没有收到对探测器的响应，则连接将被丢弃。
 
-`starttls `参数指定使用扩展操作认证的供应商之前建立TLS会话启动TLS的。如果提供了`critical `参数，则如果StartTLS请求失败，则该会话将中止。否则syncrepl会话继续而不使用TLS。tls_reqcert设置默认为`“demand”`，其他TLS设置默认与主slapd TLS设置相同。
+`starttls`参数指定使用扩展操作认证的供应商之前建立TLS会话启动TLS的。如果提供了`critical`参数，则如果StartTLS请求失败，则该会话将中止。否则syncrepl会话继续而不使用TLS。tls_reqcert设置默认为`“demand”`，其他TLS设置默认与主slapd TLS设置相同。
 
 `suffixmassage`参数允许用户从远程目录中其DN后缀从本地目录不同拉条目。与搜索库匹配的远程条目DN的部分将被后缀名称DN替换。
 
-消费者不是复制整个条目，而是可以查询数据修改的日志。这种操作模式称为*delta syncrepl*。除了上述参数之外，必须对要使用的日志适当地设置`logbase`和`logfilter`参数。所述`syncdata`参数必须设置为`“accesslog”`如果日志符合*slapo-accesslog*（5）日志格式，或`“更改日志”`如果日志符合过时的*更改日志*的格式。如果`syncdata`参数被省略或设置为`“default”` ，则日志参数将被忽略。
+消费者不是复制整个条目，而是可以查询数据修改的日志。这种操作模式称为*delta syncrepl*。除了上述参数之外，
+必须对要使用的日志适当地设置`logbase`和`logfilter`参数。所述`syncdata`参数必须设置为`“accesslog”`如果日志符合*slapo-accesslog*（5）日志格式，
+或`“更改日志”`如果日志符合过时的*更改日志*的格式。如果`syncdata`参数被省略或设置为`“default”` ，则日志参数将被忽略。
 
 *syncrepl* 复制机制是由支持*BDB*，*hdb*，以及*MDB*后端。
 
-有关如何使用此指令的详细信息，请参阅本指南的“ [LDAP同步复制”](http://www.openldap.org/doc/admin24/replication.html#LDAP Sync Replication)一章。
+有关如何使用此指令的详细信息，请参阅本指南的“ [LDAP同步复制”](https://www.openldap.org/doc/admin24/replication.html#LDAP%20Sync%20Replication)一章。
 
 #### 6.2.3.8 updateref &lt;URL&gt;
 
@@ -1421,7 +1456,7 @@ syncrepl rid=<replica ID>
 
 例：
 
-```
+```text
 updateref       ldap://master.example.net
 ```
 
@@ -1435,7 +1470,7 @@ updateref       ldap://master.example.net
 
 默认：
 
-```
+```text
 directory /usr/local/var/openldap-data
 ```
 
@@ -1443,20 +1478,20 @@ directory /usr/local/var/openldap-data
 
 以下是一个示例配置文件，其中插有说明文字。它定义了两个数据库来处理不同的部分X.500树; 两者都是BDB数据库实例。显示的行号仅供参考，不包括在实际文件中。首先，全局配置部分：
 
-```
+```text
 1.    # example config file - global configuration section
 2.    include /usr/local/etc/schema/core.schema
 3.    referral ldap://root.openldap.org
 4.    access to * by * read
 ```
 
-第1行是一条评论。第2行包含另一个包含*核心*模式定义的配置文件。第3行的`referral `指令意味着不属于下面定义的数据库之一的查询将被引用到在主机`root.openldap.org`上的标准端口（389）上运行的LDAP服务器。
+第1行是一条评论。第2行包含另一个包含*核心*模式定义的配置文件。第3行的`referral`指令意味着不属于下面定义的数据库之一的查询将被引用到在主机`root.openldap.org`上的标准端口（389）上运行的LDAP服务器。
 
 第4行是一个全局访问控制。它适用于所有条目（在任何适用的特定于数据库的访问控制之后）。
 
 配置文件的下一部分定义了一个BDB后端，它将处理对树的“`dc=example,dc=com`”部分中的内容的查询。数据库将被复制到两个从属 slapds，一个在叛逃，另一个在判断日。指数将被维护为几个属性，并且`userPassword`属性被保护免受未经授权的访问。
 
-```
+```text
  5.    # BDB definition for the example.com
  6.    database bdb
  7.    suffix "dc=example,dc=com"
@@ -1489,7 +1524,7 @@ directory /usr/local/var/openldap-data
 
 示例配置文件的下一部分定义了另一个BDB数据库。这个处理涉及`dc=example,dc=net` subtree的查询`，`但是由与第一个数据库相同的实体进行管理。请注意，没有第39行，由于第4行的全局访问规则，读访问将被允许。
 
-```
+```text
 33.    # BDB definition for example.net
 34.    database bdb
 35.    suffix "dc=example,dc=net"
@@ -1507,13 +1542,13 @@ directory /usr/local/var/openldap-data
 
 *slapd*（8）支持手册页中详细说明的许多命令行选项。本节详细介绍了一些常用的选项。
 
-```
+```text
 -f <filename>
 ```
 
 此选项指定slapd的备用配置文件。默认值通常是`/usr/local/etc/openldap/slapd.conf`。
 
-```
+```text
 -F <slapd-config-directory>
 ```
 
@@ -1521,7 +1556,7 @@ directory /usr/local/var/openldap-data
 
 如果指定了`-f`和`-F`，则配置文件将被读取并转换为config目录格式并写入指定的目录。如果未指定任何选项，slapd将尝试读取默认配置目录，然后再尝试使用默认配置文件。如果存在有效的配置目录，那么默认配置文件将被忽略。所有使用配置选项的拍照工具都遵循同样的行为。
 
-```
+```text
 -h <URLs>
 ```
 
@@ -1533,11 +1568,11 @@ directory /usr/local/var/openldap-data
 | LDAPS：/// | LDAP over SSL | TCP端口636      |
 | ldapi：/// | LDAP          | IPC（Unix域套接字） |
 
-例如，-h `ldaps:// ldap://127.0.0.1:666 `将创建两个监听器：一个用于默认`ldaps`上的所有接口上的（非标准）方案`ldaps：//`端口 636 ，另外一个用于端口666 上`localhost`（*loopback*）接口上的标准`ldap://`方案。主机可以使用主机名或 IPv4 要么 IPv6 地址。端口值必须是数字。
+例如，-h`ldaps:// ldap://127.0.0.1:666`将创建两个监听器：一个用于默认`ldaps`上的所有接口上的（非标准）方案`ldaps：//`端口 636 ，另外一个用于端口666 上`localhost`（*loopback*）接口上的标准`ldap://`方案。主机可以使用主机名或 IPv4 要么 IPv6 地址。端口值必须是数字。
 
 对于通过IPC的LDAP，可以在URL中编码Unix域套接字的路径名。请注意，目录分隔符必须与URL特殊的任何其他字符进行URL编码。因此，套接字`/usr/local/var/ldapi`必须编码为
 
-```
+```text
 ldapi://%2Fusr%2Flocal%2Fvar%2Fldapi
 ```
 
@@ -1545,37 +1580,37 @@ ldapi：在*使用LDAP机制*中详细描述[ [Chu-LDAPI](http://tools.ietf.org/
 
 请注意，ldapi：///传输没有被广泛实现：非OpenLDAP客户端可能无法使用它。
 
-```
+```text
 -n <service-name>
 ```
 
 此选项指定用于记录和其他目的的服务名称。默认的服务名称是`slapd`。
 
-```
+```text
 -l <syslog-local-user>
 ```
 
 此选项指定*syslog*（8）设施的本地用户。值可以是`LOCAL0`，`LOCAL1`，`LOCAL2`，...和`LOCAL7`。默认值为`LOCAL4`。所有系统可能不支持此选项。
 
-```
+```text
 -u user -g group
 ```
 
-这些选项分别指定用户和组作为运行。 `用户`可以是用户名或uid。 `组`可以是组名或gid。
+这些选项分别指定用户和组作为运行。`用户`可以是用户名或uid。`组`可以是组名或gid。
 
-```
+```text
  -r directory
 ```
 
 此选项指定运行时目录。打开侦听器之后，slapd将在读取任何配置文件或初始化任何后端之前将*chroot*（2）*chroot*（2）转到此目录。
 
-```
+```text
 -d <level> | ?
 ```
 
 此选项将slapd调试级别设置为&lt;level&gt;。当级别是'？' 字符，打印各种调试级别并退出slapd，无论您提供任何其他选项。当前的调试级别是
 
-**表7.1：调试级别**
+**表7.1：调试级别:**
 
 | **水平** | **关键词**        | **描述**         |
 | ------ | -------------- | -------------- |
@@ -1604,21 +1639,21 @@ ldapi：在*使用LDAP机制*中详细描述[ [Chu-LDAPI](http://tools.ietf.org/
 
 一般来说，slapd是这样运行的：
 
-```
+```text
 /usr/local/libexec/slapd [<option>]*
 ```
 
-其中`/usr/local/libexec `由`configure`确定，&lt;option&gt;是上述选项之一（或*slapd*（8））。除非你已经指定了一个调试级别（包括`0`级），否则slapd会自动从控制终端进行分支和分离，并在后台运行。
+其中`/usr/local/libexec`由`configure`确定，&lt;option&gt;是上述选项之一（或*slapd*（8））。除非你已经指定了一个调试级别（包括`0`级），否则slapd会自动从控制终端进行分支和分离，并在后台运行。
 
 ### 7.3 停止slapd
 
 要安全地杀死*slapd*（8），你应该给出这样的命令
 
-```
-kill -INT `cat /usr/local/var/slapd.pid`
+```text
+kill -INT`cat /usr/local/var/slapd.pid`
 ```
 
-其中` /usr/local/var`由`configure`决定。
+其中`/usr/local/var`由`configure`决定。
 
 通过更加激烈的方法杀死slapd可能会导致信息丢失或数据库损坏。
 
@@ -1640,7 +1675,7 @@ kill -INT `cat /usr/local/var/slapd.pid`
 
 访问条目和属性由访问配置文件指令控制。访问线路的一般形式是：
 
-```
+```text
 <access directive> ::= access to <what>
     [by <who> [<access>] [<control>] ]+
 <what> ::= * |
@@ -1672,7 +1707,7 @@ kill -INT `cat /usr/local/var/slapd.pid`
 
 访问规范的\<what>部分确定访问控制适用于的条目和属性。条目通常以两种方式进行选择：通过DN和过滤器。以下限定符通过DN选择条目：
 
-```
+```text
 to *
 to dn[.<basic-style>]=<regex>
 to dn.<scope-style>=<DN>
@@ -1684,7 +1719,7 @@ to dn.<scope-style>=<DN>
 
 例如，如果目录包含名为的条目：
 
-```
+```text
 0: o=suffix
 1: cn=Manager,o=suffix
 2: ou=people,o=suffix
@@ -1695,7 +1730,7 @@ to dn.<scope-style>=<DN>
 
 然后：
 
-```
+```text
 dn.base="ou=people,o=suffix" match 2;
 dn.one="ou=people,o=suffix" match 3, and 5;
 dn.subtree="ou=people,o=suffix" match 2, 3, 4, and 5; and
@@ -1704,37 +1739,37 @@ dn.children="ou=people,o=suffix" match 3, 4, and 5.
 
 也可以使用过滤器选择条目：
 
-```
+```text
 to filter=<ldap filter>
 ```
 
 其中`<ldap filter>`是LDAP搜索过滤器的字符串表示形式，如[RFC4515中所述](http://www.rfc-editor.org/rfc/rfc4515.txt)。例如：
 
-```
+```text
 to filter=(objectClass=person)
 ```
 
 请注意，可以通过在`<what>`子句中包含两个限定符来由DN和过滤器选择条目。
 
-```
+```text
 to dn.one="ou=people,o=suffix" filter=(objectClass=person)
 ```
 
 请注意，可以通过在`<what>`子句中包含两个限定符来由DN和过滤器选择条目。
 
-```
+```text
 attrs=<attribute list>
 ```
 
 通过使用单个属性名称并使用值选择器来选择属性的特定值：
 
-```
+```text
 attrs=<attribute> val[.<style>]=<regex>
 ```
 
 有两个特殊的*伪*属性`条目`和`子项`。要读取（并返回）目标条目，主体必须具有对目标*条目*属性的`读取`访问权限。要执行搜索，主题必须具有对搜索库*条目*属性的`搜索`访问权限。要添加或删除条目，主体必须`写入`到条目的访问`入口`属性，必须有`写`访问条目的父级的`子级`属性。要重命名的条目，主题必须`写`进入的访问`入口`属性并且具有对旧父级和新父级的`子级`属性的`写`访问权限。本节末尾的完整示例应该有助于清除。
 
-最后，有一个特殊的条目选择器`“*”`用于选择任何条目。当没有提供其他`<what>`选择器时使用它。这相当于“ `dn=.*` ”
+最后，有一个特殊的条目选择器`“*”`用于选择任何条目。当没有提供其他`<what>`选择器时使用它。这相当于“`dn=.*` ”
 
 #### 8.2.2 谁授予访问权限
 
@@ -1742,18 +1777,18 @@ attrs=<attribute> val[.<style>]=<regex>
 
 | **Specifier**                | **Entities**      |
 | ---------------------------- | ----------------- |
-| `*`                          | 全部，包括匿名和经过身份验证的用户 |
-| `anonymous`                  | 匿名（未认证）用户         |
-| `users`                      | 认证用户              |
-| `self`                       | 与目标条目关联的用户        |
-| `dn[.<basic-style>]=<regex>` | 用户匹配正则表达式         |
-| `dn.<scope-style>=<DN>`      | DN范围内的用户          |
+|`*`                          | 全部，包括匿名和经过身份验证的用户 |
+|`anonymous`                  | 匿名（未认证）用户         |
+|`users`                      | 认证用户              |
+|`self`                       | 与目标条目关联的用户        |
+|`dn[.<basic-style>]=<regex>` | 用户匹配正则表达式         |
+|`dn.<scope-style>=<DN>`      | DN范围内的用户          |
 
 DN说明符的行为非常类似于&lt;what&gt;子句DN说明符。
 
 还支持其他控制因素。例如，`<who>`可以被访问应用的条目中的DN值属性中列出的条目限制：
 
-```
+```text
 dnattr=<dn-valued attribute name>
 ```
 
@@ -1765,7 +1800,7 @@ dnattr规范用于授予访问其DN在条目的属性中的条目的访问权限
 
 授予的\<access>类型可以是以下之一：
 
-**表6.4：访问级别**
+**表6.4：访问级别:**
 
 | **Level**     | **权限**  | **说明**    |
 | ------------- | ------- | --------- |
@@ -1782,7 +1817,9 @@ dnattr规范用于授予访问其DN在条目的属性中的条目的访问权限
 
 #### 8.2.4 访问控制评估
 
-当评估某个请求者是否需要访问条目和/或属性时，slapd将条目和/或属性与配置文件中给出的`<what>`选择器进行比较。对于每个条目，数据库中提供的存储条目的访问控制（或全局访问指令，如果不保存在任何数据库中）首先应用，然后应用全局访问指令。然而，当处理访问列表时，由于全局访问列表被有效地附加到每个每个数据库列表中，所以如果结果列表不为空，则访问列表将以`* by * none`指令的隐式`访问`结束。如果没有适用于后端的访问指令，则使用默认读取。
+当评估某个请求者是否需要访问条目和/或属性时，slapd将条目和/或属性与配置文件中给出的`<what>`选择器进行比较。对于每个条目，
+数据库中提供的存储条目的访问控制（或全局访问指令，如果不保存在任何数据库中）首先应用，然后应用全局访问指令。然而，当处理访问列表时，
+由于全局访问列表被有效地附加到每个每个数据库列表中，所以如果结果列表不为空，则访问列表将以`* by * none`指令的隐式`访问`结束。如果没有适用于后端的访问指令，则使用默认读取。
 
 在这个优先级中，访问指令按照它们在配置文件中出现的顺序进行检查。Slapd与第一个匹配条目和/或属性的`<what>`选择器停止。相应的访问指令是用于评估访问的一个slapd。
 
@@ -1798,24 +1835,24 @@ dnattr规范用于授予访问其DN在条目的属性中的条目的访问权限
 
 一个简单的例子：
 
-```
+```text
 access to * by * read
 ```
 
 此访问指令授予对所有人的读访问权限。
 
-```
+```text
 access to *
     by self write
     by anonymous auth
     by * read
 ```
 
-该指令允许用户修改其条目，允许匿名者对这些条目进行身份验证，并允许所有其他人读取这些条目。请注意，只有第一个`通过<who>`子句匹配。因此，匿名用户被授予`认证`，而不是`阅读`。最后一个条款也可以“ `被用户阅读` ”。
+该指令允许用户修改其条目，允许匿名者对这些条目进行身份验证，并允许所有其他人读取这些条目。请注意，只有第一个`通过<who>`子句匹配。因此，匿名用户被授予`认证`，而不是`阅读`。最后一个条款也可以“`被用户阅读` ”。
 
 通常希望根据现有的保护级别来限制操作。以下显示如何使用安全强度因子（SSF）。
 
-```
+```text
 access to *
     by ssf=128 self write
     by ssf=64 anonymous auth
@@ -1826,20 +1863,22 @@ access to *
 
 以下示例显示了使用样式说明符在两个访问指令中按顺序选择DN的条目。
 
-```
+```text
 access to dn.children="dc=example,dc=com"
      by * search
 access to dn.children="dc=com"
      by * read
 ```
 
-读取访问权限被授予`dc = com`子树下的条目，除了`dc = example，dc = com`子树之下的条目，授予搜索访问权限。由于两个访问指令都不匹配此DN，因此无法访问`dc = com`。如果这些访问指令的顺序被颠倒，则将永远不会达到尾随指令，因为`dc = example，dc = com`下的所有条目也都在`dc = com`条目下。
+读取访问权限被授予`dc = com`子树下的条目，除了`dc = example，dc = com`子树之下的条目，授予搜索访问权限。由于两个访问指令都不匹配此DN，
+因此无法访问`dc = com`。如果这些访问指令的顺序被颠倒，则将永远不会达到尾随指令，因为`dc = example，dc = com`下的所有条目也都在`dc = com`条目下。
 
-另请注意，如果没有`访问`指令与`<who>`子句匹配或否，**访问被拒绝**。也就是说，每个`对`指令的`访问都以``* none`子句隐含。当处理访问列表时，因为全局访问列表被有效地附加到每个数据库列表中，如果结果列表不为空，则访问列表将以`* by * none`指令的隐式`访问`结束。如果没有适用于后端的访问指令，则使用默认读取。
+另请注意，如果没有`访问`指令与`<who>`子句匹配或否，**访问被拒绝**。也就是说，每个`对`指令的`访问都以``* none`子句隐含。
+当处理访问列表时，因为全局访问列表被有效地附加到每个数据库列表中，如果结果列表不为空，则访问列表将以`* by * none`指令的隐式`访问`结束。如果没有适用于后端的访问指令，则使用默认读取。
 
 下一个例子再次显示了对访问指令和`<who>`子句的排序的重要性。它还显示了使用属性选择器来授予对特定属性和各种`<who>`选择器的访问权限。
 
-```
+```text
 access to dn.subtree="dc=example,dc=com" attrs=homePhone
     by self write
     by dn.children="dc=example,dc=com" search
@@ -1850,22 +1889,24 @@ access to dn.subtree="dc=example,dc=com"
     by anonymous auth
 ```
 
-此示例适用于“ `dc = example，dc = com` ”子树中的条目。对于除`homePhone`之外的所有属性，一个条目可以写入自己，`example.com`条目下的条目可以由他们进行搜索，任何人除了认证/授权（总是匿名完成）之外没有访问权限（`由* none`隐含）。所述`HOMEPHONE`属性由条目，通过条目搜索下是可写`example.com`，通过从网络10连接的客户端可读的，否则不读取（隐式`由*无`）。所有其他访问被`* *`的隐式访问所拒绝。
+此示例适用于“`dc = example，dc = com` ”子树中的条目。对于除`homePhone`之外的所有属性，一个条目可以写入自己，
+`example.com`条目下的条目可以由他们进行搜索，任何人除了认证/授权（总是匿名完成）之外没有访问权限（`由* none`隐含）。
+所述`HOMEPHONE`属性由条目，通过条目搜索下是可写`example.com`，通过从网络10连接的客户端可读的，否则不读取（隐式`由*无`）。所有其他访问被`* *`的隐式访问所拒绝。
 
 有时，允许特定的DN从属性中添加或删除自己是有用的。例如，如果要创建一个组，并允许人们从成员属性中添加和删除其自己的DN，则可以使用如下所示的访问指令来实现：
 
-```
+```text
 access to attrs=member,entry
      by dnattr=member selfwrite
 ```
 
-dnattr `<who>`选择器表示该访问适用于`成员`属性中列出的条目。自`写`访问选择器说，这样的成员只能从属性添加或删除自己的DN，而不是其他值。添加条目属性是必需的，因为访问该条目需要访问条目的任何属性。
+dnattr`<who>`选择器表示该访问适用于`成员`属性中列出的条目。自`写`访问选择器说，这样的成员只能从属性添加或删除自己的DN，而不是其他值。添加条目属性是必需的，因为访问该条目需要访问条目的任何属性。
 
 ### 8.3 通过动态配置访问控制
 
 对slapd条目和属性的访问由olcAccess属性控制，其值是一系列访问指令。olcAccess配置的一般形式是：
 
-```
+```text
 olcAccess: <access directive>
 <access directive> ::= to <what>
     [by <who> [<access>] [<control>] ]+
@@ -1892,25 +1933,27 @@ olcAccess: <access directive>
 <control> ::= [stop | continue | break]
 ```
 
-其中\<what>部分选择访问适用的条目和/或属性，`<who>`部分指定哪些实体被授予访问权限，并且`<access>`部分指定所授予的访问权限。支持多个`<who> <access> <control>`三元组，允许许多实体被授予对同一组条目和属性的不同访问权限。不是所有这些访问控制选项都在这里描述; 有关更多详细信息，请参阅*slapd.access*（5）手册页。
+其中\<what>部分选择访问适用的条目和/或属性，`<who>`部分指定哪些实体被授予访问权限，并且`<access>`部分指定所授予的访问权限。
+支持多个`<who> <access> <control>`三元组，允许许多实体被授予对同一组条目和属性的不同访问权限。不是所有这些访问控制选项都在这里描述; 有关更多详细信息，请参阅*slapd.access*（5）手册页。
 
 #### 8.3.1 什么来控制访问
 
 访问规范的\<what>部分确定访问控制适用于的条目和属性。条目通常以两种方式进行选择：通过DN和过滤器。以下限定符通过DN选择条目：
 
-```
+```text
 to *
 to dn[.<basic-style>]=<regex>
 to dn.<scope-style>=<DN>
 ```
 
-第一个表单用于选择所有条目。第二种形式可以用于通过将正则表达式与目标条目的*标准化DN*相匹配来选择条目。（本文档中没有进一步讨论第二种形式。）第三种形式用于选择DN请求范围内的条目。\<DN>是可分辨名称的字符串表示形式，如[RFC4514所述](http://www.rfc-editor.org/rfc/rfc4514.txt)。
+第一个表单用于选择所有条目。第二种形式可以用于通过将正则表达式与目标条目的*标准化DN*相匹配来选择条目。
+（本文档中没有进一步讨论第二种形式。）第三种形式用于选择DN请求范围内的条目。\<DN>是可分辨名称的字符串表示形式，如[RFC4514所述](http://www.rfc-editor.org/rfc/rfc4514.txt)。
 
 范围可以是`base`，`one`，`subtree`或`children`。当`基地`只提供DN的条目相匹配，`one`匹配，其父母为所提供的DN的条目，`subtree`的所有条目匹配，其根源在于所提供的DN子树，和`children`的所有条目匹配的DN下（但不是以项名为DN）。
 
 例如，如果目录包含名为的条目：
 
-```
+```text
 0: o=suffix
 1: cn=Manager,o=suffix
 2: ou=people,o=suffix
@@ -1921,7 +1964,7 @@ to dn.<scope-style>=<DN>
 
 然后：
 
-```
+```text
 dn.base="ou=people,o=suffix" match 2;
 dn.one="ou=people,o=suffix" match 3, and 5;
 dn.subtree="ou=people,o=suffix" match 2, 3, 4, and 5; and
@@ -1930,43 +1973,43 @@ dn.children="ou=people,o=suffix" match 3, 4, and 5.
 
 也可以使用过滤器选择条目：
 
-```
+```text
 to filter=<ldap filter>
 ```
 
 其中\<ldap filter>是LDAP搜索过滤器的字符串表示形式，如[RFC4515中所述](http://www.rfc-editor.org/rfc/rfc4515.txt)。例如：
 
-```
+```text
 to filter=(objectClass=person)
 ```
 
 请注意，可以通过在\<what>子句中包含两个限定符来由DN和过滤器选择条目。
 
-```
+```text
 to dn.one="ou=people,o=suffix" filter=(objectClass=person)
 ```
 
 通过在\<what>选择器中包含逗号分隔的属性名称列表来选择条目中的属性：
 
-```
+```text
 attrs=<attribute list>
 ```
 
 通过使用单个属性名称并使用值选择器来选择属性的特定值：
 
-```
+```text
 attrs=<attribute> val[.<style>]=<regex>
 ```
 
 有两个特殊的*伪*属性`条目`和`子项`。要读取（并返回）目标条目，主体必须具有对目标*条目*属性的`读取`访问权限。要执行搜索，主题必须具有对搜索库*条目*属性的`搜索`访问权限。要添加或删除条目，主体必须`写入`到条目的访问`入口`属性，必须有`写`访问条目的父级的`子级`属性。要重命名的条目，主题必须`写`进入的访问`入口`属性并且具有对旧父级和新父级的`子级`属性的`写`访问权限。本节末尾的完整示例应该有助于清除。
 
-最后，有一个特殊的条目选择器`“*”`用于选择任何条目。当没有提供其他`<what>`选择器时使用它。这相当于“ `dn =。*` ”
+最后，有一个特殊的条目选择器`“*”`用于选择任何条目。当没有提供其他`<what>`选择器时使用它。这相当于“`dn =。*` ”
 
 #### 8.3.2 谁授予访问权限
 
 \<who>部分标识被授予访问权限的实体或实体。请注意，访问权限授予“实体”而不是“条目”。下表总结了实体说明符：
 
-**表5.3：访问实体指定符**
+**表5.3：访问实体指定符:**
 
 | **Specifier**                | **Entities**      |
 | ---------------------------- | ----------------- |
@@ -1981,7 +2024,7 @@ DN说明符的行为非常类似于\<what>子句DN说明符。
 
 还支持其他控制因素。例如，`<who>`可以被访问应用的条目中的DN值属性中列出的条目限制：
 
-```
+```text
 dnattr=<dn-valued attribute name>
 ```
 
@@ -2008,7 +2051,10 @@ dnattr规范用于授予访问其DN在条目的属性中的条目的访问权限
 
 #### 8.3.4 访问控制评估
 
-当评估某个请求者是否需要访问条目和/或属性时，slapd将条目和/或属性与配置中给出的`<what>`选择器进行比较。对于每个条目，在数据库中提供的存储条目的访问控制（或全局访问指令，如果不保存在任何数据库中）首先应用，然后应用全局访问指令（保存在`前端`数据库定义中）。然而，当处理访问列表时，由于全局访问列表被有效地附加到每个每个数据库列表中，所以如果结果列表不为空，则访问列表将以`* by * none`指令的隐式`访问`结束。如果没有适用于后端的访问指令，则使用默认读取。
+当评估某个请求者是否需要访问条目和/或属性时，slapd将条目和/或属性与配置中给出的`<what>`选择器进行比较。
+对于每个条目，在数据库中提供的存储条目的访问控制（或全局访问指令，如果不保存在任何数据库中）首先应用，
+然后应用全局访问指令（保存在`前端`数据库定义中）。然而，当处理访问列表时，由于全局访问列表被有效地附加到每个每个数据库列表中，
+所以如果结果列表不为空，则访问列表将以`* by * none`指令的隐式`访问`结束。如果没有适用于后端的访问指令，则使用默认读取。
 
 在此优先级内，按照配置属性中显示的顺序检查访问指令。Slapd与第一个匹配条目和/或属性的`<what>`选择器停止。相应的访问指令是用于评估访问的一个slapd。
 
@@ -2024,24 +2070,24 @@ dnattr规范用于授予访问其DN在条目的属性中的条目的访问权限
 
 一个简单的例子：
 
-```
+```text
 olcAccess: to * by * read
 ```
 
 此访问指令授予对所有人的读访问权限。
 
-```
+```text
 olcAccess: to *
     by self write
     by anonymous auth
     by * read
 ```
 
-该指令允许用户修改其条目，允许匿名者对这些条目进行身份验证，并允许所有其他人读取这些条目。请注意，只有第一个`通过<who>`子句匹配。因此，匿名用户被授予`认证`，而不是`阅读`。最后一个条款也可以“ `被用户阅读` ”。
+该指令允许用户修改其条目，允许匿名者对这些条目进行身份验证，并允许所有其他人读取这些条目。请注意，只有第一个`通过<who>`子句匹配。因此，匿名用户被授予`认证`，而不是`阅读`。最后一个条款也可以“`被用户阅读` ”。
 
 通常希望根据现有的保护级别来限制操作。以下显示如何使用安全强度因子（SSF）。
 
-```
+```text
 olcAccess: to *
     by ssf=128 self write
     by ssf=64 anonymous auth
@@ -2052,20 +2098,22 @@ olcAccess: to *
 
 以下示例显示了使用样式说明符在两个访问指令中选择DN的条目，其中排序很重要。
 
-```
+```text
 olcAccess: to dn.children="dc=example,dc=com"
      by * search
 olcAccess: to dn.children="dc=com"
      by * read
 ```
 
-读取访问权限被授予`dc = com`子树下的条目，除了`dc = example，dc = com`子树之下的条目，授予搜索访问权限。由于两个访问指令都不匹配此DN，因此无法访问`dc = com`。如果这些访问指令的顺序被颠倒，则将永远不会达到尾随指令，因为`dc = example，dc = com`下的所有条目也都在`dc = com`条目下。
+读取访问权限被授予`dc = com`子树下的条目，除了`dc = example，dc = com`子树之下的条目，授予搜索访问权限。由于两个访问指令都不匹配此DN，
+因此无法访问`dc = com`。如果这些访问指令的顺序被颠倒，则将永远不会达到尾随指令，因为`dc = example，dc = com`下的所有条目也都在`dc = com`条目下。
 
-另请注意，如果没有`olcAccess：to`指令匹配或否`由<who>`子句，**访问被拒绝**。当处理访问列表时，因为全局访问列表被有效地附加到每个数据库列表中，如果结果列表不为空，则访问列表将以`* by * none`指令的隐式`访问`结束。如果没有适用于后端的访问指令，则使用默认读取。
+另请注意，如果没有`olcAccess：to`指令匹配或否`由<who>`子句，**访问被拒绝**。当处理访问列表时，因为全局访问列表被有效地附加到每个数据库列表中，
+如果结果列表不为空，则访问列表将以`* by * none`指令的隐式`访问`结束。如果没有适用于后端的访问指令，则使用默认读取。
 
 下一个例子再次显示了对访问指令和`<who>`子句的排序的重要性。它还显示了使用属性选择器来授予对特定属性和各种`<who>`选择器的访问权限。
 
-```
+```text
 olcAccess: to dn.subtree="dc=example,dc=com" attrs=homePhone
     by self write
     by dn.children=dc=example,dc=com" search
@@ -2076,22 +2124,25 @@ olcAccess: to dn.subtree="dc=example,dc=com"
     by anonymous auth
 ```
 
-此示例适用于“ `dc = example，dc = com` ”子树中的条目。对于除`homePhone`之外的所有属性，一个条目可以写入自己，`example.com`条目下的条目可以由他们进行搜索，任何人除了认证/授权（总是匿名完成）之外没有访问权限（`由* none`隐含）。所述`HOMEPHONE`属性由条目，通过条目搜索下是可写`example.com`，通过从网络10连接的客户端可读的，否则不读取（隐式`由*无`）。所有其他访问被`* *`的隐式访问所拒绝。
+此示例适用于“`dc = example，dc = com` ”子树中的条目。对于除`homePhone`之外的所有属性，一个条目可以写入自己，
+`example.com`条目下的条目可以由他们进行搜索，任何人除了认证/授权（总是匿名完成）之外没有访问权限（`由* none`隐含）。
+所述`HOMEPHONE`属性由条目，通过条目搜索下是可写`example.com`，通过从网络10连接的客户端可读的，否则不读取（隐式`由*无`）。所有其他访问被`* *`的隐式访问所拒绝。
 
 有时，允许特定的DN从属性中添加或删除自己是有用的。例如，如果要创建一个组，并允许人们从成员属性中添加和删除其自己的DN，则可以使用如下所示的访问指令来实现：
 
-```
+```text
 olcAccess: to attrs=member,entry
      by dnattr=member selfwrite
 ```
 
-dnattr `<who>`选择器表示该访问适用于`成员`属性中列出的条目。自`写`访问选择器说，这样的成员只能从属性添加或删除自己的DN，而不是其他值。添加条目属性是必需的，因为访问该条目需要访问条目的任何属性。
+dnattr`<who>`选择器表示该访问适用于`成员`属性中列出的条目。自`写`访问选择器说，这样的成员只能从属性添加或删除自己的DN，而不是其他值。添加条目属性是必需的，因为访问该条目需要访问条目的任何属性。
 
 #### 8.3.6 访问控制订购
 
-由于`olcAccess`指令的排序对其正确的评估至关重要，但LDAP属性通常不会保留其值的排序，因此OpenLDAP使用自定义模式扩展来维护这些值的固定排序。通过为每个值预先添加一个`“{X}”`数字索引来维护此顺序，与用于排序配置条目的方法类似。这些索引标签由slapd自动保存，在最初定义值时不需要指定。例如，创建设置时
+由于`olcAccess`指令的排序对其正确的评估至关重要，但LDAP属性通常不会保留其值的排序，因此OpenLDAP使用自定义模式扩展来维护这些值的固定排序。
+通过为每个值预先添加一个`“{X}”`数字索引来维护此顺序，与用于排序配置条目的方法类似。这些索引标签由slapd自动保存，在最初定义值时不需要指定。例如，创建设置时
 
-```
+```text
 olcAccess: to attrs=member,entry
      by dnattr=member selfwrite
 olcAccess: to dn.children="dc=example,dc=com"
@@ -2102,7 +2153,7 @@ olcAccess: to dn.children="dc=com"
 
 当您使用slapcat或ldapsearch读取它们时，它们将包含
 
-```
+```text
 olcAccess: {0}to attrs=member,entry
      by dnattr=member selfwrite
 olcAccess: {1}to dn.children="dc=example,dc=com"
@@ -2115,7 +2166,7 @@ olcAccess: {2}to dn.children="dc=com"
 
 例如，如果我们需要更改上面的第二个规则来授予写访问权限而不是搜索，我们可以尝试这个LDIF：
 
-```
+```text
 changetype: modify
 delete: olcAccess
 olcAccess: to dn.children="dc=example,dc=com" by * search
@@ -2127,7 +2178,7 @@ olcAccess: to dn.children="dc=example,dc=com" by * write
 
 但是，此示例**不能**保证现有值保持原始顺序，因此很可能会导致安全配置不正确。相反，应使用数字索引：
 
-```
+```text
 changetype: modify
 delete: olcAccess
 olcAccess: {1}
@@ -2139,7 +2190,7 @@ olcAccess: {1}to dn.children="dc=example,dc=com" by * write
 
 此示例删除`olcAccess`属性（不管其值）的值＃1中的任何规则，并添加明确插入为值＃1的新值。结果将是
 
-```
+```text
 olcAccess: {0}to attrs=member,entry
      by dnattr=member selfwrite
 olcAccess: {1}to dn.children="dc=example,dc=com"
@@ -2156,7 +2207,7 @@ olcAccess: {2}to dn.children="dc=com"
 
 一般应该从一些基本的ACL开始，如：
 
-```
+```text
 access to attrs=userPassword
     by self =xw
     by anonymous auth
@@ -2177,7 +2228,7 @@ access to attrs=userPassword
 
 匿名用户具有空DN。虽然可以使用*dn.exact =“”*或*dn.regex =“^ $”*，但*slapd*（8））提供了一个匿名的简写，而应该使用它。
 
-```
+```text
 access to *
   by anonymous none
   by * read
@@ -2187,7 +2238,7 @@ access to *
 
 经过身份验证的用户拥有主题DN。虽然*dn.regex =“。+”*将匹配任何经过身份验证的用户，但OpenLDAP为用户提供了短用的代码。
 
-```
+```text
 access to *
   by users read
   by * none
@@ -2199,7 +2250,7 @@ access to *
 
 您可以在*slapd.conf*（5）或*slapd.d中*指定*rootdn*，而不指定*rootpw*。那么你必须添加一个具有相同dn的实际目录条目，例如：
 
-```
+```text
 dn: cn=Manager,o=MyOrganization
 cn: Manager
 sn: Manager
@@ -2210,7 +2261,7 @@ userPassword: {SSHA}someSSHAdata
 
 然后绑定为*rootdn*将需要对该DN进行常规绑定，这又需要对该条目的DN和*userPassword进行*身份验证访问，这可以通过ACL进行限制。例如：
 
-```
+```text
 access to dn.base="cn=Manager,o=MyOrganization"
   by peername.regex=127\.0\.0\.1 auth
   by peername.regex=192\.168\.0\..* auth
@@ -2224,7 +2275,7 @@ access to dn.base="cn=Manager,o=MyOrganization"
 
 有几种方法可以做到这一点。这里说明了一种方法。考虑以下DIT布局：
 
-```
+```text
 +-dc=example,dc=com
 +---cn=administrators,dc=example,dc=com
 +---cn=fred blogs,dc=example,dc=com
@@ -2232,7 +2283,7 @@ access to dn.base="cn=Manager,o=MyOrganization"
 
 和以下组对象（LDIF格式）：
 
-```
+```text
 dn: cn=administrators,dc=example,dc=com
 cn: administrators of this region
 objectclass: groupOfNames  (important for the group acl feature)
@@ -2242,7 +2293,7 @@ member: cn=somebody else,dc=example,dc=com
 
 然后，可以通过将适当*的group*子句添加到*slapd.conf*（5）中的访问指令，来授予对此组的成员的访问权限。例如，
 
-```
+```text
 access to dn.children="dc=example,dc=com"
     by self write
     by group.exact="cn=Administrators,dc=example,dc=com" write
@@ -2251,7 +2302,7 @@ access to dn.children="dc=example,dc=com"
 
 像*dn*子句一样，还可以使用*expand*来根据目标的正则表达式匹配来扩展组名，也就是到*dn.regex*。例如，
 
-```
+```text
 access to dn.regex="(.+,)?ou=People,(dc=[^,]+,dc=[^,]+)$"
          attrs=children,entry,uid
     by group.expand="cn=Managers,$2" write
@@ -2261,21 +2312,21 @@ access to dn.regex="(.+,)?ou=People,(dc=[^,]+,dc=[^,]+)$"
 
 以上图示假定要在*groupOfNames*对象类的*成员*属性类型中找到组成员。如果您需要使用不同的组对象和/或不同的属性类型，请使用以下*slapd.conf*（5）（缩写）语法：
 
-```
+```text
 access to <what>
         by group/<objectclass>/<attributename>=<DN> <access>
 ```
 
 例如：
 
-```
+```text
 access to *
   by group/organizationalRole/roleOccupant="cn=Administrator,dc=example,dc=com" write
 ```
 
 在这种情况下，我们有一个ObjectClass *organizationalRole*，其中包含*roleOccupant*属性中的管理员DN 。例如：
 
-```
+```text
 dn: cn=Administrator,dc=example,dc=com
 cn: Administrator
 objectclass: organizationalRole
@@ -2288,7 +2339,7 @@ roleOccupant: cn=Jane Doe,dc=example,dc=com
 
 您可以通过在ACL *to*子句中指定属性名称列表来授予对一组属性的访问权限。为了有用，您还需要授予对该*条目*本身的访问权限。还要注意*儿童*如何控制添加，删除和重命名条目的能力。
 
-```
+```text
 # mail: self may write, authenticated users may read
 access to attrs=mail
   by self write
@@ -2321,7 +2372,7 @@ access to *
 
 对于用户可以写入自己的记录及其所有子项的设置：
 
-```
+```text
 access to dn.regex="(.+,)?(uid=[^,]+,o=Company)$"
    by dn.exact,expand="$2" write
    by anonymous auth
@@ -2333,7 +2384,7 @@ access to dn.regex="(.+,)?(uid=[^,]+,o=Company)$"
 
 假设你有这样的想法：
 
-```
+```text
 o=<basedn>
     ou=domains
         associatedDomain=<somedomain>
@@ -2348,7 +2399,7 @@ o=<basedn>
 
 而另一个域\<someotherdomain>：
 
-```
+```text
 o=<basedn>
     ou=domains
         associatedDomain=<someotherdomain>
@@ -2363,7 +2414,7 @@ o=<basedn>
 
 那么，如果你想用户*的uid = \<someuserid>*以**ONLY**创造自己的事项，你可以写一个这样的ACL：
 
-```
+```text
 # this rule lets users of "associatedDomain=<matcheddomain>"
 # write under "ou=addressbook,associatedDomain=<matcheddomain>,ou=domains,o=<basedn>",
 # i.e. a user can write ANY entry below its domain's address book;
@@ -2406,7 +2457,7 @@ access to dn.regex="^(.+,)?uid=([^,]+),ou=addressbook,associatedDomain=([^,]+),o
 
 不要使用正则表达式，否则可以以更安全和更便宜的方式进行匹配。例子：
 
-```
+```text
 dn.regex=".*dc=example,dc=com"
 ```
 
@@ -2416,44 +2467,44 @@ dn.regex=".*dc=example,dc=com"
 - 不安全，因为它将允许任何*attributeType*以*dc*结尾为字符串中第一个RDN的命名属性，例如自定义的attributeType *mydc*也会匹配。如果真的需要一个正则表达式，它只允许*dc=example，dc=com*或其任何子树，请使用*^(,+,)？dc = example，dc = com $*，这意味着：dc=...（如果有的话（括号内的模式后面的问号）必须以逗号结尾;
 - 昂贵，因为如果你不需要submatches，你可以使用范围设计样式，例如
 
-```
+```text
 dn.subtree="dc=example,dc=com"
 ```
 
 在匹配模式中包括*dc = example，dc = com*，
 
-```
+```text
 dn.children="dc=example,dc=com"
 ```
 
 从匹配模式中排除*dc = example，dc = com*，或者
 
-```
+```text
 dn.onelevel="dc=example,dc=com"
 ```
 
 只允许一个子级匹配。
 
-因为*ou =（。+），ou =（。+），ou=addressbooks，o=basedn*将匹配*something=bla，ou=xxx，ou=yyy，ou=addressbooks，*总是在正则表达式中使用*^*和*$ *，o=basedn中，ou=addressbooks，o= BaseDN中，dc=some，dc=org
+因为 `ou =（.+），ou =（.+），ou=addressbooks，o=basedn` 将匹配 `something=bla，ou=xxx，ou=yyy，ou=addressbooks` ，总是在正则表达式中使用 `^` 和 `$`，`o=basedn中，ou=addressbooks，o= BaseDN中，dc=some，dc=org`
 
-始终使用*（\[^，\] +）*来表示一个RDN，因为*（。+）*可以包含任意数量的RDN; 例如*ou =（。+），dc = example，dc = com*将匹配*ou = My，o = Org，dc = example，dc = com*，这可能不是你想要的。
+始终使用 `(\[^，\] +)` 来表示一个RDN，因为 `().+)` 可以包含任意数量的RDN; 例如 `ou =（。+），dc = example，dc = com` 将匹配 `ou = My，o = Org，dc = example，dc = com` ，这可能不是你想要的。
 
 不要将rootdn添加到by子句中。对于使用rootdn身份执行的操作，ACL甚至不会被处理（否则根本就没有理由定义rootdn）。
 
 使用shorthands。用户指令与经过身份验证的用户匹配，匿名指令与匿名用户匹配。
 
-如果您需要的是范围和/或子字符串替换，则不要使用*dn.regex*表单来执行<by>子句。使用范围设计样式（例如，*精确*，*一级*，*子级*或*子树*），并且样式修饰符将展开以引起子字符串扩展。
+如果您需要的是范围和/或子字符串替换，则不要使用 `dn.regex` 表单来执行`<by>`子句。使用范围设计样式（例如，*精确*，*一级*，*子级*或*子树*），并且样式修饰符将展开以引起子字符串扩展。
 
 例如，
 
-```
+```text
 access to dn.regex=".+,dc=([^,]+),dc=([^,]+)$"
   by dn.regex="^[^,],ou=Admin,dc=$1,dc=$2$$" write
 ```
 
 虽然正确，可以安全有效地代替
 
-```
+```text
 access to dn.regex=".+,(dc=[^,]+,dc=[^,]+)$"
   by dn.onelevel,expand="ou=Admin,$1" write
 ```
@@ -2464,7 +2515,7 @@ access to dn.regex=".+,(dc=[^,]+,dc=[^,]+)$"
 
 您可以根据安全强度因子（SSF）限制访问
 
-```
+```text
 access to dn="cn=example,cn=edu"
       by * ssf=256 read
 ```
@@ -2473,7 +2524,7 @@ access to dn="cn=example,cn=edu"
 
 其他可能性：
 
-```
+```text
 transport_ssf=<n>
 tls_ssf=<n>
 sasl_ssf=<n>
@@ -2487,7 +2538,7 @@ sasl_ssf=<n>
 
 考虑这个例子：
 
-```
+```text
 access to *
   by anonymous auth
 
@@ -2502,7 +2553,7 @@ access to *
 
 要获得我们想要的文件必须阅读：
 
-```
+```text
 access to *
   by anonymous auth
   by self write
@@ -2525,7 +2576,7 @@ access to *
 
 组的OpenLDAP ACL不会扩展组内的组，它们是具有另一组作为成员的组。例如：
 
-```
+```text
 dn: cn=sudoadm,ou=group,dc=example,dc=com
 cn: sudoadm
 objectClass: groupOfNames
@@ -2540,7 +2591,7 @@ member: uid=mary,ou=people,dc=example,dc=com
 
 如果我们使用具有上述条目的标准组ACL，并允许`sudoadm`组的成员写入某个地方，则不会包括`mary`：
 
-```
+```text
 access to dn.subtree="ou=sudoers,dc=example,dc=com"
         by group.exact="cn=sudoadm,ou=group,dc=example,dc=com" write
         by * read
@@ -2548,13 +2599,13 @@ access to dn.subtree="ou=sudoers,dc=example,dc=com"
 
 使用集合，我们可以使ACL成为递归，并在组内考虑组。因此，对于每个成员，它进一步扩展：
 
-```
+```text
  access to dn.subtree="ou=sudoers,dc=example,dc=com"
        by set="[cn=sudoadm,ou=group,dc=example,dc=com]/member* & user" write
        by * read
 ```
 
-此设置ACL意味着：取`cn = sudoadm` DN，检查其`成员`属性（“ `*` ”表示递归），并将结果与经过身份验证的用户DN相交。如果结果不为空，则将ACL视为匹配，并授予写访问权限。
+此设置ACL意味着：取`cn = sudoadm` DN，检查其`成员`属性（“`*` ”表示递归），并将结果与经过身份验证的用户DN相交。如果结果不为空，则将ACL视为匹配，并授予写访问权限。
 
 下图解释了如何构建这个集合：
 
@@ -2562,7 +2613,7 @@ access to dn.subtree="ou=sudoers,dc=example,dc=com"
 
 首先我们得到`uid = john` DN。此条目没有`成员`属性，因此扩展在此停止。现在我们来到`cn = accountadm`。这个确实有一个`成员`属性，这是`uid = mary`。该`UID =玛丽`项，然而，没有成员，所以我们在这里再次停止。最后的比较是：
 
-```
+```text
 {"uid=john,ou=people,dc=example,dc=com","uid=mary,ou=people,dc=example,dc=com"} & user
 ```
 
@@ -2576,7 +2627,7 @@ access to dn.subtree="ou=sudoers,dc=example,dc=com"
 
 假设我们要允许`sudoadm`组的成员写入我们树的`ou = suders`分支。但是我们现在的组定义是使用`memberUid`作为组成员：
 
-```
+```text
 dn: cn=sudoadm,ou=group,dc=example,dc=com
 cn: sudoadm
 objectClass: posixGroup
@@ -2586,7 +2637,7 @@ memberUid: john
 
 使用这种类型的组，我们不能使用组ACL。但是使用一组ACL，我们可以授予所需的访问权限：
 
-```
+```text
 access to dn.subtree="ou=sudoers,dc=example,dc=com"
       by set="[cn=sudoadm,ou=group,dc=example,dc=com]/memberUid & user/uid" write
       by * read
@@ -2606,7 +2657,7 @@ access to dn.subtree="ou=sudoers,dc=example,dc=com"
 
 我们从一个用户条目开始：
 
-```
+```text
 dn: uid=john,ou=people,dc=example,dc=com
 uid: john
 objectClass: inetOrgPerson
@@ -2618,7 +2669,7 @@ manager: uid=mary,ou=people,dc=example,dc=com
 
 编写ACL以允许管理员更新某些属性是非常简单的使用集合：
 
-```
+```text
 access to dn.exact="uid=john,ou=people,dc=example,dc=com"
    attrs=carLicense,homePhone,mobile,pager,telephoneNumber
    by self write
@@ -2630,7 +2681,7 @@ access to dn.exact="uid=john,ou=people,dc=example,dc=com"
 
 到目前为止，使用`dnattr`关键字可以获得同样的行为。然而，使用集合，我们可以进一步增强此ACL。假设我们想允许经理的秘书也更新这些属性。这是我们的做法：
 
-```
+```text
 access to dn.exact="uid=john,ou=people,dc=example,dc=com"
    attrs=carLicense,homePhone,mobile,pager,telephoneNumber
    by self write
@@ -2645,7 +2696,7 @@ access to dn.exact="uid=john,ou=people,dc=example,dc=com"
 
 在这个例子中，简是玛丽的秘书，是约翰的经理。这个整体关系由`经理`和`秘书`属性定义，它们都是distinguishedName语法（即，完整的DN）。因此，当`uid = john`条目被访问时，`这个/ manager / secretary`集合变为`{“uid = jane，ou = people，dc = example，dc = com”` }（遵循图片中的引用）：
 
-```
+```text
 this = [uid=john,ou=people,dc=example,dc=com]
 this/manager = \
   [uid=john,ou=people,dc=example,dc=com]/manager = uid=mary,ou=people,dc=example,dc=com
@@ -2657,7 +2708,7 @@ this/manager/secretary = \
 
 这是很酷和好，但也许给秘书太多的权力。也许我们需要进一步限制。例如，让我们只允许执行秘书有这样的权力：
 
-```
+```text
 access to dn.exact="uid=john,ou=people,dc=example,dc=com"
   attrs=carLicense,homePhone,mobile,pager,telephoneNumber
   by self write
@@ -2674,7 +2725,8 @@ access to dn.exact="uid=john,ou=people,dc=example,dc=com"
 
 本章介绍如何扩展*slapd*（8）使用的用户模式。本章假设读者熟悉了LDAP/X.500 信息模型。
 
-第一部分，[分布式模式文件](https://www.openldap.org/doc/admin24/schema.html#Distributed Schema Files)详细说明了分发中提供的可选模式定义以及获取其他定义的位置。第二部分“ [扩展架构](https://www.openldap.org/doc/admin24/schema.html#Extending Schema) ”详细介绍了如何定义新的架构项目。
+第一部分，[分布式模式文件](https://www.openldap.org/doc/admin24/schema.html#Distributed%20Schema%20Files)详细说明了分发中提供的可选模式定义以及获取其他定义的位置。
+第二部分“ [扩展架构](https://www.openldap.org/doc/admin24/schema.html#Extending%20Schema) ”详细介绍了如何定义新的架构项目。
 
 本章不讨论如何扩展*slapd*（8）使用的系统模式，因为这需要源代码修改。系统架构包括所有操作属性类型或允许或需要操作属性（直接或间接）的任何对象类。
 
@@ -2693,7 +2745,7 @@ OpenLDAP软件分布有一组模式规范供您使用。每个集合都在一个
 
 要使用任何这些模式文件，您只需要将所需的文件包含在*slapd.conf*（5）文件的全局定义部分中。例如：
 
-```
+```text
 # include schema
 include /usr/local/etc/openldap/schema/core.schema
 include /usr/local/etc/openldap/schema/cosine.schema
@@ -2718,9 +2770,9 @@ include /usr/local/etc/openldap/schema/inetorgperson.schema
 
 #### 13.2.1 对象标识符
 
-每个架构元素由全局唯一标识 对象标识符（OID）。OID也用于识别其他对象。它们通常用协议描述ASN.1。特别是，它们被大量使用简单网络管理协议（SNMP）。由于OID是分级的，您的组织可以获得一个OID，并根据需要进行分支。例如，如果您的组织分配了OID `1.1`，则可以按如下方式分支树：
+每个架构元素由全局唯一标识 对象标识符（OID）。OID也用于识别其他对象。它们通常用协议描述ASN.1。特别是，它们被大量使用简单网络管理协议（SNMP）。由于OID是分级的，您的组织可以获得一个OID，并根据需要进行分支。例如，如果您的组织分配了OID`1.1`，则可以按如下方式分支树：
 
-**表8.2：OID层次结构示例**
+**表8.2：OID层次结构示例:**
 
 | **OID**   | **Assignment**     |
 | --------- | ------------------ |
@@ -2751,13 +2803,13 @@ include /usr/local/etc/openldap/schema/inetorgperson.schema
 
 请注意，您可以获得自己的注册名称前缀，以避免不必单独注册您的姓名。有关详细信息，请参阅[RFC4520](http://www.rfc-editor.org/rfc/rfc4520.txt)。
 
-在下面的例子中，我们使用了一个短的前缀' `x-my-` '。这样一个短的前缀只适合于一个非常大的全球组织。一般来说，我们建议像“ `x-de-Firm-` ”（德国公司）或“ `x-com-Example` ”（与`example.com`相关的组织相关的元素）。
+在下面的例子中，我们使用了一个短的前缀'`x-my-` '。这样一个短的前缀只适合于一个非常大的全球组织。一般来说，我们建议像“`x-de-Firm-` ”（德国公司）或“`x-com-Example` ”（与`example.com`相关的组织相关的元素）。
 
 #### 13.2.3 本地架构文件
 
 该`对象类`和`attributeTypes`配置文件指令可以被用来在目录中的条目定义模式规则。通常要创建一个文件来包含自定义模式项的定义。我们建议您在`/usr/local/etc/openldap/schema/local.schema中`创建一个文件`local.schema`，然后在其他模式`include`指令之后立即将此文件包含在*slapd.conf*（5）文件中。
 
-```
+```text
 # include schema
 include /usr/local/etc/openldap/schema/core.schema
 include /usr/local/etc/openldap/schema/cosine.schema
@@ -2770,13 +2822,13 @@ include /usr/local/etc/openldap/schema/local.schema
 
 该*属性类型*指令用于定义一个新的属性类型。该伪指令使用在子模式子条目中找到的attributeTypes属性使用的相同属性类型说明（如[RFC4512中](http://www.rfc-editor.org/rfc/rfc4512.txt)定义），例如：
 
-```
+```text
 attributetype <RFC4512 Attribute Type Description>
 ```
 
 其中属性类型描述由以下定义 ABNF：
 
-```
+```text
 AttributeTypeDescription = "(" whsp
       numericoid whsp              ; AttributeType identifier
     [ "NAME" qdescrs ]             ; name used in AttributeType
@@ -2801,11 +2853,11 @@ AttributeUsage =
     "dSAOperation"          ; DSA-specific, value depends on server
 ```
 
-其中whsp是空格（' ``'），numericoid是点分十进制形式的全局唯一OID（例如`1.1.0`），qdescrs是一个或多个名称，wid是名称或OID，可选地后跟一个长度说明符（例如`{10` }）。
+其中whsp是空格（'``'），numericoid是点分十进制形式的全局唯一OID（例如`1.1.0`），qdescrs是一个或多个名称，wid是名称或OID，可选地后跟一个长度说明符（例如`{10` }）。
 
 例如，属性类型`名称`和`cn`在`core.schema`中定义为：
 
-```
+```text
 attributeType ( 2.5.4.41 NAME 'name'
         DESC 'name(s) associated with the object'
         EQUALITY caseIgnoreMatch
@@ -2836,7 +2888,7 @@ OpenLDAP客户端和服务器能够通过认证 简单的认证和安全层 （S
 
 OpenLDAP软件提供的标准客户端工具（如*ldapsearch*（1）和*ldapmodify*（1））将默认尝试将用户认证为LDAP目录服务器使用SASL。基本身份验证服务可以由LDAP管理员设置几个步骤，允许用户对slapd服务器作为其LDAP条目进行身份验证。通过几个额外的步骤，可以允许一些用户和服务利用SASL的代理授权功能，允许他们自己进行身份验证，然后将其身份切换到另一个用户或服务的身份。
 
-本章假设您已阅读*Cyrus SASL（系统管理员）*，并附带[Cyrus SASL](http://asg.web.cmu.edu/sasl/sasl-library.html)软件包（`doc / sysadmin.html`），并安装了Cyrus SASL。您应该使用Cyrus SASL `sample_client`和`sample_server`来测试您的SASL安装，然后再尝试使用OpenLDAP软件。
+本章假设您已阅读*Cyrus SASL（系统管理员）*，并附带[Cyrus SASL](http://asg.web.cmu.edu/sasl/sasl-library.html)软件包（`doc / sysadmin.html`），并安装了Cyrus SASL。您应该使用Cyrus SASL`sample_client`和`sample_server`来测试您的SASL安装，然后再尝试使用OpenLDAP软件。
 
 请注意，在以下文本中，术语*用户*用于描述通过LDAP客户端（如*ldapsearch*（1））连接到LDAP服务器的人员或应用程序实体。也就是说，术语*用户*不仅适用于使用LDAP客户端的个人，而且适用于在没有直接用户控制的情况下发出LDAP客户端操作的应用程序实体。例如，使用LDAP操作访问LDAP服务器中保存的信息的电子邮件服务器是应用程序实体。
 
@@ -2858,7 +2910,10 @@ EXTERNAL也可以与`ldapi：///`传输一起使用，因为Unix-domain sockets�
 
 ### 15.2 SASL认证
 
-获取基本的SASL认证运行涉及到几个步骤。第一步配置您的slapd服务器环境，以便可以使用您网站上的安全系统与客户端程序进行通信。这通常涉及设置服务密钥，公钥或其他形式的秘密。第二步涉及将身份验证身份映射到LDAPDN这取决于条目在目录中的布局。将在下一节中使用Kerberos V4作为示例机制给出第一步的说明。您站点身份验证机制所需的步骤将是类似的，但SASL可用的每种机制的指南超出了本章的范围。第二步在“ [映射身份验证身份](http://www.openldap.org/doc/admin24/sasl.html#Mapping Authentication Identities) ”一节中描述。
+获取基本的SASL认证运行涉及到几个步骤。第一步配置您的slapd服务器环境，以便可以使用您网站上的安全系统与客户端程序进行通信。
+这通常涉及设置服务密钥，公钥或其他形式的秘密。第二步涉及将身份验证身份映射到LDAPDN这取决于条目在目录中的布局。
+将在下一节中使用Kerberos V4作为示例机制给出第一步的说明。您站点身份验证机制所需的步骤将是类似的，但SASL可用的每种机制的指南超出了本章的范围。
+第二步在“ [映射身份验证身份](https://www.openldap.org/doc/admin24/sasl.html#Mapping%20Authentication%20Identities) ”一节中描述。
 
 #### 15.2.1 GSSAPI
 
@@ -2866,7 +2921,7 @@ EXTERNAL也可以与`ldapi：///`传输一起使用，因为Unix-domain sockets�
 
 要使用具有*slapd*（8）的GSSAPI机制，必须在服务运行的主机的领域内为*ldap*服务的主体创建一个服务密钥。例如，如果在`directory.example.com`上运行*slapd*，并且您的领域是`EXAMPLE.COM`，则需要使用主体创建服务密钥：
 
-```
+```text
 ldap/directory.example.com@EXAMPLE.COM
 ```
 
@@ -2876,23 +2931,23 @@ ldap/directory.example.com@EXAMPLE.COM
 
 为了进行认证和授权，*slapd*（8）将认证请求DN与以下形式相关联：
 
-```
+```text
 uid=<primary[/instance]>,cn=<realm>,cn=gssapi,cn=auth
 ```
 
 继续我们的例子，具有Kerberos主体`kurt@EXAMPLE.COM`的用户将具有相关的DN：
 
-```
+```text
 uid=kurt,cn=example.com,cn=gssapi,cn=auth
 ```
 
 并且主体`ursula/admin@FOREIGN.REALM`将具有关联的DN：
 
-```
+```text
 uid=ursula/admin,cn=foreign.realm,cn=gssapi,cn=auth
 ```
 
-认证请求DN可以直接使用ACL和`groupOfNames` “member”属性，因为它是合法的LDAP DN格式。或者，可以在使用之前映射认证DN。有关详细信息，请参阅[映射身份验证身份](http://www.openldap.org/doc/admin24/sasl.html#Mapping Authentication Identities)部分。
+认证请求DN可以直接使用ACL和`groupOfNames` “member”属性，因为它是合法的LDAP DN格式。或者，可以在使用之前映射认证DN。有关详细信息，请参阅[映射身份验证身份](https://www.openldap.org/doc/admin24/sasl.html#Mapping%20Authentication%20Identities)部分。
 
 #### 15.2.2 KERBEROS_V4
 
@@ -2904,29 +2959,29 @@ uid=ursula/admin,cn=foreign.realm,cn=gssapi,cn=auth
 
 slapd服务器运行名为“ *ldap* ” 的服务，服务器将需要具有服务密钥的srvtab文件。SASL感知的客户端程序将获得带有用户票证授予票据（TGT）的“ldap”服务票证，其中票据的实例与OpenLDAP服务器的主机名相匹配。例如，如果您的`域名`为`EXAMPLE.COM`，并且slapd服务器正在名为`directory.example.com`的主机上运行，则服务器上的`/etc/srvtab`文件将具有服务密钥
 
-```
+```text
  ldap.directory@EXAMPLE.COM
 ```
 
 当LDAP客户端使用KERBEROS_IV机制将用户认证到目录时，它将从票据缓存或通过从Kerberos服务器获取一个新请求来为同一主体请求会话密钥。这将需要TGT在缓存中可用和有效。如果它不存在或已经过期，客户端可能打印出消息：
 
-```
+```text
 ldap_sasl_interactive_bind_s: Local error
 ```
 
 获得服务票证后，将作为用户身份证明传递给LDAP服务器。服务器将使用SASL库调用从服务票证中提取身份和领域，并将其转换为表单的*身份验证请求DN*
 
-```
+```text
 uid=<username>,cn=<realm>,cn=<mechanism>,cn=auth
 ```
 
 所以在上面的例子中，如果用户的名字是“adamson”，认证请求DN将是：
 
-```
+```text
 uid=adamsom,cn=example.com,cn=kerberos_v4,cn=auth
 ```
 
-该认证请求DN可以直接使用ACL，也可以在使用前进行映射。有关详细信息，请参阅[映射身份验证身份](http://www.openldap.org/doc/admin24/sasl.html#Mapping Authentication Identities)部分。
+该认证请求DN可以直接使用ACL，也可以在使用前进行映射。有关详细信息，请参阅[映射身份验证身份](https://www.openldap.org/doc/admin24/sasl.html#Mapping%20Authentication%20Identities)部分。
 
 #### 15.2.3 DIGEST-MD5
 
@@ -2938,7 +2993,7 @@ uid=adamsom,cn=example.com,cn=kerberos_v4,cn=auth
 
 要使用存储在*sasldb中的*秘密，只需使用*saslpasswd2*命令添加用户：
 
-```
+```text
 saslpasswd2 -c <username>
 ```
 
@@ -2946,7 +3001,7 @@ saslpasswd2 -c <username>
 
 要使用存储在LDAP目录中的秘密，请将明文密码放在`userPassword`属性中。有必要为`slapd.conf`添加一个选项，以确保使用LDAP密码修改操作设置的密码以明文形式存储：
 
-```
+```text
 password-hash   {CLEARTEXT}
 ```
 
@@ -2954,21 +3009,21 @@ password-hash   {CLEARTEXT}
 
 DIGEST-MD5机制产生以下形式的身份验证ID：
 
-```
+```text
 uid=<username>,cn=<realm>,cn=digest-md5,cn=auth
 ```
 
 如果使用默认领域，则从ID中省略领域名称，给出：
 
-```
+```text
 uid=<username>,cn=digest-md5,cn=auth
 ```
 
-有关可选的身份映射的信息，请参阅下面的[映射身份验证](http://www.openldap.org/doc/admin24/sasl.html#Mapping Authentication Identities)身份。
+有关可选的身份映射的信息，请参阅下面的[映射身份验证](https://www.openldap.org/doc/admin24/sasl.html#Mapping%20Authentication%20Identities)身份。
 
 使用合适的映射，用户可以在执行LDAP操作时指定SASL ID，并且将使用存储在*sasldb*或目录本身中的密码来验证身份验证。例如，由目录条目标识的用户：
 
-```
+```text
 dn: cn=Andrew Findlay+uid=u000997,dc=example,dc=com
 objectclass: inetOrgPerson
 objectclass: person
@@ -2977,7 +3032,7 @@ uid: u000997
 userPassword: secret
 ```
 
-**注意：**在上述每种情况下，都没有提供授权身份（例如`-X`）。除非您正在尝试[SASL代理授权](http://www.openldap.org/doc/admin24/sasl.html#SASL Proxy Authorization)，否则不应指定授权身份。服务器将从认证身份推断授权身份（如下所述）。
+**注意：**在上述每种情况下，都没有提供授权身份（例如`-X`）。除非您正在尝试[SASL代理授权](https://www.openldap.org/doc/admin24/sasl.html#SASL%20Proxy%20Authorization)，否则不应指定授权身份。服务器将从认证身份推断授权身份（如下所述）。
 
 #### 15.2.4 EXTERNAL
 
@@ -2989,13 +3044,13 @@ SASL EXTERNAL机制利用较低级协议进行的认证：通常 TLS 或Unix IPC
 
 这是客户端证书的主题DN。请注意，DN由LDAP和X.509显示不同，因此颁发了证书
 
-```
+```text
 C=gb, O=The Example Organisation, CN=A Person
 ```
 
 将产生以下认证身份：
 
-```
+```text
 cn=A Person,o=The Example Organisation,c=gb
 ```
 
@@ -3005,13 +3060,13 @@ cn=A Person,o=The Example Organisation,c=gb
 
 这是由客户端进程的Unix UID和GID组成的：
 
-```
+```text
 gidNumber=<number>+uidNumber=<number>,cn=peercred,cn=external,cn=auth
 ```
 
 因此，以`root`身份运行的客户端进程将是：
 
-```
+```text
 gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
 ```
 
@@ -3019,13 +3074,13 @@ gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
 
 slapd服务器中的认证机制将使用SASL库调用来获取经过身份验证的用户的“用户名”，这取决于所使用的基本身份验证机制。该用户名位于身份验证机制的命名空间中，而不在正常的LDAP命名空间中。如上述部分所述，该用户名重新格式化为表单的认证请求DN
 
-```
+```text
 uid=<username>,cn=<realm>,cn=<mechanism>,cn=auth
 ```
 
 或
 
-```
+```text
 uid=<username>,cn=<mechanism>,cn=auth
 ```
 
@@ -3039,7 +3094,7 @@ uid=<username>,cn=<mechanism>,cn=auth
 
 LDAP管理员需要告诉slapd服务器如何将身份验证请求DN映射到用户的身份验证DN。这通过在*slapd.conf*（5）文件中添加一个或多个`authz-regexp`指令来完成。这个指令有两个参数：**
 
-```
+```text
 authz-regexp <搜索模式> <替换模式>
 ```
 
@@ -3055,19 +3110,19 @@ authz-regexp <搜索模式> <替换模式>
 
 假设认证请求DN被写为：
 
-```
+```text
 uid=adamson,cn=example.com,cn=gssapi,cn=auth
 ```
 
 用户的实际LDAP条目为：
 
-```
+```text
 uid=adamson,ou=people,dc=example,dc=com
 ```
 
 那么*slapd.conf*（5）中的以下`authz-regexp`指令将提供直接映射。
 
-```
+```text
 authz-regexp
   uid=([^,]*),cn=example.com,cn=gssapi,cn=auth
   uid=$1,ou=people,dc=example,dc=com
@@ -3075,7 +3130,7 @@ authz-regexp
 
 一个更宽松的规则可以写成
 
-```
+```text
 authz-regexp
   uid=([^,]*),cn=[^,]*,cn=auth
   uid=$1,ou=people,dc=example,dc=com
@@ -3089,7 +3144,7 @@ authz-regexp
 
 有一些情况下映射到LDAP URL可能是适当的。例如，一些站点可能具有位于LDAP树的多个区域中的人物对象，例如，如果存在`ou=accounting`树和`ou=engineering`树，并且人物之间散布着它们。或者，也许所需的映射必须基于用户信息中的信息。考虑需要将上述认证请求DN映射到其条目如下的用户：
 
-```
+```text
 dn: cn=Mark Adamson,ou=People,dc=Example,dc=COM
 objectclass: person
 cn: Mark Adamson
@@ -3100,7 +3155,7 @@ uid: adamson
 
 与其他网址相似的LDAP网址为形式
 
-```
+```text
 ldap://<host>/<base>?<attrs>?<scope>?<filter>
 ```
 
@@ -3108,7 +3163,7 @@ ldap://<host>/<base>?<attrs>?<scope>?<filter>
 
 假设上述示例中的人实际上具有“adamson”的身份验证用户名，并且该信息保存在其LDAP条目的属性“uid”中。在`authz-regexp`指令可以写成
 
-```
+```text
 authz-regexp
   uid=([^,]*),cn=example.com,cn=gssapi,cn=auth
   ldap:///ou=people,dc=example,dc=com??one?(uid=$1)
@@ -3116,11 +3171,11 @@ authz-regexp
 
 这将启动对slapd服务器内的LDAP数据库的内部搜索。如果搜索只返回一个条目，则它被接受为用户的DN。如果返回多个条目，或者返回零条目，则认证失败，并将用户的连接作为认证请求DN绑定。
 
-在URL中的搜索过滤器<filter>中使用的属性应该被编入索引，以便更快地搜索。如果不是，认证步骤单独可能会持续很长时间，用户可能会认为服务器关闭。
+在URL中的搜索过滤器 `<filter>` 中使用的属性应该被编入索引，以便更快地搜索。如果不是，认证步骤单独可能会持续很长时间，用户可能会认为服务器关闭。
 
 一个更复杂的站点可能有几个领域的使用，每个映射到目录中的不同的子树。这些可以用以下形式的语句处理：
 
-```
+```text
 # Match Engineering realm
 authz-regexp
    uid=([^,]*),cn=engineering.example.com,cn=digest-md5,cn=auth
@@ -3153,13 +3208,13 @@ SASL提供了一种被称为*代理授权*的功能，允许经过身份验证�
 
 当一个实体需要代表许多其他用户行事时，这种服务是有用的。例如，用户可能被引导到网页以在其LDAP条目中对其个人信息进行更改。用户向Web服务器进行身份验证以建立其身份，但是由于该用户对其进行更改，因此，Web服务器CGI无法向LDAP服务器进行身份验证。相反，Web服务器将其自身认证为LDAP服务器作为服务标识，比如说，
 
-```
+```text
 cn=WebUpdate,dc=example,dc=com
 ```
 
 然后将SASL授权给用户的DN。一旦这样授权，CGI会更改用户的LDAP条目，只要slapd服务器能够识别其ACL，则用户本身就在连接的另一端。用户可以直接连接到LDAP服务器，并自己认证，但这需要用户更多地了解LDAP客户端，网页提供的知识更容易。
 
-还可以使用代理授权来限制对具有对数据库的更大访问权限的帐户的访问。这样的帐户，甚至是*slapd.conf*（5）中指定的根DN ，可以有一个严格的可以授权给该DN的人员列表。那么LDAP数据库的更改只能由该DN允许，并且为了成为该DN，用户必须首先认证为列表中的人员之一。这样可以更好地审核谁对LDAP数据库进行了更改。如果允许人们通过`rootpw `*slapd.conf*（5）指令或通过`userPassword`属性直接向特权帐户进行身份验证，则审核变得更加困难。
+还可以使用代理授权来限制对具有对数据库的更大访问权限的帐户的访问。这样的帐户，甚至是*slapd.conf*（5）中指定的根DN ，可以有一个严格的可以授权给该DN的人员列表。那么LDAP数据库的更改只能由该DN允许，并且为了成为该DN，用户必须首先认证为列表中的人员之一。这样可以更好地审核谁对LDAP数据库进行了更改。如果允许人们通过`rootpw`*slapd.conf*（5）指令或通过`userPassword`属性直接向特权帐户进行身份验证，则审核变得更加困难。
 
 请注意，在成功的代理授权之后，LDAP连接的原始身份验证DN将被授权请求中的新DN覆盖。如果服务程序能够自己认证为自己的认证DN，然后授权给其他DN，并且计划在一个LDAP会话期间切换到几个不同的身份，则每次在授权给另一个DN之前需要对其进行身份验证（或使用不同的代理授权机制）。slapd服务器不记录服务程序切换到其他DN的能力。在Kerberos这样的认证机制上，由于用户的TGT和“ldap”
 
@@ -3167,19 +3222,19 @@ cn=WebUpdate,dc=example,dc=com
 
 SASL授权身份通过*ldapsearch*（1）的`-X`开关和其他工具或在*lutil_sasl_defaults*（）调用的`* authzid`参数中发送到LDAP服务器。身份可以是两种形式之一
 
-```
+```text
 u:<username>
 ```
 
 或
 
-```
+```text
 dn:<dn>
 ```
 
-在第一种形式中，<username>来自与上述身份验证身份相同的命名空间。它是由底层身份验证机制引用的用户的用户名。该表单的授权身份通过与认证过程相同的功能转换成DN格式，生成表单的*授权请求DN*
+在第一种形式中，`<username>` 来自与上述身份验证身份相同的命名空间。它是由底层身份验证机制引用的用户的用户名。该表单的授权身份通过与认证过程相同的功能转换成DN格式，生成表单的*授权请求DN*
 
-```
+```text
 uid=<username>,cn=<realm>,cn=<mechanism>,cn=auth
 ```
 
@@ -3191,7 +3246,7 @@ uid=<username>,cn=<realm>,cn=<mechanism>,cn=auth
 
 一旦slapd具有授权DN，则开始实际的批准过程。LDAP管理员可以将两个属性放入LDAP条目以允许授权：
 
-```
+```text
 authzTo
 authzFrom
 ```
@@ -3202,12 +3257,12 @@ authzFrom
 
 两个属性中的值与`authz-regexp`伪指令的替换模式的输出形式相同：DN或LDAP URL。例如，如果`authzTo`值是DN，则该DN是经过身份验证的用户可以授权的DN。另一方面，如果`authzTo`值是LDAP URL，则该URL将用作LDAP数据库的内部搜索，并且已验证的用户可以成为搜索返回的任何DN。如果LDAP条目看起来像：
 
-```
+```text
 dn: cn=WebUpdate,dc=example,dc=com
 authzTo: ldap:///dc=example,dc=com??sub?(objectclass=person)
 ```
 
-那么认证为`cn = WebUpdate，dc = example，dc = com的`任何用户可以授权给具有objectClass of `Person`的搜索库`dc = example，dc = com`下的任何其他LDAP条目。``
+那么认证为`cn = WebUpdate，dc = example，dc = com的`任何用户可以授权给具有objectClass of`Person`的搜索库`dc = example，dc = com`下的任何其他LDAP条目。``
 
 ##### 15.3.3.1 代理授权规则说明
 
@@ -3215,13 +3270,13 @@ authzTo: ldap:///dc=example,dc=com??sub?(objectclass=person)
 
 为了帮助为`authzFrom`和`authzTo`生成更多清晰的规则，这些属性的值可以是其中具有正则表达式字符的DN。这意味着一个源规则
 
-```
+```text
 authzTo: dn.regex:^uid=[^,]*,dc=example,dc=com$
 ```
 
 将允许经过身份验证的用户授权给与给定的正则表达式模式匹配的任何DN。这种正则表达式比较可以比LDAP搜索`（uid = *）`快得多。
 
-另请注意，授权规则中的值必须是以下两种形式之一：LDAP URL或DN（带或不带正则表达式字符）。任何不以“ `ldap：//` ” 开头的内容都将被视为DN。不允许输入形式“ `u：<username>` ”的另一个授权身份作为授权规则。
+另请注意，授权规则中的值必须是以下两种形式之一：LDAP URL或DN（带或不带正则表达式字符）。任何不以“`ldap：//` ” 开头的内容都将被视为DN。不允许输入形式“`u：<username>` ”的另一个授权身份作为授权规则。
 
 ##### 15.3.3.2 策略配置
 
@@ -3239,9 +3294,16 @@ authzTo: dn.regex:^uid=[^,]*,dc=example,dc=com$
 
 启用监视界面后，LDAP客户端可能被用于访问由*监视器*后端提供的信息，受访问和其他控制。
 
-启用后，*监视器*后端将动态生成并返回对象，以响应 *cn=monitor* 子树中的搜索请求。每个对象包含有关服务器特定方面的信息。信息以用户应用程序和操作属性的组合方式进行。该信息可以使用*ldapsearch（1）*，任何通用LDAP浏览器或专门的监控工具进行访问。“ [访问监控信息”](https://www.openldap.org/doc/admin24/monitoringslapd.html#Accessing Monitoring Information)部分提供了有关如何使用*ldapsearch*（1）访问监视信息的简要教程监控信息 监控信息基础及其组织部分细节。
+启用后，*监视器*后端将动态生成并返回对象，以响应 *cn=monitor* 子树中的搜索请求。每个对象包含有关服务器特定方面的信息。
+信息以用户应用程序和操作属性的组合方式进行。该信息可以使用*ldapsearch（1）*，任何通用LDAP浏览器或专门的监控工具进行访问。
+“ [访问监控信息”](https://www.openldap.org/doc/admin24/monitoringslapd.html#Accessing%20Monitoring%20Information)部分提供了有关如何使用*ldapsearch*（1）访问监视信息的简要教程监控信息 监控信息基础及其组织部分细节。
 
-虽然支持监视器后端包含在slapd（8）的默认版本中，但该支持需要一些配置才能激活。这可以使用`cn=config`或 *slapd.conf*（5）完成。前者在中讨论过通过 cn=config 监视配置本章的一部分。后者[通过](https://www.openldap.org/doc/admin24/monitoringslapd.html#Monitor configuration via slapd.conf(5))本章的[slapd.conf（5）](https://www.openldap.org/doc/admin24/monitoringslapd.html#Monitor configuration via slapd.conf(5))部分在[Monitor配置中](https://www.openldap.org/doc/admin24/monitoringslapd.html#Monitor configuration via slapd.conf(5))讨论。这些部分假设监视器后端内置于*slapd中*（例如，`enable-monitor=yes` ，默认值）。如果监视器后端被构建为一个模块（例如，`enable-monitor=mod）`，则该模块必须加载。在“ [配置slapd](https://www.openldap.org/doc/admin24/slapdconf2.html)和[slapd配置文件”](https://www.openldap.org/doc/admin24/slapdconfig.html)章节中讨论了模块的加载。
+虽然支持监视器后端包含在slapd（8）的默认版本中，但该支持需要一些配置才能激活。这可以使用`cn=config`或 *slapd.conf*（5）完成。
+前者在中讨论过通过 cn=config 监视配置本章的一部分。后者[通过](hhttps://www.openldap.org/doc/admin24/monitoringslapd.html#Monitor%20configuration%20via%20slapd.conf(5))本章
+的[slapd.conf（5）](hhttps://www.openldap.org/doc/admin24/monitoringslapd.html#Monitor%20configuration%20via%20slapd.conf(5))部分
+在[Monitor配置中](hhttps://www.openldap.org/doc/admin24/monitoringslapd.html#Monitor%20configuration%20via%20slapd.conf(5))讨论。
+这些部分假设监视器后端内置于*slapd中*（例如，`enable-monitor=yes` ，默认值）。如果监视器后端被构建为一个模块（例如，`enable-monitor=mod）`，
+则该模块必须加载。在“ [配置slapd](https://www.openldap.org/doc/admin24/slapdconf2.html)和[slapd配置文件”](https://www.openldap.org/doc/admin24/slapdconfig.html)章节中讨论了模块的加载。
 
 ### 20.1 通过cn=config(5)监控配置
 
@@ -3255,9 +3317,9 @@ authzTo: dn.regex:^uid=[^,]*,dc=example,dc=com$
 
 首先，确保您的*slapd.conf*（5）文件包含*core.schema*模式配置文件。该*显示器* 后端需要它。
 
-其次，通过在现有数据库部分下方添加 *数据库监视器 *指令来实例化*监视器后端。例如：
+其次，通过在现有数据库部分下方添加 数据库监视器指令来实例化监视器后端。例如：
 
-```
+```text
 database monitor
 ```
 
@@ -3265,7 +3327,7 @@ database monitor
 
 像大多数其他数据库后端一样，监视器后端执行slapd（8）访问和其他管理控制。由于某些监视器信息可能很敏感，因此通常建议对 cn=monitor 进行访问，限于目录管理员及其监控代理。在*数据库监视器*指令下面添加*访问*指令是控制访问的一种清晰有效的方法。例如，在*数据库监视器*指令正下方添加以下*访问*指令将对监视信息的访问限制到指定的目录管理器。
 
-```
+```text
 access to *
         by dn.exact="cn=Manager,dc=example,dc=com
         by * none
@@ -3273,11 +3335,11 @@ access to *
 
 有关*slapd*（8）访问控制的更多信息，请参阅[“slapd配置文件”](https://www.openldap.org/doc/admin24/slapdconfig.html)一章*的访问控制指令*部分和*slapd.access*（5）。
 
-重新启动*slapd*（8）后，您可以开始探索`cn=config`中提供的监视信息，如本章“ [访问监控信息”](https://www.openldap.org/doc/admin24/monitoringslapd.html#Accessing Monitoring Information)部分所述。
+重新启动*slapd*（8）后，您可以开始探索`cn=config`中提供的监视信息，如本章“ [访问监控信息”](https://www.openldap.org/doc/admin24/monitoringslapd.html#Accessing%20Monitoring%20Information)部分所述。
 
 可以验证slapd（8）是否被正确地配置为通过尝试读取`cn=monitor`对象来提供监视信息。例如，如果以下*ldapsearch*（1）命令返回cn=monitor对象（根据请求，没有属性），它正在运行。
 
-```
+```text
 ldapsearch -x -D 'cn=Manager,dc=example,dc=com' -W \
         -b 'cn=Monitor' -s base 1.1
 ```
@@ -3292,14 +3354,14 @@ ldapsearch -x -D 'cn=Manager,dc=example,dc=com' -W \
 
 要检查任何特定的监视器对象，可以使用一个baseObject范围和一个`（objectClass = *）`过滤器对对象执行搜索操作。由于监视信息包含在用户应用程序和操作属性的组合中，所以应该要求返回所有用户应用程序属性（例如`'*'`）和所有操作属性（例如`'+'`）。例如，要读取`cn = Monitor`对象本身，可以使用*ldapsearch*（1）命令（修改为适合您的配置）：
 
-```
+```text
 ldapsearch -x -D 'cn=Manager,dc=example,dc=com' -W \
         -b 'cn=Monitor' -s base '(objectClass=*)' '*' '+'
 ```
 
 当您的服务器运行时，应该产生类似于以下的输出：
 
-```
+```text
 dn: cn=Monitor
 objectClass: monitorServer
 structuralObjectClass: monitorServer
@@ -3320,14 +3382,14 @@ hasSubordinates: TRUE
 
 为了减少返回的不感兴趣的属性数量，在请求哪些属性要返回时，可以更有选择性。例如，可以请求返回由*monitorServer*对象类（例如`@objectClass`）允许的所有属性，而不是所有用户和所有操作属性：
 
-```
+```text
 ldapsearch -x -D 'cn=Manager,dc=example,dc=com' -W \
         -b 'cn=Monitor' -s base '(objectClass=*)' '@monitorServer'
 ```
 
 这将限制输出如下：
 
-```
+```text
 dn: cn=Monitor
 objectClass: monitorServer
 cn: Monitor
@@ -3340,7 +3402,7 @@ monitoredInfo: OpenLDAP: slapd 2.X (Dec  7 2006 17:30:29)
 
 要返回所有监控对象的名称，可以使用子树范围和`（objectClass = *）`过滤器执行`cn = Monitor`的搜索，并且不要求返回任何属性（例如，`1.1`）。````
 
-```
+```text
 ldapsearch -x -D 'cn=Manager,dc=example,dc=com' -W -b 'cn=Monitor' -s sub 1.1
 ```
 
@@ -3352,7 +3414,7 @@ ldapsearch -x -D 'cn=Manager,dc=example,dc=com' -W -b 'cn=Monitor' -s sub 1.1
 
 在这个层次结构中，最高级的对象是{cn = Monitor}。虽然此对象主要用作其他对象的容器，其中大多数是容器，但此对象提供有关此服务器的信息。特别是它提供了slapd（8）版本字符串。例：
 
-```
+```text
 dn: cn=Monitor
 monitoredInfo: OpenLDAP: slapd 2.X (Dec  7 2006 17:30:29)
 ```
@@ -3361,9 +3423,9 @@ monitoredInfo: OpenLDAP: slapd 2.X (Dec  7 2006 17:30:29)
 
 #### 20.4.1 后端
 
-该`cn=Backends`，`cn=Monitor `对象，本身提供了可用后端的列表。所有内置后端的可用后端列表以及模块加载的后端。例如：
+该`cn=Backends`，`cn=Monitor`对象，本身提供了可用后端的列表。所有内置后端的可用后端列表以及模块加载的后端。例如：
 
-```
+```text
 dn: cn=Backends,cn=Monitor
 monitoredInfo: config
 monitoredInfo: ldif
@@ -3374,9 +3436,9 @@ monitoredInfo: hdb
 
 这表示*config*，*ldif*，*monitor*，*bdb*和*hdb*后端可用。
 
-`cn=Backends`，` cn=Monitor`对象也是可用的后端对象的容器。每个可用的后端对象包含有关特定后端的信息。例如：
+`cn=Backends`，`cn=Monitor`对象也是可用的后端对象的容器。每个可用的后端对象包含有关特定后端的信息。例如：
 
-```
+```text
 dn: cn=Backend 0,cn=Backends,cn=Monitor
 monitoredInfo: config
 monitorRuntimeConfig: TRUE
@@ -3440,7 +3502,7 @@ supportedControl: 1.3.6.1.4.1.4203.666.11.7.2
 
 总连接数：
 
-```
+```text
 dn: cn=Total,cn=Connections,cn=Monitor
 structuralObjectClass: monitorCounterObject
 monitorCounter: 4
@@ -3451,7 +3513,7 @@ hasSubordinates: FALSE
 
 当前连接：
 
-```
+```text
 dn: cn=Current,cn=Connections,cn=Monitor
 structuralObjectClass: monitorCounterObject
 monitorCounter: 2
@@ -3466,7 +3528,7 @@ hasSubordinates: FALSE
 
 例如：
 
-```
+```text
 dn: cn=Database 2,cn=Databases,cn=Monitor
 structuralObjectClass: monitoredObject
 monitoredInfo: monitor
@@ -3482,7 +3544,7 @@ hasSubordinates: FALSE
 
 它包含服务器当前正在侦听的设备的描述：
 
-```
+```text
 dn: cn=Listener 0,cn=Listeners,cn=Monitor
 structuralObjectClass: monitoredObject
 monitorConnectionLocalAddress: IP=0.0.0.0:389
@@ -3495,7 +3557,7 @@ hasSubordinates: FALSE
 
 它包含当前活动的日志项目。该*日志*子系统允许用户修改的操作*描述*属性，其值*必须*在admittable日志切换列表：
 
-```
+```text
 Trace
 Packets
 Args
@@ -3517,14 +3579,14 @@ Sync
 
 它显示了服务器执行的操作的一些统计信息：
 
-```
+```text
 Initiated
 Completed
 ```
 
 对于每个操作类型，即：
 
-```
+```text
 Bind
 Unbind
 Add
@@ -3545,7 +3607,7 @@ Extended
 
 如果启用动态覆盖，它也应该包含已加载的模块：
 
-```
+```text
 # Overlays, Monitor
 dn: cn=Overlays,cn=Monitor
 structuralObjectClass: monitorContainer
@@ -3565,7 +3627,7 @@ hasSubordinates: TRUE
 
 它显示了服务器发送的数据的一些统计信息：
 
-```
+```text
 Bytes
 PDU
 Entries
@@ -3574,7 +3636,7 @@ Referrals
 
 例如
 
-```
+```text
 # Entries, Statistics, Monitor
 dn: cn=Entries,cn=Statistics,cn=Monitor
 structuralObjectClass: monitorCounterObject
@@ -3590,7 +3652,7 @@ hasSubordinates: FALSE
 
 例如
 
-```
+```text
 # Max, Threads, Monitor
 dn: cn=Max,cn=Threads,cn=Monitor
 structuralObjectClass: monitoredObject
@@ -3608,7 +3670,7 @@ hasSubordinates: FALSE
 
 开始时间：
 
-```
+```text
 dn: cn=Start,cn=Time,cn=Monitor
 structuralObjectClass: monitoredObject
 monitorTimestamp: 20061205124040Z
@@ -3619,7 +3681,7 @@ hasSubordinates: FALSE
 
 当前时间：
 
-```
+```text
 dn: cn=Current,cn=Time,cn=Monitor
 structuralObjectClass: monitoredObject
 monitorTimestamp: 20061207120624Z
@@ -3640,7 +3702,7 @@ hasSubordinates: FALSE
 
 读服务员：
 
-```
+```text
 dn: cn=Read,cn=Waiters,cn=Monitor
 structuralObjectClass: monitorCounterObject
 monitorCounter: 7
@@ -3651,7 +3713,7 @@ hasSubordinates: FALSE
 
 写服务员：
 
-```
+```text
 dn: cn=Write,cn=Waiters,cn=Monitor
 structuralObjectClass: monitorCounterObject
 monitorCounter: 0

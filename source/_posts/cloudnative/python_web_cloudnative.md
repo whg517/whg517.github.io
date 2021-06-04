@@ -40,13 +40,13 @@ pip install cookiecutter
 
 如果无法使用，可以手动创建
 
-```
+```text
 cookiecutter http://git.tendata.com.cn/tendata/bigdata/cookiecutter-tendata-python.git
 ```
 
 项目模板结构如下：
 
-```
+```text
 .
 ├── httpbin
 │   └── __init__.py
@@ -65,7 +65,7 @@ cookiecutter http://git.tendata.com.cn/tendata/bigdata/cookiecutter-tendata-pyth
 
 `httpbin/__init__.py`
 
-```
+```text
 __version__ = '0.1.0'
 ```
 
@@ -159,7 +159,10 @@ python_files = tests.py test_*.py *_tests.py
 
 
 
-> 注意： `version = attr: httpbin.__version__` 使用了 [`attr:`](https://setuptools.readthedocs.io/en/latest/setuptools.html?highlight=setup.cfg#specifying-values) 特殊指令，其作用相当于 `import` ，如果 `httpbin/__init__.py` 中导入了第三方依赖，在执行 `tox` 或者在没有外部依赖的环境下执行 `python setup.py` 打包的时候会报缺少外部依赖的问题。因为依赖调用，而环境中又没有安装。此时要么把依赖从 `httpbin/__init__.py` 中移出去，要么在 `setuo.py` 中使用 `open` 方法读取 `httpbin/__init__.py` 文件，然后用正则匹配出对版本号。`re.search(r"__version__ = ['\"]([^'\"]+)['\"]", open(['httpbin', '__version__.py']).read(), re.M).group(1)`
+> 注意： `version = attr: httpbin.__version__` 使用了 [`attr:`](https://setuptools.readthedocs.io/en/latest/setuptools.html?highlight=setup.cfg#specifying-values) 特殊指令，
+> 其作用相当于 `import` ，如果 `httpbin/__init__.py` 中导入了第三方依赖，在执行 `tox` 或者在没有外部依赖的环境下执行 `python setup.py` 打包的时候会报缺少外部依赖的问题。
+> 因为依赖调用，而环境中又没有安装。此时要么把依赖从 `httpbin/__init__.py` 中移出去，要么在 `setuo.py` 中使用 `open` 方法读取 `httpbin/__init__.py` 文件，
+> 然后用正则匹配出对版本号。`re.search(r"__version__ = ['\"]([^'\"]+)['\"]", open(['httpbin', '__version__.py']).read(), re.M).group(1)`
 
 
 
@@ -461,7 +464,7 @@ docker run --rm httpbin
 
 
 
-### 2. 增加 ci/cd 
+### 2. 增加 ci/cd
 
 我使用的是 gitlab，所以后面 gitlab-ci 内容。以后有机会会增加其他 ci 工具。
 

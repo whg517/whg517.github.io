@@ -7,7 +7,7 @@ tags:
 - api-design
 ---
 
-> 本文是 [Understanding the API-First Approach to Building Products](https://swagger.io/resources/articles/adopting-an-api-first-approach/) 
+> 本文是 [Understanding the API-First Approach to Building Products](https://swagger.io/resources/articles/adopting-an-api-first-approach/)
 > 的翻译，进供学习交流。如有翻译不当，请斧正。所有权归原作者。侵删。
 
 ![swagger smartbear](https://static1.smartbear.co/swagger/media/images/resources/articles/api-first-approach-to-products.png)
@@ -48,7 +48,7 @@ API 和代码可以在许多不同项目上重用。当开发团队需要构建�
 
 ### 加快上市速度
 
-使用允许导入 API 定义文件的工具，可以自动构建 API 的大部分过程。像 [SwaggerHub](https://swagger.io/tools/swaggerhub/) 允许导入 API 
+使用允许导入 API 定义文件的工具，可以自动构建 API 的大部分过程。像 [SwaggerHub](https://swagger.io/tools/swaggerhub/) 允许导入 API
 定义文件，像 API 文档、SDK、和 mock API 都可以自动生成。自动化极大地加快了API和应用程序的开发。
 
 API首先还可以为应用程序添加新的服务和技术，而不必重新架构整个系统。在开发应用程序方面，竞争非常激烈，因此必须快速开发应用程序。
@@ -74,7 +74,7 @@ API首先通过确保API可靠，一致且易于开发人员使用来降低失�
     另外，找出并写下每个API的用例。根据这些用例写下潜在的端点。
 2. **建立 API 受众**: 谁是您组织中的利益相关者？您的API计划应包含尽可能多的人-您需要公司范围内的支持，并需要组织内团队共享的愿景。然后，
     利益相关者可以就整个组织之间的交互达成一致，以使API保持一致。
-３. **设计 API 约定[^1]**: 约定[^1]为设计 API 建立了一套标准和最佳实践。确保描述和记录所有API。从端点名称和URL到错误代码和版本控制，
+3. **设计 API 约定[^1]**: 约定[^1]为设计 API 建立了一套标准和最佳实践。确保描述和记录所有API。从端点名称和URL到错误代码和版本控制，
     确保所有API的工作方式相同。一致性是关键。
 4. **定义风格指南**: 全面，具有凝聚力的风格指南可确保组织服务的团队之间的一致性。API状态代码，版本控制，错误处理等将被标准化，
     以确保以相同的方式设计API。使用SwaggerHub之类的工具为组织中的所有API创建样式指南。
@@ -90,8 +90,5 @@ API首先通过确保API可靠，一致且易于开发人员使用来降低失�
 ## API作为一等公民
 
 API优先的产品构建方法可以使您的组织从许多方面受益。API优先方法要求团队计划，组织和共享其API程序的愿景。它还需要采用支持API优先方法的工具。
-
-
-
 
 [^1]: 这里的约定其实就是 API 设计规范。

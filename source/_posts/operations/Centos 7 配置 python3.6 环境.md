@@ -24,14 +24,15 @@ yum install python36
 
 `python` 命令默认是系统 python2.x 软连接到 `python2.x` 上的，请勿将该软链接置到 python3.x 上，否可可能会出现系统问题，当然可以通过 livecd 启动然后把软链接更改回来。
 
-**后文中的 python 都是指系统中 python2.x**
+**注意:**后文中的 python 都是指系统中 python2.x
 
-```
+```text
 [root@localhost ~]# python3.6 --version
 Python 3.6.3
 ```
 
 ### python3 软链接
+
 为了方便使用 python3.6，我们做一个 python3 的软链接到 python3.6 上
 
 python36 是链接到 python3.6 上的
@@ -43,7 +44,7 @@ ln -s python36 python3
 
 检查环境
 
-```
+```text
 [root@localhost bin]# python3 --version
 Python 3.6.3
 ```
@@ -90,18 +91,18 @@ python3.6 get-pip.py
 
 安装完成后使用
 
-```
+```text
 [root@localhost ~]# pip3 --version
 pip 9.0.3 from /usr/local/lib/python3.6/site-packages (python 3.6)
 ```
 
 如果你的系统没有为 python 安装 pip ，`pip --version` 也应该为 pyhon3.6 。当然即使有了，可以修改 `/usr/local/bin/pip` 文件指向 pip3 或者使用软链接。
 
-**后文中 pip 都是指 pip3**
+**注意：**后文中 pip 都是指 pip3
 
 ### 安装虚拟环境 Virtualenvwrapper
 
-详细内容参考 [Virtualenv和Virtualenvwrapper的配置使用](https://blog.csdn.net/leafage_m/article/details/72854559) 
+详细内容参考 [Virtualenv和Virtualenvwrapper的配置使用](https://blog.csdn.net/leafage_m/article/details/72854559)
 
 里面包含 Winwows 和 Linux 的安装使用说明
 
@@ -111,7 +112,9 @@ virtualenv是用来创建一个独立的Python虚拟环境的工具，通过virt
 
 对应的Virtualenvwrapper是在使用virtualenv的一个扩展。
 
-> virtualenvwrapper is a set of extensions to Ian Bicking’s virtualenv tool. The extensions include wrappers for creating and deleting virtual environments and otherwise managing your development workflow, making it easier to work on more than one project at a time without introducing conflicts in their dependencies.
+> virtualenvwrapper is a set of extensions to Ian Bicking’s virtualenv tool.
+> The extensions include wrappers for creating and deleting virtual environments and
+> otherwise managing your development workflow, making it easier to work on more than one project at a time without introducing conflicts in their dependencies.
 
 通过wrapper可以方便的管理虚拟环境。
 
@@ -151,38 +154,38 @@ source /etc/profile
 
 1. 创建 python 虚拟环境
 
-```
-[root@localhost ~]# mkvirtualenv testenv
-Using base prefix '/usr'
-New python executable in /root/.virtualenvs/testenv/bin/python3.6
-Also creating executable in /root/.virtualenvs/testenv/bin/python
-Installing setuptools, pip, wheel...done.
-virtualenvwrapper.user_scripts creating /root/.virtualenvs/testenv/bin/predeactivate
-virtualenvwrapper.user_scripts creating /root/.virtualenvs/testenv/bin/postdeactivate
-virtualenvwrapper.user_scripts creating /root/.virtualenvs/testenv/bin/preactivate
-virtualenvwrapper.user_scripts creating /root/.virtualenvs/testenv/bin/postactivate
-virtualenvwrapper.user_scripts creating /root/.virtualenvs/testenv/bin/get_env_details
-(testenv) [root@localhost ~]# 
-(testenv) [root@localhost ~]# ll ~/.virtualenvs/testenv/
-total 8
-drwxr-xr-x 2 root root 4096 Apr  3 03:24 bin
-drwxr-xr-x 2 root root   24 Apr  3 03:24 include
-drwxr-xr-x 3 root root   23 Apr  3 03:24 lib
-lrwxrwxrwx 1 root root    3 Apr  3 03:24 lib64 -> lib
--rw-r--r-- 1 root root   60 Apr  3 03:24 pip-selfcheck.json
+    ```text
+    [root@localhost ~]# mkvirtualenv testenv
+    Using base prefix '/usr'
+    New python executable in /root/.virtualenvs/testenv/bin/python3.6
+    Also creating executable in /root/.virtualenvs/testenv/bin/python
+    Installing setuptools, pip, wheel...done.
+    virtualenvwrapper.user_scripts creating /root/.virtualenvs/testenv/bin/predeactivate
+    virtualenvwrapper.user_scripts creating /root/.virtualenvs/testenv/bin/postdeactivate
+    virtualenvwrapper.user_scripts creating /root/.virtualenvs/testenv/bin/preactivate
+    virtualenvwrapper.user_scripts creating /root/.virtualenvs/testenv/bin/postactivate
+    virtualenvwrapper.user_scripts creating /root/.virtualenvs/testenv/bin/get_env_details
+    (testenv) [root@localhost ~]# 
+    (testenv) [root@localhost ~]# ll ~/.virtualenvs/testenv/
+    total 8
+    drwxr-xr-x 2 root root 4096 Apr  3 03:24 bin
+    drwxr-xr-x 2 root root   24 Apr  3 03:24 include
+    drwxr-xr-x 3 root root   23 Apr  3 03:24 lib
+    lrwxrwxrwx 1 root root    3 Apr  3 03:24 lib64 -> lib
+    -rw-r--r-- 1 root root   60 Apr  3 03:24 pip-selfcheck.json
 
-(testenv) [root@localhost ~]# 
-```
+    (testenv) [root@localhost ~]# 
+    ```
 
-初次创建完成虚拟环境，会自动使用。退出虚拟环境请使用 `deactivate`
+    初次创建完成虚拟环境，会自动使用。退出虚拟环境请使用 `deactivate`
 
 2. 使用虚拟环境
 
-使用 `workon` 命令，直接 `tab` 提示即可列出当前虚拟环境。指定名称后使用
+    使用 `workon` 命令，直接 `tab` 提示即可列出当前虚拟环境。指定名称后使用
 
-```
-[root@localhost ~]# workon test
-testenv   test_env  
-```
+    ```text
+    [root@localhost ~]# workon test
+    testenv   test_env  
+    ```
 
 3. 关于 virtualenv 和 virtualenvwrapper 的更多使用方法请参考官方文档。另外再推荐一个虚拟环境管理工具 `pipenv` 。请自行权衡利弊后选择使用

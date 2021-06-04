@@ -19,19 +19,19 @@ tags:
 
 文档编辑：John Gossman（C + E），Chris Mullins（ASG），Gareth Jones（ASG），Rob Dolin（C + E），Mark Stafford（C + E）
 
-<!-- more -->
-
-# Microsoft REST API准则
-
 ## 1. 摘要
 
-作为设计原则，Microsoft REST API准则鼓励应用程序开发人员通过RESTful HTTP接口访问资源。为了在遵循Microsoft REST API准则的平台上为开发人员提供尽可能流畅的体验，REST API应当遵循一致的设计准则，以使其使用起来简单直观。
+作为设计原则，Microsoft REST API准则鼓励应用程序开发人员通过RESTful HTTP接口访问资源。为了在遵循Microsoft REST API准则的平台上为开发人员提供尽可能流畅的体验，
+REST API应当遵循一致的设计准则，以使其使用起来简单直观。
 
 本文档建立了Microsoft REST API应该遵循的准则，以便一致地开发RESTful接口。
 
+<!-- more -->
+
 ## 3. 引言
 
-开发人员通过HTTP接口访问大多数Microsoft Cloud Platform资源。尽管每个服务通常都提供特定于语言的框架来包装其API，但其所有操作最终都归结为HTTP请求。Microsoft必须支持广泛的客户端和服务，并且不能依赖可用于每个开发环境的丰富框架。因此，这些准则的目标是确保具有基本HTTP支持的任何客户端都可以轻松，一致地使用Microsoft REST API。
+开发人员通过HTTP接口访问大多数Microsoft Cloud Platform资源。尽管每个服务通常都提供特定于语言的框架来包装其API，但其所有操作最终都归结为HTTP请求。
+Microsoft必须支持广泛的客户端和服务，并且不能依赖可用于每个开发环境的丰富框架。因此，这些准则的目标是确保具有基本HTTP支持的任何客户端都可以轻松，一致地使用Microsoft REST API。
 
 为了为开发人员提供尽可能流畅的体验，使这些API遵循一致的设计准则非常重要，因此使它们使用起来简单直观。本文档建立了Microsoft REST API开发人员应遵循的准则，以一致地开发此类API。
 
@@ -45,7 +45,7 @@ tags:
 - 允许服务开发人员利用其他服务的先前工作来实施，测试和记录一致定义的REST端点。
 - 允许合作伙伴（例如，非Microsoft实体）将这些准则用于他们自己的REST端点设计。
 
-*注意：准则旨在与符合REST体系结构样式的建筑服务保持一致，尽管它们并未解决或要求遵循REST约束的建筑服务。在整个文档中，术语“ REST”用于表示符合REST精神的服务，而不是本书所遵循的REST*
+**注意**：准则旨在与符合REST体系结构样式的建筑服务保持一致，尽管它们并未解决或要求遵循REST约束的建筑服务。在整个文档中，术语“ REST”用于表示符合REST精神的服务，而不是本书所遵循的REST
 
 ### 3.1 推荐阅读
 
@@ -63,13 +63,17 @@ tags:
 
 ### 4.1 准则的适用
 
-这些准则适用于Microsoft或任何合作伙伴服务公开公开的任何REST API。私有或内部API也应尝试遵循这些准则，因为内部服务最终倾向于公开公开。一致性不仅对外部客户而且对内部服务消费者都很有价值，并且这些准则提供了对任何服务都有用的最佳实践。
+这些准则适用于Microsoft或任何合作伙伴服务公开公开的任何REST API。私有或内部API也应尝试遵循这些准则，因为内部服务最终倾向于公开公开。
+一致性不仅对外部客户而且对内部服务消费者都很有价值，并且这些准则提供了对任何服务都有用的最佳实践。
 
-有正当理由免除这些准则。显然，实现或必须与某些外部定义的REST API互操作的REST服务必须与该API兼容，而不一定与这些准则兼容。一些服务可能还具有特殊的性能需求，这些需求需要不同的格式，例如二进制协议。
+有正当理由免除这些准则。显然，实现或必须与某些外部定义的REST API互操作的REST服务必须与该API兼容，而不一定与这些准则兼容。
+一些服务可能还具有特殊的性能需求，这些需求需要不同的格式，例如二进制协议。
 
 ### 4.2 现有服务和服务版本指导
 
-我们不建议仅出于合规性考虑而对早于这些准则的服务进行重大更改。当兼容性遭到破坏时，该服务应尝试在下一版本中变得兼容。当服务添加新的API时，该API应该与相同版本的其他API一致。因此，如果针对该指南的1.0版编写了服务，则应将增量添加到该服务的新API也遵循1.0版。然后可以在服务的下一个主要版本中升级该服务以使其与指南的最新版本保持一致。
+我们不建议仅出于合规性考虑而对早于这些准则的服务进行重大更改。当兼容性遭到破坏时，该服务应尝试在下一版本中变得兼容。
+当服务添加新的API时，该API应该与相同版本的其他API一致。因此，如果针对该指南的1.0版编写了服务，则应将增量添加到该服务的新API也遵循1.0版。
+然后可以在服务的下一个主要版本中升级该服务以使其与指南的最新版本保持一致。
 
 ### 4.3 需求语言
 
@@ -77,7 +81,8 @@ tags:
 
 ### 4.4 许可证
 
-该作品已根据知识共享署名4.0国际许可协议获得许可。要查看此许可证的副本，请访问http://creativecommons.org/licenses/by/4.0/或向美国纽约州94042，山景城的PO Box 1866邮政局（Creative Commons）发信。
+该作品已根据知识共享署名4.0国际许可协议获得许可。要查看此许可证的副本，请访问 [http://creativecommons.org/licenses/by/4.0/])
+ 或向美国纽约州94042，山景城的PO Box 1866邮政局（Creative Commons）发信。
 
 ## 5 分类
 
@@ -85,7 +90,8 @@ tags:
 
 ### 5.1 错误
 
-错误，或更具体地说是服务错误，定义为客户端将无效数据传递给服务，并且服务*正确*拒绝该数据。示例包括无效的凭据，不正确的参数，未知的版本ID或类似内容。这些通常是“ 4xx” HTTP错误代码，是客户端传递不正确或无效数据的结果。
+错误，或更具体地说是服务错误，定义为客户端将无效数据传递给服务，并且服务**正确**拒绝该数据。
+示例包括无效的凭据，不正确的参数，未知的版本ID或类似内容。这些通常是“ 4xx” HTTP错误代码，是客户端传递不正确或无效数据的结果。
 
 错误*不会*影响总体API可用性。
 
@@ -99,7 +105,8 @@ tags:
 
 ### 5.3 延迟
 
-延迟定义为特定API调用完成所需的时间，并尽可能接近客户端。此指标以相同的方式适用于同步和异步API。对于长时间运行的呼叫，延迟是根据初始请求进行衡量的，并衡量该呼叫（而不是整个操作）需要花费多长时间。
+延迟定义为特定API调用完成所需的时间，并尽可能接近客户端。此指标以相同的方式适用于同步和异步API。对于长时间运行的呼叫，
+延迟是根据初始请求进行衡量的，并衡量该呼叫（而不是整个操作）需要花费多长时间。
 
 ### 5.4完成时间
 
@@ -107,7 +114,8 @@ tags:
 
 ### 5.5 长时间运行的API错误
 
-对于长时间运行的API，初始请求可以开始操作，并且检索结果的请求可以在技术上正常工作（每个返回200），但是基础操作失败。长期运行的故障必须作为故障汇总到总体可用性指标中。
+对于长时间运行的API，初始请求可以开始操作，并且检索结果的请求可以在技术上正常工作（每个返回200），但是基础操作失败。
+长期运行的故障必须作为故障汇总到总体可用性指标中。
 
 ## 6 客户指导
 
@@ -137,17 +145,19 @@ tags:
 
 结构良好的URL的示例是：
 
-```
+```text
 https://api.contoso.com/v1.0/people/jdoe@contoso.com/inbox
 ```
+
 不友好的URL是：
-```
+
+```text
 https://api.contoso.com/EWS/OData/Users('jdoe@microsoft.com')/Folders('AAMkADdiYzI1MjUzLTk4MjQtNDQ1Yy05YjJkLWNlMzMzYmIzNTY0MwAuAAAAAACzMsPHYH6HQoSwfdpDx-2bAQCXhUk6PC1dS7AERFluCgBfAAABo58UAAA=')
 ```
 
 经常出现的模式是使用URL作为值。服务可以使用URL作为值。例如，以下是可接受的：
 
-```
+```text
 https://api.contoso.com/v1.0/items?url=https://resources.contoso.com/shoes/fancy
 ```
 
@@ -159,8 +169,8 @@ https://api.contoso.com/v1.0/items?url=https://resources.contoso.com/shoes/fancy
 
 可以生成超过2083个字符的URL的服务必须为他们希望支持的客户提供便利。以下是一些确定目标客户支持的来源：
 
-- http://stackoverflow.com/a/417184
-- https://blogs.msdn.microsoft.com/ieinternals/2014/08/13/url-length-limits/
+- `http://stackoverflow.com/a/417184`
+- `https://blogs.msdn.microsoft.com/ieinternals/2014/08/13/url-length-limits/`
 
 另请注意，某些技术堆栈具有严格的可调整的URL限制，因此在设计服务时请记住这一点。
 
@@ -172,7 +182,7 @@ https://api.contoso.com/v1.0/items?url=https://resources.contoso.com/shoes/fancy
 
 包含规范标识符的URL的示例是：
 
-```
+```text
 https://api.contoso.com/v1.0/people/7011042402/inbox
 ```
 
@@ -198,13 +208,13 @@ POST操作应支持Location响应标头，以通过Location标头指定未显式
 
 例如，设想一个允许创建托管服务器的服务，该服务将由该服务命名：
 
-```
+```text
 POST http://api.contoso.com/account1/servers
 ```
 
 响应：
 
-```
+```text
 201 Created
 Location: http://api.contoso.com/account1/servers/server321
 ```
@@ -231,7 +241,7 @@ OPTIONS允许客户端至少通过返回表示该资源有效方法的Allow标�
 
 另外，服务应该包括一个链接头（参见[RFC 5988](http://tools.ietf.org/html/rfc5988)），以指向相关资源的文档：
 
-```
+```text
 Link: <{help}>; rel="help"
 ```
 
@@ -244,7 +254,7 @@ Link: <{help}>; rel="help"
 Microsoft REST API指南服务应使用下面的请求标头表。没有强制使用这些头，但是如果使用，则必须始终使用它们。
 
 所有报头值必须遵循规范中规定的语法规则，其中定义了报头字段。[RFC7231](https://tools.ietf.org/html/rfc7231)中定义了许多HTTP标头，但是可以在[IANA标头注册表中](http://www.iana.org/assignments/message-headers/message-headers.xhtml)找到批准标头的完整列表。”
-
+<!-- markdownlint-disable MD013 MD033-->
 | Header                                   | 类型                                  | 描述                                                         |
 | ---------------------------------------- | ------------------------------------- | ------------------------------------------------------------ |
 | `Authorization`                          | String                                | 请求的授权标头                                               |
@@ -256,11 +266,11 @@ Microsoft REST API指南服务应使用下面的请求标头表。没有强制�
 | `Content-Type`                           | 内容类型                              | 请求主体的MIME类型（PUT / POST / PATCH）                     |
 | `Prefer`                                 | return=minimal，return=representation | 如果指定了return = minimal首选项，则服务应响应成功的插入或更新而返回空主体。如果指定了return = representation，则服务应在响应中返回创建或更新的资源。如果服务具有客户端有时会从响应中受益的场景，但有时响应会对带宽造成太大的影响，则服务应支持此标头。 |
 | `If-Match`, `If-None-Match` , `If-Range` | String                                | 支持使用乐观并发控制更新资源的服务必须支持If-Match标头。服务也可以使用其他与ETag相关的标头，只要它们遵循HTTP规范即可。 |
-
+<!-- markdownlint-restore -->
 ### 7.6标准响应头
 
 服务应返回以下响应标头，除非在“必需”列中注明。
-
+<!-- markdownlint-disable MD013 MD033-->
 | 响应Header           | 必要条件                   | 说明                                                         |
 | -------------------- | -------------------------- | ------------------------------------------------------------ |
 | `Date`               | 所有响应                   | 根据服务器的时钟，以[RFC 5322](https://tools.ietf.org/html/rfc5322#section-3.3)日期和时间格式处理响应的时间戳。该头必须包含在响应中。格林威治标准时间（GMT）必须用作此标头的时区参考。例如：`Wed, 24 Aug 2016 18:41:30 GMT`。请注意，为此目的，GMT完全等于UTC（世界标准时间）。 |
@@ -268,7 +278,7 @@ Microsoft REST API指南服务应使用下面的请求标头表。没有强制�
 | `Content-Encoding`   | 所有响应                   | GZIP或DEFLATE（视情况而定）                                  |
 | `Preference-Applied` | 在请求中指定时             | 是否应用了“首选”请求标头中指示的首选项                       |
 | `ETag`               | 当请求的资源具有实体标签时 | ETag响应标头字段提供所请求变体的实体标签的当前值。与If-Match，If-None-Match和If-Range一起使用以实现乐观并发控制。 |
-
+<!-- markdownlint-restore -->
 ### 7.7自定义 Header
 
 给定API的基本操作必须不需要自定义标头。
@@ -326,28 +336,41 @@ JSON属性名称应为驼峰式。
 | ---------------- | ------------------- | ---------------------------------------- |
 | application/json | 返回内容应该是 JSON | 对于 `text/javascript` 可以是 JSONP 格式 |
 
-```
+```text
 GET https://api.contoso.com/v1.0/products/user
 Accept: application/json
 ```
 
 #### 7.10.2错误条件响应
 
-对于不成功的情况，开发人员应该能够编写一段代码，以在不同的Microsoft REST API准则服务之间一致地处理错误。这允许构建简单可靠的基础结构来将异常作为成功响应的独立流程来处理。以下内容基于OData v4 JSON规范。但是，它非常通用，不需要特定的OData构造。即使没有使用其他OData构造，API也应该使用这种格式。
+对于不成功的情况，开发人员应该能够编写一段代码，以在不同的Microsoft REST API准则服务之间一致地处理错误。
+这允许构建简单可靠的基础结构来将异常作为成功响应的独立流程来处理。以下内容基于OData v4 JSON规范。
+但是，它非常通用，不需要特定的OData构造。即使没有使用其他OData构造，API也应该使用这种格式。
 
 错误响应必须是单个JSON对象。这个对象必须有一个名为“错误”的名称/值对。该值必须是JSON对象。
 
 这个对象必须包含名称/值对，名称为“ code”和“ message”，并且可以包含名称/值对，名称为“ target”，“ details”和“ innererror”。
 
-“代码”名称/值对的值是与语言无关的字符串。它的值是服务定义的错误代码，应易于阅读。与响应中指定的HTTP错误代码相比，此代码可作为错误的更具体指示。服务应该具有相对少量（大约20个）的“代码”可能值，并且所有客户端都必须能够处理所有这些值。大多数服务将需要更多数量的更特定的错误代码，这对于所有客户端而言都不是很有趣。如下所述，这些错误代码应在“内部错误”名称/值对中公开。为现有客户端可见的“代码”引入新值是一项重大更改，需要增加版本。服务可以通过将新的错误代码添加到“
+“代码”名称/值对的值是与语言无关的字符串。它的值是服务定义的错误代码，应易于阅读。与响应中指定的HTTP错误代码相比，此代码可作为错误的更具体指示。
+服务应该具有相对少量（大约20个）的“代码”可能值，并且所有客户端都必须能够处理所有这些值。大多数服务将需要更多数量的更特定的错误代码，
+这对于所有客户端而言都不是很有趣。如下所述，这些错误代码应在“内部错误”名称/值对中公开。为现有客户端可见的“代码”引入新值是一项重大更改，
+需要增加版本。服务可以通过将新的错误代码添加到“
 
-“消息”名称/值对的值必须是人类可读的错误表示。它旨在帮助开发人员，不适合最终用户使用。希望向最终用户公开合适消息的服务必须通过[注释](http://docs.oasis-open.org/odata/odata-json-format/v4.0/os/odata-json-format-v4.0-os.html#_Instance_Annotations)或自定义属性来实现。服务不应该为最终用户本地化“消息”，因为这样做可能会使值记录给可能正在记录该值的应用程序开发人员不可读，并使该值在Internet上的可搜索性降低。
+“消息”名称/值对的值必须是人类可读的错误表示。它旨在帮助开发人员，不适合最终用户使用。
+希望向最终用户公开合适消息的服务必须通过[注释](http://docs.oasis-open.org/odata/odata-json-format/v4.0/os/odata-json-format-v4.0-os.html#_Instance_Annotations)或自定义属性来实现。
+服务不应该为最终用户本地化“消息”，因为这样做可能会使值记录给可能正在记录该值的应用程序开发人员不可读，并使该值在Internet上的可搜索性降低。
 
 “目标”名称/值对的值是特定错误的目标（例如，错误属性的名称）。
 
-如上所述，“详细信息”名称/值对的值必须是JSON对象数组，该对象必须包含“代码”和“消息”的名称/值对，并且可以包含“目标”的名称/值对，如上所述。“详细信息”数组中的对象通常表示在请求期间发生的不同的，相关的错误。请参见下面的示例。
+如上所述，“详细信息”名称/值对的值必须是JSON对象数组，该对象必须包含“代码”和“消息”的名称/值对，并且可以包含“目标”的名称/值对，
+如上所述。“详细信息”数组中的对象通常表示在请求期间发生的不同的，相关的错误。请参见下面的示例。
 
-“内部错误”名称/值对的值必须是一个对象。该对象的内容是服务定义的。希望返回比根级代码更具体的错误的服务必须这样做，方法是包括“代码”的名称/值对和嵌套的“ innererror”。每个嵌套的“ innererror”对象都比其父对象表示更高级别的详细信息。在评估错误时，客户必须遍历所有嵌套的“内部错误”，并选择他们了解的最深层的错误。这种方案允许服务在层次结构中的任何位置引入新的错误代码，而不会破坏向后兼容性，只要仍然出现旧的错误代码即可。服务可以向不同的调用者返回不同级别的深度和细节。例如，在开发环境中，最深的“ 具有自定义服务器定义属性的错误类型应在服务的元数据文档中声明。请参见下面的示例。具有自定义服务器定义属性的错误类型应在服务的元数据文档中声明。请参见下面的示例。
+“内部错误”名称/值对的值必须是一个对象。该对象的内容是服务定义的。希望返回比根级代码更具体的错误的服务必须这样做，
+方法是包括“代码”的名称/值对和嵌套的 `innererror` 。每个嵌套的 `innererror` 对象都比其父对象表示更高级别的详细信息。
+在评估错误时，客户必须遍历所有嵌套的“内部错误”，并选择他们了解的最深层的错误。这种方案允许服务在层次结构中的任何位置引入新的错误代码，
+而不会破坏向后兼容性，只要仍然出现旧的错误代码即可。服务可以向不同的调用者返回不同级别的深度和细节。
+例如，在开发环境中，最深的“ 具有自定义服务器定义属性的错误类型应在服务的元数据文档中声明。请参见下面的示例。
+具有自定义服务器定义属性的错误类型应在服务的元数据文档中声明。请参见下面的示例。
 
 错误响应可能在其任何JSON对象中包含[注释](http://docs.oasis-open.org/odata/odata-json-format/v4.0/os/odata-json-format-v4.0-os.html#_Instance_Annotations)。
 
@@ -403,7 +426,10 @@ Accept: application/json
 }
 ```
 
-在此示例中，最基本的错误代码是“ BadArgument”，但是对于感兴趣的客户端，“ innererror”中有更具体的错误代码。该服务可能在以后的日期中添加了“ PasswordReuseNotAllowed”代码，以前仅返回了“ PasswordDoesNotMeetPolicy”。添加新的错误代码时，现有客户端不会中断，但是新客户端可以利用它。“ PasswordDoesNotMeetPolicy”错误还包括其他名称/值对，允许客户端确定服务器的配置，以编程方式验证用户的输入或在客户端自己的本地化消息传递中向用户显示服务器的约束。
+在此示例中，最基本的错误代码是“ BadArgument”，但是对于感兴趣的客户端，“ innererror”中有更具体的错误代码。
+该服务可能在以后的日期中添加了“ PasswordReuseNotAllowed”代码，以前仅返回了“ PasswordDoesNotMeetPolicy”。
+添加新的错误代码时，现有客户端不会中断，但是新客户端可以利用它。“ PasswordDoesNotMeetPolicy”错误还包括其他名称/值对，
+允许客户端确定服务器的配置，以编程方式验证用户的输入或在客户端自己的本地化消息传递中向用户显示服务器的约束。
 
 “详细信息”示例：
 
@@ -450,7 +476,8 @@ Accept: application/json
 
 ## 8 CORS
 
-符合Microsoft REST API准则的服务必须支持[CORS（跨源资源共享）](http://www.w3.org/TR/access-control/)。服务应支持允许的CORS *来源，并通过有效的OAuth令牌强制执行授权。服务不应通过原始验证支持用户凭证。特殊情况可能会有例外。
+符合Microsoft REST API准则的服务必须支持[CORS（跨源资源共享）](http://www.w3.org/TR/access-control/)。服务应支持允许的 `CORS` 来源，
+并通过有效的OAuth令牌强制执行授权。服务不应通过原始验证支持用户凭证。特殊情况可能会有例外。
 
 ### 8.1客户指导
 
@@ -460,9 +487,12 @@ Web开发人员通常不需要做任何特殊的事情就可以利用CORS。所�
 
 #### 8.1.1避免飞行前
 
-由于CORS协议可以触发预检请求，这些预检请求会增加服务器的往返行程，因此对性能要求较高的应用可能会希望避免这种情况。CORS的精神是避免对旧的不具备CORS功能的浏览器能够进行的任何简单的跨域请求进行预检。所有其他请求都需要进行飞行前检查。
+由于CORS协议可以触发预检请求，这些预检请求会增加服务器的往返行程，因此对性能要求较高的应用可能会希望避免这种情况。
+CORS的精神是避免对旧的不具备CORS功能的浏览器能够进行的任何简单的跨域请求进行预检。所有其他请求都需要进行飞行前检查。
 
-请求是“简单的”，如果其方法是GET，HEAD或POST，并且除了Accept，Accept-Language和Content-Language之外不包含任何请求标头，则避免预检。对于POST请求，还允许使用Content-Type标头，但前提是其值是“ application / x-www-form-urlencoded”，“ multipart / form-data”或“ text / plain”。对于任何其他标题或值，将发生预检请求。
+请求是“简单的”，如果其方法是GET，HEAD或POST，并且除了 `Accept` ， `Accept-Language` 和 `Content-Language` 之外不包含任何请求标头，
+则避免预检。对于POST请求，还允许使用 `Content-Type` 标头，
+但前提是其值是 `application/x-www-form-urlencoded` ， `multipart/form-data` 或 `text/plain` 。对于任何其他标题或值，将发生预检请求。
 
 ### 8.2服务指南
 
@@ -470,27 +500,39 @@ Web开发人员通常不需要做任何特殊的事情就可以利用CORS。所�
 
 - 了解浏览器在跨域请求中发送的Origin请求标头，以及在检查访问的预检OPTIONS请求中发送的Access-Control-Request-Method请求标头。
 - 如果请求中存在Origin头：
-  - 如果请求使用OPTIONS方法并包含Access-Control-Request-Method标头，则它是预检请求，旨在在实际请求之前探测访问。否则，这是一个实际的请求。对于预检请求，除了执行以下添加标头的步骤之外，服务务必不要执行任何其他处理，并且必须返回200 OK。对于非预检请求，除了请求的常规处理之外，还会添加以下标头。
-  - 将Access-Control-Allow-Origin标头添加到响应中，该标头包含与Origin请求标头相同的值。请注意，这需要服务动态生成标头值。不需要cookie或任何其他形式的[用户凭证的资源](http://www.w3.org/TR/access-control/#user-credentials)可以使用通配符星号（*）代替。请注意，通配符仅在此处可接受，不适用于以下所述的任何其他标头。
-  - 如果调用方需要访问不在[简单响应标头](http://www.w3.org/TR/access-control/#simple-header)集中的[响应标头](http://www.w3.org/TR/access-control/#simple-header)（缓存控制，内容语言，内容类型，过期，最后修改，实用），则添加访问控制暴露-标头标头，包含客户端应有权访问的其他响应标头名称的列表。
+  - 如果请求使用OPTIONS方法并包含Access-Control-Request-Method标头，则它是预检请求，旨在在实际请求之前探测访问。
+    否则，这是一个实际的请求。对于预检请求，除了执行以下添加标头的步骤之外，服务务必不要执行任何其他处理，并且必须返回200 OK。
+    对于非预检请求，除了请求的常规处理之外，还会添加以下标头。
+  - 将Access-Control-Allow-Origin标头添加到响应中，该标头包含与Origin请求标头相同的值。请注意，这需要服务动态生成标头值。
+    不需要cookie或任何其他形式的[用户凭证的资源](http://www.w3.org/TR/access-control/#user-credentials)可以使用通配符星号（*）代替。
+    请注意，通配符仅在此处可接受，不适用于以下所述的任何其他标头。
+  - 如果调用方需要访问不在[简单响应标头](http://www.w3.org/TR/access-control/#simple-header)集中的[响应标头](http://www.w3.org/TR/access-control/#simple-header)
+    （缓存控制，内容语言，内容类型，过期，最后修改，实用），则添加访问控制暴露-标头标头，包含客户端应有权访问的其他响应标头名称的列表。
   - 如果请求需要cookie，则添加一个Access-Control-Allow-Credentials标头设置为“ true”。
   - 如果该请求是预检请求（请参阅第一个项目符号），则该服务必须：
-    - 添加一个Access-Control-Allow-Headers响应标头，其中包含允许客户端使用的请求标头名称的列表。该列表仅需要包含不在[简单请求标头](http://www.w3.org/TR/access-control/#simple-header)集中的[标头](http://www.w3.org/TR/access-control/#simple-header)（Accept，Accept-Language，Content-Language）。如果服务接受的头没有任何限制，则该服务可以简单地返回与客户端发送的Access-Control-Request-Headers头相同的值。
+    - 添加一个 `Access-Control-Allow-Headers` 响应标头，其中包含允许客户端使用的请求标头名称的列表。
+      该列表仅需要包含不在[简单请求标头](http://www.w3.org/TR/access-control/#simple-header)集中的[标头](http://www.w3.org/TR/access-control/#simple-header)
+      （Accept，Accept-Language，Content-Language）。如果服务接受的头没有任何限制，则该服务可以简单地返回与客户端发送的Access-Control-Request-Headers头相同的值。
     - 添加一个Access-Control-Allow-Methods响应标头，其中包含允许调用方使用的HTTP方法的列表。
 
-添加一个Access-Control-Max-Age首选项响应标头，其中包含该首选项响应有效的秒数（因此可以在随后的实际请求之前避免使用）。请注意，虽然习惯使用较大的值，如2592000（30天），但许多浏览器会自行施加一个较低的限制（例如5分钟）。
+添加一个 `Access-Control-Max-Age` 首选项响应标头，其中包含该首选项响应有效的秒数（因此可以在随后的实际请求之前避免使用）。
+请注意，虽然习惯使用较大的值，如2592000（30天），但许多浏览器会自行施加一个较低的限制（例如5分钟）。
 
 由于浏览器的飞行前响应缓存非常差，因此飞行前响应带来的额外往返行程会影响性能。性能至关重要的交互式Web客户端使用的服务应避免导致预检请求的模式
 
 - 对于GET和HEAD调用，请避免要求不属于上述简单设置的请求标头。允许将它们作为查询参数提供。
-  - Authorization标头不是简单集的一部分，因此对于需要身份验证的资源，必须通过“ access_token”查询参数发送身份验证令牌。请注意，不建议在URL中传递身份验证令牌，因为它可能导致令牌记录在服务器日志中并暴露给有权访问这些日志的任何人。通过URL接受身份验证令牌的服务必须采取措施来减轻安全风险，例如使用短暂的身份验证令牌，禁止身份验证令牌被记录以及控制对服务器日志的访问。
+  - Authorization标头不是简单集的一部分，因此对于需要身份验证的资源，必须通过“ access_token”查询参数发送身份验证令牌。
+    请注意，不建议在URL中传递身份验证令牌，因为它可能导致令牌记录在服务器日志中并暴露给有权访问这些日志的任何人。
+    通过URL接受身份验证令牌的服务必须采取措施来减轻安全风险，例如使用短暂的身份验证令牌，禁止身份验证令牌被记录以及控制对服务器日志的访问。
 - 避免要求Cookie。如果设置了“ withCredentials”属性，则XmlHttpRequest仅在跨域请求上发送cookie。这也会导致预检请求。
   - 需要基于Cookie的身份验证的服务务必使用“动态Canary”来保护所有接受Cookie的API。
 - 对于POST调用，请在适用的情况下（“应用程序/ x-www-form-urlencoded”，“ multipart / form-data”，“ text / plain”）集中使用简单的Content-Type。任何其他Content-Type都会引发预检请求。
   - 服务不得以避免CORS飞行前请求的名义违反其他API建议。特别是，根据建议，由于内容类型，大多数POST请求实际上将需要进行预检请求。
   - 如果消除预检是至关重要的，则服务可以支持替代的数据传输机制，但是必须也支持推荐的方法。
 
-另外，在适当的服务时，可以支持JSONP模式，以进行简单的，仅限GET的跨域访问。在JSONP中，服务采用指示格式（*$ format = json*）的参数和指示回调（*$ callback = someFunc*）的参数，并返回文本/ javascript文档，该文档包含包装在具有指定名称的函数调用中的JSON响应。Wikipedia上有关JSONP的更多信息：[JSONP](https://en.wikipedia.org/wiki/JSONP)。
+另外，在适当的服务时，可以支持JSONP模式，以进行简单的，仅限GET的跨域访问。在JSONP中，服务采用指示格式（*$ format = json*）的参数
+和指示回调（*$ callback = someFunc*）的参数，并返回文本/ javascript文档，该文档包含包装在具有指定名称的函数调用中的JSON响应。
+Wikipedia上有关JSONP的更多信息：[JSONP](https://en.wikipedia.org/wiki/JSONP)。
 
 ## 12 版本
 
@@ -520,7 +562,7 @@ Web开发人员通常不需要做任何特殊的事情就可以利用CORS。所�
 
 ##### 12.1.1.1组版本控制的示例
 
-```
+```text
 Group      | Major.Minor
 ---------- | -----------
 2012-12-01 | 1.0
@@ -544,7 +586,7 @@ Group      | Major.Minor
 
 例如：
 
-```
+```test
 GET http://api.contoso.com/acct1/c1/blob2?api-version=1.0
 PUT http://api.contoso.com/acct1/c1/b2?api-version=2011-12-07
 ```
@@ -595,7 +637,7 @@ PUT http://api.contoso.com/acct1/c1/b2?api-version=2011-12-07
 
 虽然大多数操作可能是POST语义，但除POST语义服务外，MAY还可以通过路由支持PUT语义，以简化其API。例如，想要创建一个名为“ db1”的数据库的用户可以调用：
 
-```
+```test
 PUT https://api.contoso.com/v1.0/databases/db1
 ```
 
@@ -619,13 +661,13 @@ PUT https://api.contoso.com/v1.0/databases/db1
 
 服务可以启用用于实体创建的PUT请求。
 
-```
+```test
 PUT https://api.contoso.com/v1.0/databases/db1
 ```
 
 在这种情况下，*数据库*段正在处理PUT操作。
 
-```
+```test
 HTTP/1.1 202 Accepted
 Operation-Location: https://api.contoso.com/v1.0/operations/123
 ```
@@ -638,7 +680,7 @@ Operation-Location: https://api.contoso.com/v1.0/operations/123
 
 服务可以启用用于实体创建的POST请求。
 
-```
+```test
 POST https://api.contoso.com/v1.0/databases/
 
 {
@@ -647,7 +689,7 @@ POST https://api.contoso.com/v1.0/databases/
 }
 ```
 
-```
+```test
 HTTP/1.1 202 Accepted
 Operation-Location: https://api.contoso.com/v1.0/operations/123
 ```
@@ -658,7 +700,7 @@ Operation-Location: https://api.contoso.com/v1.0/operations/123
 
 例如：
 
-```
+```test
 POST https://api.contoso.com/v1.0/databases/ HTTP/1.1
 Host: api.contoso.com
 Content-Type: application/json
@@ -672,7 +714,7 @@ Accept: application/json
 
 服务响应说数据库已经创建，但是通过包含Operation-Location标头指示请求未完成。在这种情况下，响应有效负载中的状态属性还指示操作尚未完全完成。
 
-```
+```test
 HTTP/1.1 201 Created
 Location: https://api.contoso.com/v1.0/databases/db1
 Operation-Location: https://api.contoso.com/v1.0/operations/123
@@ -731,7 +773,7 @@ Operation-Location: https://api.contoso.com/v1.0/operations/123
 
 服务可以在操作中添加其他特定于API的字段。返回的操作状态JSON如下所示：
 
-```
+```test
 {
   "createdDateTime": "2015-06-19T12-01-03.45Z",
   "lastActionDateTime": "2015-06-19T12-01-03.45Z",
@@ -743,7 +785,7 @@ Operation-Location: https://api.contoso.com/v1.0/operations/123
 
 有时，服务无法完全准确地知道操作何时完成。这使得使用Retry-After标头有问题。在这种情况下，服务可以在operationStatus JSON中包含完成百分比字段。
 
-```
+```test
 {
    “ createdDateTime ”：“ 2015-06-19T12-01-03.45Z ”，
    “ percentComplete ”：“ 50 ”，
@@ -757,7 +799,7 @@ Operation-Location: https://api.contoso.com/v1.0/operations/123
 
 对于产生或操纵资源的操作，服务必须在操作完成后的状态中包含目标资源位置。
 
-```
+```test
 {
   "createdDateTime": "2015-06-19T12-01-03.45Z",
   "lastActionDateTime": "2015-06-19T12-06-03.0024Z",

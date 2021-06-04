@@ -9,7 +9,7 @@ categories: 运维
 ---
 
 本文是在我安装好 Deepin 15.5 之后做的系统环境初始化记录。方便以后安装新系统直接按照以前的习惯初始化环境。其中包含基础环境配置，和常见服务安装，如
-Redis 等。 
+Redis 等。
 
 <!-- more -->
 
@@ -31,7 +31,7 @@ deb [by-hash=force] https://mirror.tuna.tsinghua.edu.cn/deepin/ panda main contr
 #deb-src http://packages.deepin.com/deepin panda main contrib non-free
 ```
 
-### 使用 `ll` 命令。
+### 使用 `ll` 命令
 
 如果有需要也可以修改 root 目录中的，这样sudo下也可以使用
 
@@ -127,7 +127,7 @@ sudo vim /etc/shadowsocks.conf
 
 错误重现
 
-```
+```text
 $ sslocal -c /etc/shadowsocks.conf 
 INFO: loading config from /etc/shadowsocks.conf
 2018-03-24 00:31:11 INFO     loading libcrypto from libcrypto.so.1.1
@@ -161,11 +161,11 @@ AttributeError: /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1: undefined symbol: EV
 
 这个问题是由于在openssl1.1.0版本中，废弃了EVP_CIPHER_CTX_cleanup函数，如官网中所说：
 
-```
+```text
 EVP_CIPHER_CTX was made opaque in OpenSSL 1.1.0. As a result, EVP_CIPHER_CTX_reset() appeared and EVP_CIPHER_CTX_cleanup() disappeared.
 ```
 
-```
+```text
 EVP_CIPHER_CTX_init() remains as an alias for EVP_CIPHER_CTX_reset().  
 ```
 
@@ -173,9 +173,9 @@ EVP_CIPHER_CTX_init() remains as an alias for EVP_CIPHER_CTX_reset().
 
 1. 用vim打开文件：
 
-`vim /usr/local/lib/python2.7/dist-packages/shadowsocks/crypto/openssl.py`
+    `vim /usr/local/lib/python2.7/dist-packages/shadowsocks/crypto/openssl.py`
 
-(该路径请根据自己的系统情况自行修改，如果不知道该文件在哪里的话，可以使用find命令查找文件位置)
+    (该路径请根据自己的系统情况自行修改，如果不知道该文件在哪里的话，可以使用find命令查找文件位置)
 
 2. 跳转到52行（shadowsocks2.8.2版本，其他版本搜索一下cleanup）
 
@@ -183,18 +183,18 @@ EVP_CIPHER_CTX_init() remains as an alias for EVP_CIPHER_CTX_reset().
 
 4. 将第52行
 
-libcrypto.EVP_CIPHER_CTX_`cleanup`.argtypes = (c_void_p,) 
+    libcrypto.EVP_CIPHER_CTX_`cleanup`.argtypes = (c_void_p,) 
 
-改为
+    改为
 
-libcrypto.EVP_CIPHER_CTX_`reset`.argtypes = (c_void_p,)
+    libcrypto.EVP_CIPHER_CTX_`reset`.argtypes = (c_void_p,)
 
 5. 再次搜索cleanup（全文件共2处，此处位于111行），将
 
-libcrypto.EVP_CIPHER_CTX_`cleanup`(self._ctx) 
-改为
+    libcrypto.EVP_CIPHER_CTX_`cleanup`(self._ctx) 
+    改为
 
-libcrypto.EVP_CIPHER_CTX_`reset`(self._ctx)
+    libcrypto.EVP_CIPHER_CTX_`reset`(self._ctx)
 
 6. 保存并退出
 7. 启动shadowsocks服务：service shadowsocks start 或 sslocal -c ss配置文件目录

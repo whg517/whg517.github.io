@@ -7,9 +7,6 @@ tags:
 - api-desig
 ---
 
-
-# 1 摘要
-
 在当前微服务大环境之下，越来越多的项目使用 RESTful HTTP接口方位资源 。为了团队开发的友好体验，开发人员尽可能遵循一致的 REST API 设计原则就显得至关重要。
 
 API 设计指南旨在提供一套基础规范，便于团队设计和开发出一致的 RESTful 接口。
@@ -47,17 +44,21 @@ API 设计指南旨在提供一套基础规范，便于团队设计和开发出�
 
 ### 4.1 资源
 
-资源是 REST 中信息的关键抽象。根据 [Fielding 的论文 5.2 节](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_2)，可以命名的任何信息都可以是资源，如：文档或图像，临时服务（例如“洛杉矶今天的天气”），其他资源的集合，非虚拟对象（例如一个人），等等。资源是到一组实体的概念性映射，而不是在任何特定时间点与该映射相对应的实体。更准确地说，资源 `R` 是随时间变化的隶属函数 `MR(t)` ，用于将时间 `t` 映射到等效的一组实体或值。集合中的值可以是资源表示和 `/` 或资源标识符。
+资源是 REST 中信息的关键抽象。根据 [Fielding 的论文 5.2 节](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_2)，可以命名的任何信息都可以是资源，
+如：文档或图像，临时服务（例如“洛杉矶今天的天气”），其他资源的集合，非虚拟对象（例如一个人），等等。资源是到一组实体的概念性映射，而不是在任何特定时间点与该映射相对应的实体。
+更准确地说，资源 `R` 是随时间变化的隶属函数 `MR(t)` ，用于将时间 `t` 映射到等效的一组实体或值。集合中的值可以是资源表示和 `/` 或资源标识符。
 
 资源也可以映射到空集，从而允许在存在任何概念之前就对该概念进行引用。
 
 ### 4.2 资源标识符
 
-REST 使用资源标识符来标识组件之间交互中涉及的特定资源实例。命名机构（例如提供 API 的组织）分配了资源标识符以使其有可能引用资源，它负责维护映射随时间的语义有效性（确保成员资格函数不变）。- [菲尔丁的论文第 5.2 节](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_2)
+REST 使用资源标识符来标识组件之间交互中涉及的特定资源实例。命名机构（例如提供 API 的组织）分配了资源标识符以使其有可能引用资源，
+它负责维护映射随时间的语义有效性（确保成员资格函数不变）。- [菲尔丁的论文第 5.2 节](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_2)
 
 ### 4.3 域
 
-根据 Wikipedia 定义，[领域模型](https://en.wikipedia.org/wiki/Domain_model)是一个抽象系统，描述了知识，影响或活动领域的选定方面。这些概念包括业务中涉及的数据，以及业务针对该数据使用的规则。例如， PayPal 域模型包括诸如支付，风险，合规性，身份，客户支持等域。
+根据 Wikipedia 定义，[领域模型](https://en.wikipedia.org/wiki/Domain_model)是一个抽象系统，描述了知识，影响或活动领域的选定方面。这些概念包括业务中涉及的数据，
+以及业务针对该数据使用的规则。例如， PayPal 域模型包括诸如支付，风险，合规性，身份，客户支持等域。
 
 ### 4.4 功能
 
@@ -69,7 +70,8 @@ REST 使用资源标识符来标识组件之间交互中涉及的特定资源实
 
 功能驱动 API 组合中的服务建模和名称空间问题。名称空间是业务功能模型的一部分。名称空间的例子有:合规性、设备、传输、信用、限制等。。
 
-命名空间应反映逻辑上将一组业务功能分组的域。域定义应反映客户对平台功能组织方式的看法。请注意，这些可能不一定反映公司的层次结构，组织或（现有）代码结构。在某些情况下，从定义上可以反映目标，面向客户的平台组织模型的意义上说，领域定义是理想的。底层服务实现和组织结构可能需要迁移以反映这些边界。
+命名空间应反映逻辑上将一组业务功能分组的域。域定义应反映客户对平台功能组织方式的看法。请注意，这些可能不一定反映公司的层次结构，组织或（现有）代码结构。
+在某些情况下，从定义上可以反映目标，面向客户的平台组织模型的意义上说，领域定义是理想的。底层服务实现和组织结构可能需要迁移以反映这些边界。
 
 ### 4.6 服务
 
@@ -360,7 +362,9 @@ https://api.contoso.com/v1.0/items?url=https://resources.contoso.com/shoes/fancy
 
 ### 6.2 HTTP 方法
 
-HTTP 定义了一组请求方法, 以表明要对给定资源执行的操作。指示针对给定资源要执行的期望动作. 虽然他们也可以是名词, 但这些请求方法有时被称为 HTTP 动词. 每一个请求方法都实现了不同的语义, 但会有一些共同的特征。例如一个请求方法可以是 [安全](https://developer.mozilla.org/zh-CN/docs/Glossary/safe), [幂等](https://developer.mozilla.org/zh-CN/docs/Glossary/%E5%B9%82%E7%AD%89), 或 [可缓存](https://developer.mozilla.org/en-US/docs/Glossary/cacheable).
+HTTP 定义了一组请求方法, 以表明要对给定资源执行的操作。指示针对给定资源要执行的期望动作. 虽然他们也可以是名词, 但这些请求方法有时被称为 HTTP 动词。
+每一个请求方法都实现了不同的语义, 但会有一些共同的特征。例如一个请求方法可以是 [安全](https://developer.mozilla.org/zh-CN/docs/Glossary/safe),
+[幂等](https://developer.mozilla.org/zh-CN/docs/Glossary/%E5%B9%82%E7%AD%89), 或 [可缓存](https://developer.mozilla.org/en-US/docs/Glossary/cacheable).
 
 安全的 HTTP 方法是指这是个不会修改服务器的数据的方法。也就是说，这是一个对服务器只读操作的方法。`GET`， `HEAD` 和 `OPTIONS` 都是安全的 HTTP 方法。所有安全的方法都是幂等的，而 `PUT` 和 `DELETE` 则是不安全的。
 
@@ -374,15 +378,15 @@ HTTP 定义了一组请求方法, 以表明要对给定资源执行的操作。�
 
 并非所有资源都支持这些方法，但是使用以下方法的所有资源必须符合其用法。
 
-| 方法                                                                          | 描述                                                                 | 是否有请求主体| 成功响应是否有主体   | 是否安全 | 是否幂等 | 是否可缓存     |
-| ---------------------------------------------------------------------------- | ------------------------------------------------------------------- | ---------- | ----------------- | ------- | ------- | ------------ |
-| [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET)         | 请求指定的资源。使用 GET 的请求应该只用于获取数据。                         | 否         | 是                | 是       | 是      | 是            |
-| [POST](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/POST)       | 根据提供的数据创建新对象，或提交命令 。                                    | 是         | 是                | 否       | 否      | 只在有新数据是 |
-| [PUT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT)         | 使用请求中的数据创建或者替换目标资源。                                     | 是         | 否                | 否       | 是      | 否           |
-| [DELETE](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE)   | 用于删除指定的资源。                                                    | 可以有     | 可以有             | 否       | 是      | 否            |
+| 方法                                                                         | 描述                                             | 是否有请求主体| 成功响应是否有主体   | 是否安全 | 是否幂等 | 是否可缓存     |
+| ---------------------------------------------------------------------------- | ------------------------------------------------ | ---------- | ------------- | ----- | ------- | ------------ |
+| [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET)         | 请求指定的资源。使用 GET 的请求应该只用于获取数据。     | 否         | 是                | 是       | 是      | 是            |
+| [POST](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/POST)       | 根据提供的数据创建新对象，或提交命令 。                 | 是         | 是                | 否       | 否      | 只在有新数据是 |
+| [PUT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT)         | 使用请求中的数据创建或者替换目标资源。                  | 是         | 否                | 否       | 是      | 否           |
+| [DELETE](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE)   | 用于删除指定的资源。                                    | 可以有     | 可以有             | 否       | 是      | 否            |
 | [HEAD](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/HEAD)       | 请求资源的 Header 信息, 且 Header 与 GET 请求返回的一致，只是没有响应体。    | 否         | 否                | 是       | 是      | 是        |
-| [PATCH](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH)     | 用于对资源进行部分修改。                                                | 是         | 否                | 否       | 否      | 否        |
-| [OPTIONS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS) | 用于获取目的资源所支持的通信选项。                                        | 否         | 是                | 是       | 是      | 否        |
+| [PATCH](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH)     | 用于对资源进行部分修改。                                | 是         | 否                | 否       | 否      | 否        |
+| [OPTIONS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS) | 用于获取目的资源所支持的通信选项。                      | 否         | 是                | 是       | 是      | 否        |
 
 #### 6.2.1 POST
 
@@ -426,7 +430,9 @@ IETF 已将 `PATCH` 定义为用于增量更新现有对象的方法（请参阅
 
 HTTP 消息头允许客户端和服务器通过请求和响应传递附加信息。一个请求头由名称（不区分大小写）后跟一个冒号“:”，冒号后跟具体的值（不带换行符）组成。该值前面的引导空白会被忽略。
 
-自定专用消息头可通过 `X-` 前缀来添加；但是这种用法被 IETF 在 2012 年 6 月发布的 [RFC5548](https://tools.ietf.org/html/rfc6648) 中明确弃用，原因是其会在非标准字段成为标准时造成不便；其他的消息头在 [IANA 注册表](http://www.iana.org/assignments/message-headers/perm-headers.html)中列出, 其原始内容在 [RFC 4229](http://tools.ietf.org/html/rfc4229) 中定义。此外， IANA 还维护着[被提议的新 HTTP 消息头注册表](http://www.iana.org/assignments/message-headers/prov-headers.html)。
+自定专用消息头可通过 `X-` 前缀来添加；但是这种用法被 IETF 在 2012 年 6 月发布的 [RFC5548](https://tools.ietf.org/html/rfc6648) 中明确弃用，
+原因是其会在非标准字段成为标准时造成不便；其他的消息头在 [IANA 注册表](http://www.iana.org/assignments/message-headers/perm-headers.html)中列出，
+其原始内容在 [RFC 4229](http://tools.ietf.org/html/rfc4229) 中定义。此外， IANA 还维护着[被提议的新 HTTP 消息头注册表](http://www.iana.org/assignments/message-headers/prov-headers.html)。
 
 根据不同上下文，可将消息头分为：
 
@@ -435,7 +441,7 @@ HTTP 消息头允许客户端和服务器通过请求和响应传递附加信息
 - Response headers: 包含有关响应的补充信息，如其位置或服务器本身（名称和版本等）的消息头。
 - Entity headers: 包含有关实体主体的更多信息，比如主体长(Content-Length)度或其MIME类型。
 
-<!-- markdownlint-disable MD033 -->
+<!-- markdownlint-disable MD013 MD033-->
 
 | Header                                   | 类型                                  | 描述                                                         |
 | ---------------------------------------- | ------------------------------------- | ------------------------------------------------------------ |
@@ -460,9 +466,11 @@ JSON 属性名称应为驼峰式。
 
 ### 6.5 状态码
 
-HTTP 响应状态代码指示特定 HTTP 请求是否已成功完成。响应分为五类：信息响应( `100` – `199` )，成功响应( `200` – `299` )，重定向( `300`–`399` )，客户端错误( `400` – `499` )和服务器错误 ( `500` – `599` )。状态代码由 [section 10 of RFC 2616](https://tools.ietf.org/html/rfc2616#section-10) 定义
+HTTP 响应状态代码指示特定 HTTP 请求是否已成功完成。响应分为五类：信息响应( `100` – `199` )，成功响应( `200` – `299` )，重定向( `300`–`399` )，
+客户端错误( `400` – `499` )和服务器错误 ( `500` – `599` )。状态代码由 [section 10 of RFC 2616](https://tools.ietf.org/html/rfc2616#section-10) 定义。
 
-RESTful 服务使用 HTTP 状态代码来指定 HTTP 方法执行的结果。 HTTP 协议使用整数和消息指定请求执行的结果。该数字称为**状态码**，该消息称为**原因短语**。原因短语是人类可读的消息，用于阐明响应的结果。 HTTP 协议将范围内的状态代码分类。
+RESTful 服务使用 HTTP 状态代码来指定 HTTP 方法执行的结果。 HTTP 协议使用整数和消息指定请求执行的结果。该数字称为**状态码**，该消息称为**原因短语**。
+原因短语是人类可读的消息，用于阐明响应的结果。 HTTP 协议将范围内的状态代码分类。
 
 #### 6.5.1 状态码范围
 
@@ -479,6 +487,7 @@ RESTful 服务使用 HTTP 状态代码来指定 HTTP 方法执行的结果。 HT
 - API 绝不能返回此表中未定义的状态代码。
 - API 只能返回此表中定义的某些状态代码。
 
+<!-- markdownlint-disable MD013-->
 | 状态码                           | 描述                                                         |
 | ------------------------------- | ------------------------------------------------------------ |
 | `200 OK`                        | 请求成功。                                           |
@@ -496,6 +505,7 @@ RESTful 服务使用 HTTP 状态代码来指定 HTTP 方法执行的结果。 HT
 | `429 Too Many Requests`         | 如果用户，应用程序或令牌的速率限制已超过预定义的值，则服务器必须返回此状态代码。在其他 HTTP 状态代码 [RFC 6585中](https://tools.ietf.org/html/rfc6585) 定义。 |
 | `500 Internal Server Error`     | 这可能是系统错误，也可能是应用程序错误，通常表明尽管客户端似乎提供了正确的请求，但服务器上出现了意外情况。一个 `500` 响应指示服务器端软件缺陷或网站停止。 `500` 不应用于客户端验证或逻辑错误处理。 |
 | `503 Service Unavailable`       | 由于临时维护，服务器无法处理服务请求。常见原因是服务器因维护或重载而停机。     |
+<!-- markdownlint-restore -->
 
 ## 7. 命名规范
 
@@ -600,7 +610,9 @@ URI遵循 [RFC 3986](https://tools.ietf.org/html/rfc3986) 规范。该规范简�
 
 ## 8. 异常
 
-根据 HTTP 规范，可以使用整数和消息指定请求执行的结果。该数字称为**状态码**，该消息称为**原因短语**。原因短语是一种人类可读的消息，用于阐明响应的结果。 `4xx`  范围内的HTTP状态代码指示客户端错误（验证或逻辑错误），而  `5xx`  范围内的 HTTP 状态代码指示服务器端错误（通常是缺陷或中断）。但是，这些状态码和人类可读的原因短语不足以以机器可读的方式传达足够的错误信息。要解决错误，非人类的 RESTful API 使用者需要其他帮助。
+根据 HTTP 规范，可以使用整数和消息指定请求执行的结果。该数字称为**状态码**，该消息称为**原因短语**。原因短语是一种人类可读的消息，用于阐明响应的结果。
+ `4xx`  范围内的HTTP状态代码指示客户端错误（验证或逻辑错误），而  `5xx`  范围内的 HTTP 状态代码指示服务器端错误（通常是缺陷或中断）。
+ 但是，这些状态码和人类可读的原因短语不足以以机器可读的方式传达足够的错误信息。要解决错误，非人类的 RESTful API 使用者需要其他帮助。
 
 异常字段：
 
@@ -617,13 +629,16 @@ URI遵循 [RFC 3986](https://tools.ietf.org/html/rfc3986) 规范。该规范简�
 
 ### 9.1 HATEOAS
 
-超媒体是[超文本](https://en.wikipedia.org/wiki/Hypertext)一词的扩展，是一种非线性的信息介质，根据 [Wikipedia 的规定](https://en.wikipedia.org/wiki/Hypermedia)，它包括图形，音频，视频，纯文本和超链接。超媒体作为应用程序状态的引擎 `HATEOAS` 是 Roy Fielding 在其[论文中](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)描述的 REST 应用程序体系结构的约束。
+超媒体是[超文本](https://en.wikipedia.org/wiki/Hypertext)一词的扩展，是一种非线性的信息介质，根据 [Wikipedia 的规定](https://en.wikipedia.org/wiki/Hypermedia)，
+它包括图形，音频，视频，纯文本和超链接。超媒体作为应用程序状态的引擎 `HATEOAS` 是 Roy Fielding 在其[论文中](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)描述的 REST 应用程序体系结构的约束。
 
-在 RESTful API 的上下文中，客户端可以完全通过服务动态提供的超媒体与服务交互。超媒体驱动的服务通过在响应中包括超媒体链接，向其客户端提供资源表示，以动态导航 API 。这不同于 SOA 的其他形式，在 SOA 中，服务器和客户端基于 Web 上某个位置定义的或基于带外交换的，基于 WSD L的规范进行交互。
+在 RESTful API 的上下文中，客户端可以完全通过服务动态提供的超媒体与服务交互。超媒体驱动的服务通过在响应中包括超媒体链接，向其客户端提供资源表示，
+以动态导航 API 。这不同于 SOA 的其他形式，在 SOA 中，服务器和客户端基于 Web 上某个位置定义的或基于带外交换的，基于 WSD L的规范进行交互。
 
 ### 9.2 符合超媒体的 API
 
-符合超媒体的 API 公开了服务的有限状态机。在这里，要求如 `DELETE` ， `PATCH` ， `POST` 和 `PUT` 通常在启动状态的转变，而响应指示状态的变化。让我们以一个 API 为例，该 API 公开一组操作来管理用户帐户生命周期并实现HATEOAS接口约束。
+符合超媒体的 API 公开了服务的有限状态机。在这里，要求如 `DELETE` ， `PATCH` ， `POST` 和 `PUT` 通常在启动状态的转变，而响应指示状态的变化。
+让我们以一个 API 为例，该 API 公开一组操作来管理用户帐户生命周期并实现HATEOAS接口约束。
 
 客户端通过固定的URI开始与服务进行交互 `/users` 。此 URI 支持 `GET` 和 `POST` 操作。客户端执行一项 `POST` 操作以在系统中创建用户。
 
@@ -795,7 +810,9 @@ DELETE https://api.foo.com/v1/customer/users/ALT-JFWXHGUV7VI
 - `href`：
   - `href`必须提供属性的值。
   - `href`属性的值必须是 [URI 模板](https://tools.ietf.org/html/rfc6570)，用于确定相关资源的目标 URI。应根据 [RFC 6570](https://tools.ietf.org/html/rfc6570) 将其解析为 URI 模板。
-  - 仅将绝对 URI 用作`href`属性值。客户端通常将表示形式的链接关系类型的绝对 URI 标记为书签，以便以后发出 API 请求。开发人员必须使用 [URI 组件命名约定](https://github.com/paypal/api-standards/blob/master/api-style-guide.md#uri-component-names)来构造绝对 URI 。传入 `Host` 请求头（例如 api.foo.com ）中的值必须用作 `host` 绝对 URI 的字段。
+  - 仅将绝对 URI 用作`href`属性值。客户端通常将表示形式的链接关系类型的绝对 URI 标记为书签，以便以后发出 API 请求。
+    开发人员必须使用 [URI 组件命名约定](https://github.com/paypal/api-standards/blob/master/api-style-guide.md#uri-component-names)来构造绝对 URI 。
+    传入 `Host` 请求头（例如 api.foo.com ）中的值必须用作 `host` 绝对 URI 的字段。
 - `rel`：
   - `rel` 代表“链接关系类型”中定义的关系
   - 该`rel`属性的值指示与目标资源的关系的名称。
@@ -920,7 +937,9 @@ DELETE https://api.foo.com/v1/customer/users/ALT-JFWXHGUV7VI
 
 ## 10. CORS
 
-跨源资源共享标准新增了一组 HTTP 头，允许服务器声明哪些源站通过浏览器有权限访问哪些资源。另外，规范要求，对那些可能对服务器数据产生副作用的 HTTP 请求方法（特别是 GET 以外的 HTTP 请求，或者搭配某些 MIME 类型的 POST 请求），浏览器必须首先使用 OPTIONS 方法发起一个预检请求（preflight request），从而获知服务端是否允许该跨源请求。服务器确认允许之后，才发起实际的 HTTP 请求。在预检请求的返回中，服务器端也可以通知客户端，是否需要携带身份凭证（包括 Cookies 和 HTTP 认证相关数据）。
+跨源资源共享标准新增了一组 HTTP 头，允许服务器声明哪些源站通过浏览器有权限访问哪些资源。另外，规范要求，对那些可能对服务器数据产生副作用的 HTTP 请求方法（特别是 GET 以外的 HTTP 请求，
+或者搭配某些 MIME 类型的 POST 请求），浏览器必须首先使用 OPTIONS 方法发起一个预检请求（preflight request），从而获知服务端是否允许该跨源请求。
+服务器确认允许之后，才发起实际的 HTTP 请求。在预检请求的返回中，服务器端也可以通知客户端，是否需要携带身份凭证（包括 Cookies 和 HTTP 认证相关数据）。
 
 符合 REST API 准则的服务必须支持 [CORS（跨源资源共享）](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS)。
 
@@ -963,10 +982,12 @@ Web 开发人员通常不需要做任何特殊的事情就可以利用 CORS 。�
 - 如果请求中存在 `Origin` 头：
   - 如果请求使用 `OPTIONS` 方法并包含 `Access-Control-Request-Method` 标头，则它是预检请求，旨在在实际请求之前探测访问。否则，这是一个正常的请求。对于预检请求，除了执行以下添加标头的步骤之外，服务务必不要执行任何其他处理，并且必须返回 `200 OK` 。对于非预检请求，除了请求的常规处理之外，还会添加以下头。
   - 将 `Access-Control-Allow-Origin` 头添加到响应中，该头包含与 `Origin` 头相同的值。请注意，这需要服务动态生成请求头值。不需要 `cookie` 或任何其他形式的[用户凭证的资源](http://www.w3.org/TR/access-control/#user-credentials)可以用通配符星号（*）代替。请注意，通配符仅在此处可接受，不适用于以下所述的任何其他头。
-  - 如果调用方需要访问不在[简单响应标头](http://www.w3.org/TR/access-control/#simple-hader)列表中的响应标头（ `Cache-Control` ， `Content-Language` ， `Content-Type` ， `Expires` ， `Last-Modified` ， `Pragma` ），则应将客户端有权访问的其他响应头名称添加到 `Access-Control-Expose-Headers` 标头中。
+  - 如果调用方需要访问不在[简单响应标头](http://www.w3.org/TR/access-control/#simple-hader)列表中的响应标头（ `Cache-Control` ， `Content-Language` ， `Content-Type` ， `Expires` ， `Last-Modified` ， `Pragma` ），
+    则应将客户端有权访问的其他响应头名称添加到 `Access-Control-Expose-Headers` 标头中。
   - 如果请求需要 cookie ，则添加一个 `Access-Control-Allow-Credentials` 标头设置为 `true`。
   - 如果该请求是预检请求（请参阅第一个项目符号），则该服务必须：
-    - 添加一个 `Access-Control-Allow-Headers` 响应标头，其中包含允许客户端使用的请求标头名称的列表。该列表仅需要包含不在[简单请求标头](http://www.w3.org/TR/access-control/#simple-header)集中的[标头](http://www.w3.org/TR/access-control/#simple-header)（ `Accept` ， `Accept-Language` ， `Content-Language` ）。如果服务接受的头没有任何限制，则该服务可以简单地返回与客户端发送的 `Access-Control-Request-Headers` 头相同的值。
+    - 添加一个 `Access-Control-Allow-Headers` 响应标头，其中包含允许客户端使用的请求标头名称的列表。该列表仅需要包含不在[简单请求标头](http://www.w3.org/TR/access-control/#simple-header)集中的
+      [标头](http://www.w3.org/TR/access-control/#simple-header)（ `Accept` ， `Accept-Language` ， `Content-Language` ）。如果服务接受的头没有任何限制，则该服务可以简单地返回与客户端发送的 `Access-Control-Request-Headers` 头相同的值。
     - 添加一个 `Access-Control-Allow-Methods` 响应标头，其中包含允许调用方使用的 HTTP 方法的列表。
 
 添加一个 `Access-Control-Max-Age` 响应标头，其中包含该响应有效的时间（因此可以在随后的实际请求之前避免使用）。请注意，虽然习惯使用较大的值，例如 2592000（30天），但许多浏览器会自行施加一个较低的限制（例如5分钟）。
@@ -1030,7 +1051,8 @@ JSON 本身定义了一个非常简单的值 `number` ：它是一个无界的�
 
 JSON模式与JSON不同，并定义了两种数字类型： `number`和`integer` 。纯粹是为了方便模式验证。 JSON 数字类型用于实现两者。就像 JSON 中一样，除非模式作者提供显式 `minimum` 和 `maximum` 值，否则这两种类型都是不受限制的。
 
-许多编程语言不能安全地处理 JSON 中的无界值。 JavaScript 是一个很好的例子。JSON 解析器是 [ECMAScript](http://www.ecma-international.org/publications/standards/Ecma-262.htm) 规范的一部分。但是，它要求将所有 JSON 数字反序列化为JavaScript 支持的唯一类型 -64 位浮点数 `number`。这意味着在 JavaScript 客户端中尝试反序列化大于约 2^53 的任何 JSON 数字将导致异常。
+许多编程语言不能安全地处理 JSON 中的无界值。 JavaScript 是一个很好的例子。JSON 解析器是 [ECMAScript](http://www.ecma-international.org/publications/standards/Ecma-262.htm) 规范的一部分。
+但是，它要求将所有 JSON 数字反序列化为JavaScript 支持的唯一类型 -64 位浮点数 `number`。这意味着在 JavaScript 客户端中尝试反序列化大于约 2^53 的任何 JSON 数字将导致异常。
 
 为了确保最大程度的跨客户端兼容性，模式作者应：
 
@@ -1092,7 +1114,9 @@ JSON 定义 `array` 为无界。
 
 API 不得生成或使用 `null` 值。
 
-`null` 是JSON中的原始类型。当根据 JSON Schema 验证 JSON 文档时，只有在模式明确允许的情况下，使用 `type` 关键字(例如 `{"type": "null"}` )，属性的值才能为 `null` 。由于在 API  中， `type` 将始终用来定义其他值，例如 `object` 或 `string` ，并且这些标准禁止使用架构组合关键字（例如 `anyOf` 或 `oneOf` ，它允许多种类型），如果 API 产生或出现空值，则根据 API 本身的架构，这实际上不太可能是有效数据。
+`null` 是JSON中的原始类型。当根据 JSON Schema 验证 JSON 文档时，只有在模式明确允许的情况下，使用 `type` 关键字(例如 `{"type": "null"}` )，属性的值才能为 `null` 。
+由于在 API  中， `type` 将始终用来定义其他值，例如 `object` 或 `string` ，并且这些标准禁止使用架构组合关键字（例如 `anyOf` 或 `oneOf` ，它允许多种类型），
+如果 API 产生或出现空值，则根据 API 本身的架构，这实际上不太可能是有效数据。
 
 另外，在 JSON 中，对象不应有被定义为 `undefined` 的属性；这在概念上与用 `null` 值定义的属性是分离的，但是许多编程语言都难以区分这种区别。
 
@@ -1110,13 +1134,17 @@ API 不得生成或使用 `null` 值。
 { }
 ```
 
-在大多数强类型化语言（例如Java）中，没有 `undefined` 类型的概念，这意味着对于JSON对象中所有未定义的字段，反序列化器将返回此类类型的值，如 `null` 您尝试检索它们的值。同样， `null` 即使基于序列化程序无法确定用于该属性的 Java 对象的作者是使用值定义 `null` 还是简单地定义，某些基于 Java 的 JSON 序列化程序默认将字段序列化为 JSON 。例如，在 Jackson 中，通过使用[`JsonInclude`](https://fasterxml.github.io/jackson-annotations/javadoc/2.8/com/fasterxml/jackson/annotation/JsonInclude.html)注释来缓和这种行为。另一方面， org.json 库定义了一个名为 [NULL](https://stleary.github.io/JSON-java/org/json/JSONObject.html#NULL) 的对象以区分 `null` 和 `undefined` 。
+在大多数强类型化语言（例如Java）中，没有 `undefined` 类型的概念，这意味着对于JSON对象中所有未定义的字段，反序列化器将返回此类类型的值，如 `null` 您尝试检索它们的值。
+同样， `null` 即使基于序列化程序无法确定用于该属性的 Java 对象的作者是使用值定义 `null` 还是简单地定义，某些基于 Java 的 JSON 序列化程序默认将字段序列化为 JSON 。
+例如，在 Jackson 中，通过使用[`JsonInclude`](https://fasterxml.github.io/jackson-annotations/javadoc/2.8/com/fasterxml/jackson/annotation/JsonInclude.html)注释来缓和这种行为。
+另一方面， org.json 库定义了一个名为 [NULL](https://stleary.github.io/JSON-java/org/json/JSONObject.html#NULL) 的对象以区分 `null` 和 `undefined` 。
 
 完全避免使用 JSON null 可以帮助避免许多这些细微的跨语言兼容性陷阱。
 
 ##### 11.1.1.6 其他
 
-在模式对象中设置 [`additionalProperties`](http://json-schema.org/latest/json-schema-validation.html#anchor134)为 `false` 会破坏那些使用 API 的 JSON 模式（由其合同定义）来验证 API请求和响应的客户端的向后兼容性。出于相同的原因，模式创建者务必不得将明确设置 `additionalProperties` 为 `false` 。
+在模式对象中设置 [`additionalProperties`](http://json-schema.org/latest/json-schema-validation.html#anchor134)为 `false` 会破坏那些使用 API 的 JSON 模式（由其合同定义）
+来验证 API请求和响应的客户端的向后兼容性。出于相同的原因，模式创建者务必不得将明确设置 `additionalProperties` 为 `false` 。
 
 相反， API 实现应通过在运行时根据已定义的API合同对请求和响应进行严格验证来强制要求和对API合同的响应。
 
@@ -1129,11 +1157,15 @@ API中的资源表示必须在可能的情况下重用[公共数据类型](https
 处理日期和时间时，所有 API 都必须遵守以下准则。
 
 - 日期和时间字符串必须符合 [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) `5.6` 节中定义 `date-time` 的格式。在用例中，您仅需要 RFC3339 格式的字段的子集（例如 `full-date` 或 `full-time` ）。
-- 所有 API 必须在响应只使用 [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) 时间（也叫 [名祖鲁时间](https://en.wikipedia.org/wiki/List_of_military_time_zones) 或 [GMT](https://en.wikipedia.org/wiki/Greenwich_Mean_Time) ）。
-- 处理请求时， API 应该接受 `date-time` 或包含 UTC 偏移量的时间字段。例如， `2016-09-28T18:30:41.000+05:00` 应该接受与等效 `2016-09-28T13:30:41.000Z` 。这有助于确保与在发送请求之前可能无法将值归一化为 UTC 的第三方的兼容性。在这种情况下，偏移量应仅用于计算等效的 UTC 时间，然后再将其保留在系统中（由于已知的平台/语言/数据库互操作性问题）。 UTC 偏移不得衍生其他任何内容。
-- 如果业务逻辑要求表达事件的时区，建议您使用单独的请求/响应字段来显式获取时区。您不应该使用 offset 来获取时区信息。仅靠偏移量不足以将存储的 UTC 时间准确地转换回以后的本地时间。原因是许多地区的 UTC 偏移量可能相同，并且根据一年中的时间，可能还有其他因素，例如夏令时。例如，偏移量 `UTC-05:00` 代表冬季的东部标准时间，夏季的中部夏令时间，以及巴拿马，哥伦比亚和秘鲁的全年偏移量。
+- 所有 API 必须在响应只使用 [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) 时间（也叫 [名祖鲁时间](https://en.wikipedia.org/wiki/List_of_military_time_zones)
+   或 [GMT](https://en.wikipedia.org/wiki/Greenwich_Mean_Time) ）。
+- 处理请求时， API 应该接受 `date-time` 或包含 UTC 偏移量的时间字段。例如， `2016-09-28T18:30:41.000+05:00` 应该接受与等效 `2016-09-28T13:30:41.000Z` 。
+  这有助于确保与在发送请求之前可能无法将值归一化为 UTC 的第三方的兼容性。在这种情况下，偏移量应仅用于计算等效的 UTC 时间，然后再将其保留在系统中（由于已知的平台/语言/数据库互操作性问题）。 UTC 偏移不得衍生其他任何内容。
+- 如果业务逻辑要求表达事件的时区，建议您使用单独的请求/响应字段来显式获取时区。您不应该使用 offset 来获取时区信息。仅靠偏移量不足以将存储的 UTC 时间准确地转换回以后的本地时间。
+  原因是许多地区的 UTC 偏移量可能相同，并且根据一年中的时间，可能还有其他因素，例如夏令时。例如，偏移量 `UTC-05:00` 代表冬季的东部标准时间，夏季的中部夏令时间，以及巴拿马，哥伦比亚和秘鲁的全年偏移量。
 - 时区字符串务必是每个 [IANA 时区数据库](https://www.iana.org/time-zones)（又名 **Olson** 数据库， **tzdata** 或 **zoneinfo** 数据库），例如，太平洋时间的 `America/ Los_Angeles` ，中欧的 `Europe/Berlin` 时间。
-- 当在请求或响应中表达与特定时区（例如用户的出生日期，到期日期，发布日期等）无关的[浮点时间](https://www.w3.org/International/wiki/FloatingTime)值时， API 不应将其与时区相关联。原因是 UTC 偏移会更改浮动时间值的含义。例如，所有时区在本初子午线以西的国家都将浮点时间值视为前一天。
+- 当在请求或响应中表达与特定时区（例如用户的出生日期，到期日期，发布日期等）无关的[浮点时间](https://www.w3.org/International/wiki/FloatingTime)值时，
+   API 不应将其与时区相关联。原因是 UTC 偏移会更改浮动时间值的含义。例如，所有时区在本初子午线以西的国家都将浮点时间值视为前一天。
 
 ## 12. 版本化
 
@@ -1165,7 +1197,8 @@ API必须遵循以下原则才能被认为是向后兼容的：
 
 ### 13.1 上下文问题
 
-在现代应用程序开发中，客户端应用程序（通常在 Web 客户端（浏览器）中运行的代码）依赖远程 API 来提供业务逻辑和组合功能是很正常的。这些API可能与应用程序直接相关，也可能是第三方提供的共享服务。通常，这些API调用通过HTTP（S）协议进行，并遵循REST语义。
+在现代应用程序开发中，客户端应用程序（通常在 Web 客户端（浏览器）中运行的代码）依赖远程 API 来提供业务逻辑和组合功能是很正常的。
+这些API可能与应用程序直接相关，也可能是第三方提供的共享服务。通常，这些API调用通过HTTP（S）协议进行，并遵循REST语义。
 
 在大多数情况下，客户端应用程序的API被设计为可快速响应，数量级为100毫秒或更短。许多因素都会影响响应延迟，包括：
 
@@ -1178,24 +1211,29 @@ API必须遵循以下原则才能被认为是向后兼容的：
 - 处理队列长度。
 - 后端处理请求的时间。
 
-这些因素中的任何一个都会增加响应的延迟。通过扩展后端可以缓解某些问题。其他诸如网络基础结构之类的应用程序在很大程度上不受应用程序开发人员的控制。大多数API可以足够迅速地做出响应，以使响应可以通过同一连接返回。应用程序代码可以以非阻塞方式进行同步API调用，从而呈现出异步处理的外观，建议对I / O绑定操作进行异步处理。
+这些因素中的任何一个都会增加响应的延迟。通过扩展后端可以缓解某些问题。其他诸如网络基础结构之类的应用程序在很大程度上不受应用程序开发人员的控制。
+大多数API可以足够迅速地做出响应，以使响应可以通过同一连接返回。应用程序代码可以以非阻塞方式进行同步API调用，从而呈现出异步处理的外观，建议对I / O绑定操作进行异步处理。
 
-但是，在某些情况下，后端完成的工作可能会耗时数秒，或者可能是在几分钟甚至几小时内执行的后台进程。在这种情况下，在响应请求之前等待工作完成是不可行的。对于任何同步请求-应答模式，这种情况都是潜在的问题。
+但是，在某些情况下，后端完成的工作可能会耗时数秒，或者可能是在几分钟甚至几小时内执行的后台进程。
+在这种情况下，在响应请求之前等待工作完成是不可行的。对于任何同步请求-应答模式，这种情况都是潜在的问题。
 
-一些体系结构通过使用消息代理来分隔请求和响应阶段来解决此问题。通常通过使用[基于队列的负载均衡模式](https://docs.microsoft.com/en-us/azure/architecture/patterns/queue-based-load-leveling)来实现这种分离。这种分离可以允许客户端进程和后端API独立扩展。但是，当客户端需要成功通知时，这种分离也会带来额外的复杂性，因为此步骤需要变得异步。
+一些体系结构通过使用消息代理来分隔请求和响应阶段来解决此问题。通常通过使用[基于队列的负载均衡模式](https://docs.microsoft.com/en-us/azure/architecture/patterns/queue-based-load-leveling)来实现这种分离。
+这种分离可以允许客户端进程和后端API独立扩展。但是，当客户端需要成功通知时，这种分离也会带来额外的复杂性，因为此步骤需要变得异步。
 
 针对客户端应用程序讨论的许多相同考虑因素，也适用于分布式系统（例如，微服务体系结构）中的服务器到服务器REST API调用。
 
 ### 13.2 解决方法
 
-解决此问题的一种方法是使用HTTP轮询。轮询对客户端代码很有用，因为很难提供回调端点或使用长时间运行的连接。即使可能进行回调，有时所需的额外库和服务也会增加过多的额外复杂性。
+解决此问题的一种方法是使用HTTP轮询。轮询对客户端代码很有用，因为很难提供回调端点或使用长时间运行的连接。
+即使可能进行回调，有时所需的额外库和服务也会增加过多的额外复杂性。
 
 - 客户端应用程序对API进行同步调用，从而在后端触发长时间运行的操作。
 - API尽可能快地同步响应。它返回HTTP 202（已接受）状态码，确认已接收到请求进行处理。
 
 - 该响应包含指向客户端可以轮询以检查长期运行结果的端点的位置引用。
 - API将处理工作转移到另一个组件，例如消息队列。
-- 在工作仍处于待处理状态时，状态端点将返回HTTP202。完成工作后，状态端点可以返回指示完成的资源，或重定向到另一个资源URL。例如，如果异步操作创建了新资源，则状态端点将重定向到该资源的URL。
+- 在工作仍处于待处理状态时，状态端点将返回HTTP202。完成工作后，状态端点可以返回指示完成的资源，或重定向到另一个资源URL。
+  例如，如果异步操作创建了新资源，则状态端点将重定向到该资源的URL。
 
 ![异步HTTP请求的请求和响应流](https://docs.microsoft.com/en-us/azure/architecture/patterns/_images/async-request.png)
 
@@ -1244,7 +1282,8 @@ Location: /api/orders/12345
 
 支持Web挂钩的服务的核心原则是：
 
-1. 服务必须至少实现戳/拉模型。在戳/拉模型中，将通知发送给客户端，然后客户端发送请求以获取当前状态或自上次通知以来的更改记录。这种方法避免了消息排序，遗漏消息和变更集的复杂性。服务可以添加更多数据以提供丰富的通知。
+1. 服务必须至少实现戳/拉模型。在戳/拉模型中，将通知发送给客户端，然后客户端发送请求以获取当前状态或自上次通知以来的更改记录。
+   这种方法避免了消息排序，遗漏消息和变更集的复杂性。服务可以添加更多数据以提供丰富的通知。
 2. 服务必须实现用于配置回调URL的质询/响应协议。
 3. 服务应有一个建议的过期期限，并应根据情况灵活调整服务。
 4. 服务应该允许发出成功通知的订阅永久存在，并且应该容忍合理的中断时间。

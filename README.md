@@ -10,21 +10,21 @@
 
 1. 安装依赖
 
-```bash
-npm install
-```
+    ```bash
+    npm install
+    ```
 
 2. [生成静态文件](https://hexo.io/zh-cn/docs/commands#generate)
 
-```bash
-npm build
-```
+    ```bash
+    npm build
+    ```
 
 3. [预览](https://hexo.io/zh-cn/docs/commands#server)
 
-```bash
-npm server
-```
+    ```bash
+    npm server
+    ```
 
 ## 配置说明
 
