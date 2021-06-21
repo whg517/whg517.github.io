@@ -2,8 +2,8 @@
 title: Deepin 使用记录
 author: wanghuagang
 date: 2018-03-23 22:44:00
-updated: 2020-05-28 11:50:00
-tags: 
+updated: 2021-06-21 17:45:20
+tags:
 - deepin
 categories: 运维
 ---
@@ -128,7 +128,7 @@ sudo vim /etc/shadowsocks.conf
 错误重现
 
 ```text
-$ sslocal -c /etc/shadowsocks.conf 
+$ sslocal -c /etc/shadowsocks.conf
 INFO: loading config from /etc/shadowsocks.conf
 2018-03-24 00:31:11 INFO     loading libcrypto from libcrypto.so.1.1
 Traceback (most recent call last):
@@ -166,7 +166,7 @@ EVP_CIPHER_CTX was made opaque in OpenSSL 1.1.0. As a result, EVP_CIPHER_CTX_res
 ```
 
 ```text
-EVP_CIPHER_CTX_init() remains as an alias for EVP_CIPHER_CTX_reset().  
+EVP_CIPHER_CTX_init() remains as an alias for EVP_CIPHER_CTX_reset(). 
 ```
 
 修改方法：
@@ -183,7 +183,7 @@ EVP_CIPHER_CTX_init() remains as an alias for EVP_CIPHER_CTX_reset().
 
 4. 将第52行
 
-    libcrypto.EVP_CIPHER_CTX_`cleanup`.argtypes = (c_void_p,) 
+    libcrypto.EVP_CIPHER_CTX_`cleanup`.argtypes = (c_void_p,)
 
     改为
 
@@ -191,7 +191,7 @@ EVP_CIPHER_CTX_init() remains as an alias for EVP_CIPHER_CTX_reset().
 
 5. 再次搜索cleanup（全文件共2处，此处位于111行），将
 
-    libcrypto.EVP_CIPHER_CTX_`cleanup`(self._ctx) 
+    libcrypto.EVP_CIPHER_CTX_`cleanup`(self._ctx)
     改为
 
     libcrypto.EVP_CIPHER_CTX_`reset`(self._ctx)
@@ -204,25 +204,25 @@ EVP_CIPHER_CTX_init() remains as an alias for EVP_CIPHER_CTX_reset().
 
 下载 Chrome 扩展程序
 
-http://note.youdao.com/noteshare?id=ee6e65186fd5a78358a3d503e95c4746
+[http://note.youdao.com/noteshare?id=ee6e65186fd5a78358a3d503e95c4746](http://note.youdao.com/noteshare?id=ee6e65186fd5a78358a3d503e95c4746)
 
 下载扩展程序备份数据
 
-http://note.youdao.com/noteshare?id=8042047a6a81df37c561165c9775c6e4
+[http://note.youdao.com/noteshare?id=8042047a6a81df37c561165c9775c6e4](http://note.youdao.com/noteshare?id=8042047a6a81df37c561165c9775c6e4)
 
 1. Chrome 扩展安装
 
-在 Chrome 中 按下 `Alt + E` 组合键，`更多工具` ==> `扩展程序`；或者直接浏览器输入 `chrome://extensions/`
+    在 Chrome 中 按下 `Alt + E` 组合键，`更多工具` ==> `扩展程序`；或者直接浏览器输入 `chrome://extensions/`
 
-打开 `扩展程序` ，将下载的插件拖入页面以安装插件。
+    打开 `扩展程序` ，将下载的插件拖入页面以安装插件。
 
-安装完成后打开插件，选择`导入/导出` ==> `从备份文件恢复`
+    安装完成后打开插件，选择`导入/导出` ==> `从备份文件恢复`
 
-然后选择下载的扩展程序备份数据。
+    然后选择下载的扩展程序备份数据。
 
 2. 使用插件
 
-浏览器右上角点击插件图标，选择 `auto switch` ，浏览器打开谷歌应该可以访问了。
+    浏览器右上角点击插件图标，选择 `auto switch` ，浏览器打开谷歌应该可以访问了。
 
 ### 安装 JDK
 
@@ -257,7 +257,7 @@ Categories=Development
 
 Pycharm 相同
 
-### [安装便签](https://jingyan.baidu.com/article/d8072ac484c739ec95cefd23.html) 
+### [安装便签](https://jingyan.baidu.com/article/d8072ac484c739ec95cefd23.html)
 
 ### [安装 Docker](https://wiki.deepin.org/index.php?title=Docker)
 
@@ -290,33 +290,29 @@ newgrp - docker
 注意:最后一步是必须的，否则因为 groups 命令获取到的是缓存的组信息，刚添加的组信息未能生效，所以 docker images 执行时同样有错。
 
 ### [安装 Redis](https://blog.csdn.net/yjqyyjw/article/details/73293455)
+
 > 注意：下面的操作和给出链接的安装目录不一样，切勿两边操作。
 
-1. 下载
-
-```
-http://redis.io/download
-```
+1. 下载 [http://redis.io/download](http://redis.io/download)
 
 2. 解压
 
-```
-tar -zxvf ~/Downloads/redis-3.2.11.tar.gz -C /tmp/
-```
+    ```shell
+    tar -zxvf ~/Downloads/redis-3.2.11.tar.gz -C /tmp/
+    ```
 
 3. 编译并安装
 
-**编译**
+**编译：**
 
-```
+```shell
 cd /tmp/redis-3.2.11/
-sudo make 
-
+sudo make
 ```
 
 最后几行的输出
 
-```
+```text
     CC redis-benchmark.o
     LINK redis-benchmark
     INSTALL redis-check-rdb
@@ -329,27 +325,28 @@ make[1]: Leaving directory '/tmp/redis-3.2.11/src'
 
 ```
 
-**编译测试**
+**编译测试：**
 
-```
+```shell
 sudo make test
 
 ```
 
-> 注意： 如果在 make test 出现 `You need tcl 8.5 or newer in order to run the Redis test` 这个错误，请参考 https://blog.csdn.net/luyee2010/article/details/18766911 后，执行如下操作
+> 注意： 如果在 make test 出现 `You need tcl 8.5 or newer in order to run the Redis test` 这个错误，
+> 请参考 [https://blog.csdn.net/luyee2010/article/details/18766911](https://blog.csdn.net/luyee2010/article/details/18766911) 后，执行如下操作
 
-```
-wget http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz  
-sudo tar xzvf tcl8.6.1-src.tar.gz  -C /usr/local/  
-cd  /usr/local/tcl8.6.1/unix/  
-sudo ./configure  
-sudo make  
-sudo make install  
+```shell
+wget http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz 
+sudo tar xzvf tcl8.6.1-src.tar.gz  -C /usr/local/ 
+cd  /usr/local/tcl8.6.1/unix/ 
+sudo ./configure 
+sudo make 
+sudo make install 
 ```
 
 编译测试最后输出
 
-```
+```text
   79 seconds - integration/replication
   54 seconds - unit/geo
   113 seconds - unit/type/list-3
@@ -362,16 +359,16 @@ Cleanup: may take some time... OK
 make[1]: Leaving directory '/tmp/redis-3.2.11/src'
 ```
 
-**安装**
+**安装：**
 
-```
+```shell
 sudo make install PREFIX=/usr/local/share/redis
 ```
 
 这里 `PREFIX` 为指定安装到该位置。要确保对这个目录有写入权限。
 输出
 
-```
+```shell
 cd src && make install
 make[1]: Entering directory '/tmp/redis-3.2.11/src'
 
@@ -386,9 +383,9 @@ make[1]: Leaving directory '/tmp/redis-3.2.11/src'
 
 ```
 
-**增加配置文件**
+**增加配置文件：**
 
-```
+```shell
 mkdir /usr/local/share/redis/ect/
 sudo cp /tmp/redis-3.2.11/redis.conf /usr/local/share/redis/ect/
 ```
@@ -425,21 +422,21 @@ vm_max_thrrads | 设置vm IO同时使用的线程数量
 
     sudo vim /etc/systemd/system/redis.service
 
-```
-[Unit]  
-Description=redis 
-After=network.target  
-   
-[Service]  
+```conf
+[Unit] 
+Description=redis
+After=network.target 
+  
+[Service] 
 # Type=forking
 PIDFile=/var/run/redis_6379.pid
 ExecStart=/usr/local/share/redis/bin/redis-server /usr/local/share/redis/etc/redis.conf
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
-PrivateTmp=true  
-   
-[Install]  
-WantedBy=multi-user.target   
+PrivateTmp=true 
+  
+[Install] 
+WantedBy=multi-user.target  
 
 ```
 
@@ -447,15 +444,19 @@ WantedBy=multi-user.target
 
 #### 其他问题
 
-```
+<!-- markdownlint-disable MD013 MD033-->
+```text
 28769:M 24 Mar 23:49:14.920 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
 ```
+<!-- markdownlint-restore -->
 
 这个警告，可以参照警告描述操作
 
-```
+<!-- markdownlint-disable MD013 MD033-->
+```text
 28769:M 24 Mar 23:49:14.920 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 ```
+<!-- markdownlint-restore -->
 
 这个警告，分两步操作。
 
@@ -473,7 +474,7 @@ sudo touch /etc/rc.local
 
 然后编辑该文件，加入
 
-```
+```shell
 #!/bin/sh
 
 if test -f /sys/kernel/mm/redhat_transparent_hugepage/enabled; then
