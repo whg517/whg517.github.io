@@ -12,8 +12,35 @@ NexT.boot.registerEvents = function() {
     event.currentTarget.classList.toggle('toggle-close');
     const siteNav = document.querySelector('.site-nav');
     if (!siteNav) return;
-    siteNav.style.setProperty('--scroll-height', siteNav.scrollHeight + 'px');
-    document.body.classList.toggle('site-nav-on');
+    const animateAction = document.body.classList.contains('site-nav-on');
+    const height = NexT.utils.getComputedStyle(siteNav);
+    siteNav.style.height = animateAction ? height : 0;
+    const toggle = () => document.body.classList.toggle('site-nav-on');
+    const begin = () => {
+      siteNav.style.overflow = 'hidden';
+    };
+    const complete = () => {
+      siteNav.style.overflow = '';
+      siteNav.style.height = '';
+    };
+    window.anime(Object.assign({
+      targets : siteNav,
+      duration: 200,
+      height  : animateAction ? [height, 0] : [0, height],
+      easing  : 'linear'
+    }, animateAction ? {
+      begin,
+      complete: () => {
+        complete();
+        toggle();
+      }
+    } : {
+      begin: () => {
+        begin();
+        toggle();
+      },
+      complete
+    }));
   });
 
   const duration = 200;

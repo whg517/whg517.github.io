@@ -16,10 +16,13 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;blog.iclouds.work&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Mist&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;}}</script>
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.iclouds.work","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
 <meta name="description" content="I Love You !">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Myblog">
@@ -34,21 +37,65 @@
 <link rel="canonical" href="http://blog.iclouds.work/page/2/">
 
 
-
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:true,&quot;isPost&quot;:false,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:&quot;&quot;,&quot;permalink&quot;:&quot;&quot;,&quot;path&quot;:&quot;page&#x2F;2&#x2F;index.html&quot;,&quot;title&quot;:&quot;&quot;}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>Myblog</title><script src="/js/config.js"></script>
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Myblog</title>
   
 
-  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
-  <script async src="https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -172,7 +219,7 @@
     </header>
 
     
-  <div class="back-to-top" role="button" aria-label="返回顶部">
+  <div class="back-to-top" role="button">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -312,7 +359,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-05-28 11:50:00" itemprop="dateModified" datetime="2020-05-28T11:50:00+08:00">2020-05-28</time>
+        <time title="修改时间：2021-06-21 17:22:00" itemprop="dateModified" datetime="2021-06-21T17:22:00+08:00">2021-06-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -336,7 +383,7 @@
     <div class="post-body" itemprop="articleBody">
           <p>原文链接：<a target="_blank" rel="noopener" href="http://legacy.python.org/dev/peps/pep-0008/">http://legacy.python.org/dev/peps/pep-0008/</a></p>
 <p>参考翻译：<a target="_blank" rel="noopener" href="https://blog.csdn.net/ratsniper/article/details/78954852">https://blog.csdn.net/ratsniper/article/details/78954852</a></p>
-<p>本文最后更新时间：2018-11-22</p>
+<p>该文最后更新时间：2018-11-22</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/01/01/programming/python/Python%20PEP8%20%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/#more" rel="contents">
@@ -401,7 +448,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-05-28 11:50:00" itemprop="dateModified" datetime="2020-05-28T11:50:00+08:00">2020-05-28</time>
+        <time title="修改时间：2021-06-21 17:18:00" itemprop="dateModified" datetime="2021-06-21T17:18:00+08:00">2021-06-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -423,7 +470,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>如果你是新手，请先参考 <a target="_blank" rel="noopener" href="https://docs.python-guide.org/">The Hitchhiker’s Guide to Python!</a> 。<br>当然它有<a target="_blank" rel="noopener" href="https://pythonguidecn.readthedocs.io/zh/latest/">中文版</a> </p>
+          <p>如果你是新手，请先参考 <a target="_blank" rel="noopener" href="https://docs.python-guide.org/">The Hitchhiker’s Guide to Python!</a> 。<br>当然它有<a target="_blank" rel="noopener" href="https://pythonguidecn.readthedocs.io/zh/latest/">中文版</a></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/10/12/programming/python/Python%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E5%8C%96/#more" rel="contents">
@@ -662,7 +709,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-05-28 11:50:00" itemprop="dateModified" datetime="2020-05-28T11:50:00+08:00">2020-05-28</time>
+        <time title="修改时间：2021-06-21 17:37:15" itemprop="dateModified" datetime="2021-06-21T17:37:15+08:00">2021-06-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -749,7 +796,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-05-28 11:50:00" itemprop="dateModified" datetime="2020-05-28T11:50:00+08:00">2020-05-28</time>
+        <time title="修改时间：2021-06-21 17:45:20" itemprop="dateModified" datetime="2021-06-21T17:45:20+08:00">2021-06-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -771,7 +818,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>本文是在我安装好 Deepin 15.5 之后做的系统环境初始化记录。方便以后安装新系统直接按照以前的习惯初始化环境。其中包含基础环境配置，和常见服务安装，如<br>Redis 等。 </p>
+          <p>本文是在我安装好 Deepin 15.5 之后做的系统环境初始化记录。方便以后安装新系统直接按照以前的习惯初始化环境。其中包含基础环境配置，和常见服务安装，如<br>Redis 等。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/03/23/operations/Deepin%20%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/#more" rel="contents">
@@ -836,7 +883,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-05-28 10:26:00" itemprop="dateModified" datetime="2020-05-28T10:26:00+08:00">2020-05-28</time>
+        <time title="修改时间：2021-06-21 17:17:00" itemprop="dateModified" datetime="2021-06-21T17:17:00+08:00">2021-06-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1065,7 +1112,29 @@
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
-<script src="/js/comments.js"></script>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 </div>
   </main>
 
@@ -1082,7 +1151,7 @@
   <span class="author" itemprop="copyrightHolder">huagang</span>
 </div>
 <div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
@@ -1090,7 +1159,7 @@
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv">
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>

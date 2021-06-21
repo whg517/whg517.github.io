@@ -16,10 +16,13 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;blog.iclouds.work&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Mist&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;}}</script>
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.iclouds.work","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
 <meta name="description" content="本文安装 Jupyter Notebook 是我在 Centos 7 服务器上安装的一次记录过程。此方式可以作为本地环境使用，也可以作为服务器环境部署。当然对于本次Jupyter Notebook 的部署方式，也是我现在常用的项目部署方式—-通过 supervisor 部署，而结合 virtualenvwrapper 能够更方便的控制虚拟环境。下面开始吧">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Centos 7 安装 Jupyter Notebook">
@@ -38,21 +41,65 @@
 <link rel="canonical" href="http://blog.iclouds.work/2018/08/03/operations/Centos%207%20%E5%AE%89%E8%A3%85%20Jupyter%20Notebook/">
 
 
-
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;blog.iclouds.work&#x2F;2018&#x2F;08&#x2F;03&#x2F;operations&#x2F;Centos%207%20%E5%AE%89%E8%A3%85%20Jupyter%20Notebook&#x2F;&quot;,&quot;path&quot;:&quot;2018&#x2F;08&#x2F;03&#x2F;operations&#x2F;Centos 7 安装 Jupyter Notebook&#x2F;&quot;,&quot;title&quot;:&quot;Centos 7 安装 Jupyter Notebook&quot;}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>Centos 7 安装 Jupyter Notebook | Myblog</title><script src="/js/config.js"></script>
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Centos 7 安装 Jupyter Notebook | Myblog</title>
   
 
-  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
-  <script async src="https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -177,7 +224,7 @@
     </header>
 
     
-  <div class="back-to-top" role="button" aria-label="返回顶部">
+  <div class="back-to-top" role="button">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -244,7 +291,7 @@
     </span>
 
   
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
@@ -274,7 +321,7 @@
 
 <h3 id="生成必要配置参数"><a href="#生成必要配置参数" class="headerlink" title="生成必要配置参数"></a>生成必要配置参数</h3><p>为了服务器数据安全，我们采用设置密码和设置 https 保证安全登录。当然我们的 https 证书是自己颁发的。</p>
 <h4 id="生成加密密码"><a href="#生成加密密码" class="headerlink" title="生成加密密码"></a>生成加密密码</h4><p>进入 ipython ，生成 sha1 密码。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from notebook.auth import passwd</span><br><span class="line">passwd()</span><br><span class="line">Enter password:</span><br><span class="line">Verify password:</span><br><span class="line">Out[3]: &#x27;sha1:5c82f59da5a3:a68e8360e2cab6336fbbfa3d141f9a617aec7dba&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from notebook.auth import passwd</span><br><span class="line">passwd()</span><br><span class="line">Enter password:</span><br><span class="line">Verify password:</span><br><span class="line">Out[3]: &#x27;sha1:5c82f59da5a3:a68e8360e2cab6336fbbfa3d141f9a617aec7dba&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>输入两次密码。密码是不回显的！</p>
 <h4 id="生成自签名证书"><a href="#生成自签名证书" class="headerlink" title="生成自签名证书"></a>生成自签名证书</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout ~/.jupyter/jkey.key -out ~/.jupyter/jcert.pem</span><br></pre></td></tr></table></figure>
@@ -283,13 +330,13 @@
 <h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><p>修改文件 <code>/.jupyter/jupyter_notebook_config.py</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">c.NotebookApp.password = <span class="string">&#x27;sha1:5c82f59da5a3:a68e8360e2cab6336fbbfa3d141f9a617aec7dba&#x27;</span></span><br><span class="line">c.NotebookApp.port = 8888</span><br><span class="line">c.NotebookApp.ip = <span class="string">&#x27;*&#x27;</span></span><br><span class="line">c.NotebookApp.open_browser = False</span><br><span class="line">c.NotebookApp.notebook_dir = <span class="string">&#x27;/opt/jupyte_notebook/&#x27;</span></span><br><span class="line">c.NotebookApp.certfile = <span class="string">&#x27;/home/user/.jupyter/jcert.pem&#x27;</span></span><br><span class="line">c.NotebookApp.keyfile = <span class="string">&#x27;/home/user/.jupyter/jkey.key&#x27;</span></span><br></pre></td></tr></table></figure>
 
-<p><strong>注意</strong></p>
+<p><strong>注意:</strong></p>
 <ol>
 <li><code>password</code> 要填你上面密码生成的 hash 值</li>
 <li><code>notebook_dir</code> 置了jupyter的notebook路径，即访问jupyter首页时，看到的文件列表就是该目录下的。记得授权给启动用户，要不然可能会出现无法访问</li>
 <li>最后两条配置的文件路径记得要写对应文件的绝对路径！</li>
 </ol>
-<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p><strong>增加防火墙端口</strong></p>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p><strong>增加防火墙端口:</strong></p>
 <p>如果你使用了 firewalld 记得开发端口</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --add-port=8888/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
 
@@ -298,7 +345,7 @@
 
 <p>然后浏览器访问页面</p>
 <h3 id="supervisord-启动"><a href="#supervisord-启动" class="headerlink" title="supervisord 启动"></a>supervisord 启动</h3><p>编辑文件 <code>/etc/supervisord.d/jupyter_notebook.ini</code> 填入如下配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[program:jupyter_notebook]</span><br><span class="line">command = /home/user/.virtualenvs/jupyter/bin/jupyter notebook</span><br><span class="line">autostart = true</span><br><span class="line">startsecs = 5</span><br><span class="line">autorestart = true</span><br><span class="line">startretries = 3</span><br><span class="line">user = kevin</span><br><span class="line">redirect_stderr = true</span><br><span class="line">stdout_logfile_maxbytes = 20MB</span><br><span class="line">stdout_logfile_backups = 10</span><br><span class="line">stdout_logfile = /var/log/supervisor/jupyter_notebook/stdout.log</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[program:jupyter_notebook]</span><br><span class="line">command &#x3D; &#x2F;home&#x2F;user&#x2F;.virtualenvs&#x2F;jupyter&#x2F;bin&#x2F;jupyter notebook</span><br><span class="line">autostart &#x3D; true</span><br><span class="line">startsecs &#x3D; 5</span><br><span class="line">autorestart &#x3D; true</span><br><span class="line">startretries &#x3D; 3</span><br><span class="line">user &#x3D; kevin</span><br><span class="line">redirect_stderr &#x3D; true</span><br><span class="line">stdout_logfile_maxbytes &#x3D; 20MB</span><br><span class="line">stdout_logfile_backups &#x3D; 10</span><br><span class="line">stdout_logfile &#x3D; &#x2F;var&#x2F;log&#x2F;supervisor&#x2F;jupyter_notebook&#x2F;stdout.log</span><br></pre></td></tr></table></figure>
 
 <p><strong>注意：</strong></p>
 <ol>
@@ -307,10 +354,10 @@
 <li><code>stdout_logfile</code> 日志存放目录。记得把权限给启动用户。因为会生成备份日志。建议单独放一个文件夹，然后授权给此用户。免得日志写满了没有权限备份日志和建立新文件。这里配置不好的话 supervisor 页面的 <code>tail -f</code> 可能看不到实时打出的日志。</li>
 </ol>
 <p>执行 <code>supervisorctl</code>进入 supervisor 交互，重新加载 supervisor 配置文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; upload</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; upload</span><br></pre></td></tr></table></figure>
 
 <p>查看状态</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">status</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">status</span><br></pre></td></tr></table></figure>
 
 <p>当然这两个操作都可以在 web 页面上进行。</p>
 <p>如果有出错请查看相关日志</p>
@@ -355,7 +402,29 @@
 
 
 
-<script src="/js/comments.js"></script>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 </div>
   </main>
 
@@ -372,7 +441,7 @@
   <span class="author" itemprop="copyrightHolder">huagang</span>
 </div>
 <div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
@@ -380,7 +449,7 @@
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv">
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>

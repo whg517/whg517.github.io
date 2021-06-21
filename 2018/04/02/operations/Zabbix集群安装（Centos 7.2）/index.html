@@ -16,10 +16,13 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;blog.iclouds.work&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Mist&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;}}</script>
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.iclouds.work","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
 <meta name="description" content="本文主要介绍 Zabbix 集群安装记录。操作环境以 Centos 7 和 Zabbix 3.4 安装三节点集群。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Zabbix 集群安装（Centos 7.2）">
@@ -28,7 +31,7 @@
 <meta property="og:description" content="本文主要介绍 Zabbix 集群安装记录。操作环境以 Centos 7 和 Zabbix 3.4 安装三节点集群。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-04-02T10:59:00.000Z">
-<meta property="article:modified_time" content="2020-05-28T03:50:00.000Z">
+<meta property="article:modified_time" content="2021-06-21T09:37:15.000Z">
 <meta property="article:author" content="huagang">
 <meta property="article:tag" content="centos">
 <meta property="article:tag" content="zabbix">
@@ -38,21 +41,65 @@
 <link rel="canonical" href="http://blog.iclouds.work/2018/04/02/operations/Zabbix%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%EF%BC%88Centos%207.2%EF%BC%89/">
 
 
-
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;blog.iclouds.work&#x2F;2018&#x2F;04&#x2F;02&#x2F;operations&#x2F;Zabbix%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%EF%BC%88Centos%207.2%EF%BC%89&#x2F;&quot;,&quot;path&quot;:&quot;2018&#x2F;04&#x2F;02&#x2F;operations&#x2F;Zabbix集群安装（Centos 7.2）&#x2F;&quot;,&quot;title&quot;:&quot;Zabbix 集群安装（Centos 7.2）&quot;}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>Zabbix 集群安装（Centos 7.2） | Myblog</title><script src="/js/config.js"></script>
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Zabbix 集群安装（Centos 7.2） | Myblog</title>
   
 
-  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
-  <script async src="https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -177,7 +224,7 @@
     </header>
 
     
-  <div class="back-to-top" role="button" aria-label="返回顶部">
+  <div class="back-to-top" role="button">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -231,7 +278,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-05-28 11:50:00" itemprop="dateModified" datetime="2020-05-28T11:50:00+08:00">2020-05-28</time>
+        <time title="修改时间：2021-06-21 17:37:15" itemprop="dateModified" datetime="2021-06-21T17:37:15+08:00">2021-06-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -244,7 +291,7 @@
     </span>
 
   
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
@@ -267,7 +314,7 @@
 <li>centos 7.2 操作系统</li>
 <li>zibbix 3.4.2</li>
 </ol>
-<p><strong>集群环境</strong></p>
+<p><strong>集群环境：</strong></p>
 <table>
 <thead>
 <tr>
@@ -288,221 +335,172 @@
 <td>192.168.80.103</td>
 </tr>
 </tbody></table>
-<p><strong>server 主机安装的服务</strong></p>
+<p><strong>server 主机安装的服务：</strong></p>
 <ol>
 <li>LNMP 一键安装包，安装了 Nginx、Mariadb、PHP</li>
 <li>安装 zabbix web 管理页面</li>
 <li>安装 Zabbix-server 节点</li>
 <li>安装 Zabbix-agent 节点</li>
 </ol>
-<p><strong>agent1 主机 安装的服务</strong></p>
+<p><strong>agent1 主机 安装的服务：</strong></p>
 <p>agent 主机就是需要监控的主机，所以只要安装 zabbix-agent 服务就可以了。</p>
 <p>然后可以通过 Web 管理页面将 agent 节点添加进去做监控</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="server-节点"><a href="#server-节点" class="headerlink" title="server 节点"></a>server 节点</h3><h4 id="安装-LNMP-LAMP"><a href="#安装-LNMP-LAMP" class="headerlink" title="安装 LNMP / LAMP"></a>安装 LNMP / LAMP</h4><p>执行 lnmp 一键安装包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://soft.vpser.net/lnmp/lnmp1.5.tar.gz -cO lnmp1.5.tar.gz &amp;&amp; tar zxf lnmp1.5.tar.gz &amp;&amp; <span class="built_in">cd</span> lnmp1.5 &amp;&amp; ./install.sh lnmp</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://soft.vpser.net/lnmp/lnmp1.5.tar.gz -cO lnmp1.5.tar.gz &amp;&amp; tar zxf lnmp1.5.tar.gz &amp;&amp; cd lnmp1.5 &amp;&amp; ./install.sh lnmp</span><br></pre></td></tr></table></figure>
 
-<p>安装 </p>
+<p>安装</p>
 <ul>
 <li>mariadb</li>
 <li>php</li>
 <li>nginx</li>
 </ul>
-<p><strong>调整参数</strong></p>
+<p><strong>调整参数：</strong></p>
 <p>vim /usr/local/php/etc/php.ini</p>
 <p>修改 393 行参数为 300</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">393 max_input_time = 300</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">393 max_input_time &#x3D; 300</span><br></pre></td></tr></table></figure>
 
 <p>重新加载 php。即可 继续</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lnmp php-fpm reload</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lnmp php-fpm reload</span><br></pre></td></tr></table></figure>
 
 <h4 id="安装-Zabbix3-4"><a href="#安装-Zabbix3-4" class="headerlink" title="安装 Zabbix3.4"></a>安装 Zabbix3.4</h4><ol>
-<li>下载</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O zabbix-3.4.11.tar.gz  https://excellmedia.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/3.4.11/zabbix-3.4.11.tar.gz</span><br></pre></td></tr></table></figure>
+<li><p>下载</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O zabbix-3.4.11.tar.gz  https://excellmedia.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/3.4.11/zabbix-3.4.11.tar.gz</span><br></pre></td></tr></table></figure></li>
+<li><p>安装依赖库</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install net-snmp-devel libxml2-devel libcurl-devel libevent libevent-devel gcc</span><br></pre></td></tr></table></figure></li>
+<li><p>解压编译</p>
+<p> 在编译时可以指定在编译内容，这里在 server 主机同时编译了 zabbix-server 和 zabbix-agent 服务</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf zabbix-3.4.11.tar.gz</span><br><span class="line">cd zabbix-3.4.11</span><br><span class="line">./configure --prefix=/usr/local/zabbix --enable-server --enable-agent --with-mysql --enable-ipv6 --with-net-snmp --with-libcurl --with-libxml2</span><br></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>安装依赖库</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install net-snmp-devel libxml2-devel libcurl-devel libevent libevent-devel gcc</span><br></pre></td></tr></table></figure>
+<p> 如果要使用加密，需增加 <code>--with-openssl</code> 参数进行编译</p>
+<p> <strong>错误解决：</strong></p>
+<p> <code>error: MySQL library not found</code></p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y mariadb-devel</span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li>解压编译</li>
-</ol>
-<p>在编译时可以指定在编译内容，这里在 server 主机同时编译了 zabbix-server 和 zabbix-agent 服务</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf zabbix-3.4.11.tar.gz</span><br><span class="line"><span class="built_in">cd</span> zabbix-3.4.11</span><br><span class="line">./configure --prefix=/usr/<span class="built_in">local</span>/zabbix --enable-server --enable-agent --with-mysql --enable-ipv6 --with-net-snmp --with-libcurl --with-libxml2</span><br></pre></td></tr></table></figure>
+<p> <code>error: Invalid Net-SNMP directory - unable to find net-snmp-config</code></p>
+<p> 解决</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install net-snmp-devel</span><br></pre></td></tr></table></figure></li>
+<li><p>安装</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure></li>
+<li><p>创建用户和用户组</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">groupadd zabbix</span><br><span class="line">useradd -r -g zabbix zabbix</span><br><span class="line">chown -R zabbix:zabbix /usr/local/zabbix</span><br></pre></td></tr></table></figure></li>
+<li><p>准备 mysql</p>
+ <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql <span class="operator">-</span>uroot <span class="operator">-</span>p</span><br><span class="line"><span class="keyword">create</span> database if <span class="keyword">not</span> <span class="keyword">exists</span> zabbix <span class="keyword">default</span> <span class="type">character</span> <span class="keyword">set</span> utf8 <span class="keyword">collate</span> utf8_general_ci;</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">all</span> privileges <span class="keyword">on</span> zabbix.<span class="operator">*</span> <span class="keyword">to</span> zabbix<span class="variable">@localhost</span> identified <span class="keyword">by</span> <span class="string">&#x27;zabbix&#x27;</span>;</span><br><span class="line">flush privileges;</span><br><span class="line">exit;</span><br></pre></td></tr></table></figure>
 
-<p>如果要使用加密，需增加 <code>--with-openssl</code> 参数进行编译</p>
-<p><strong>错误解决</strong></p>
-<p><code>error: MySQL library not found</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y mariadb-devel</span><br></pre></td></tr></table></figure>
+<p> <strong>导入顺序不能错</strong></p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql -uzabbix -pzabbix zabbix &lt; database/mysql/schema.sql</span><br><span class="line">mysql -uzabbix -pzabbix zabbix &lt; database/mysql/images.sql</span><br><span class="line">mysql -uzabbix -pzabbix zabbix &lt; database/mysql/data.sql</span><br></pre></td></tr></table></figure>
 
-<p><code>error: Invalid Net-SNMP directory - unable to find net-snmp-config</code></p>
-<p>解决</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install net-snmp-devel</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>安装</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>创建用户和用户组</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">groupadd zabbix</span><br><span class="line">useradd -r -g zabbix zabbix</span><br><span class="line">chown -R zabbix:zabbix /usr/<span class="built_in">local</span>/zabbix</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>准备 mysql</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql <span class="operator">-</span>uroot <span class="operator">-</span>p</span><br><span class="line"><span class="keyword">create</span> database if <span class="keyword">not</span> <span class="keyword">exists</span> zabbix <span class="keyword">default</span> <span class="type">character</span> <span class="keyword">set</span> utf8 <span class="keyword">collate</span> utf8_general_ci;</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">all</span> privileges <span class="keyword">on</span> zabbix.<span class="operator">*</span> <span class="keyword">to</span> zabbix<span class="variable">@localhost</span> identified <span class="keyword">by</span> <span class="string">&#x27;zabbix&#x27;</span>;</span><br><span class="line">flush privileges;</span><br><span class="line">exit;</span><br></pre></td></tr></table></figure>
-
-<p><strong>导入顺序不能错</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql -uzabbix -pzabbix zabbix &lt; database/mysql/schema.sql</span><br><span class="line">mysql -uzabbix -pzabbix zabbix &lt; database/mysql/images.sql</span><br><span class="line">mysql -uzabbix -pzabbix zabbix &lt; database/mysql/data.sql</span><br></pre></td></tr></table></figure>
-
-<p>在使用完全分离的集群的搭建的时候，下面两点注意下：</p>
+<p> 在使用完全分离的集群的搭建的时候，下面两点注意下：</p>
 <ul>
 <li>如果只是代理可以不用导入 <code>database/mysql/images.sql</code></li>
 <li>如果只是代理可以不用导入 <code>database/mysql/data.sql</code></li>
 </ul>
-<ol start="6">
-<li>创建日志目录</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/<span class="built_in">log</span>/zabbix</span><br><span class="line">chown zabbix:zabbix /var/<span class="built_in">log</span>/zabbix</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建日志目录</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/log/zabbix</span><br><span class="line">chown zabbix:zabbix /var/log/zabbix</span><br></pre></td></tr></table></figure></li>
+<li><p>配置</p>
+<p> <strong>配置 zabbix-server 服务：</strong></p>
+<p> <code>vim /usr/local/zabbix/etc/zabbix_server.conf</code></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">LogFile&#x3D;&#x2F;var&#x2F;log&#x2F;zabbix&#x2F;server.log</span><br><span class="line">DBHost&#x3D;localhost</span><br><span class="line">DBName&#x3D;zabbix</span><br><span class="line">DBUser&#x3D;zabbix</span><br><span class="line">DBPort&#x3D;3306</span><br><span class="line">DBPassword&#x3D;zabbix</span><br><span class="line">DBSocket&#x3D;&#x2F;tmp&#x2F;mysql.sock</span><br></pre></td></tr></table></figure>
 
-<ol start="7">
-<li>配置</li>
-</ol>
-<p><strong>配置 zabbix-server 服务</strong></p>
-<p><code>vim /usr/local/zabbix/etc/zabbix_server.conf</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">LogFile=/var/log/zabbix/server.log</span><br><span class="line">DBHost=localhost</span><br><span class="line">DBName=zabbix</span><br><span class="line">DBUser=zabbix</span><br><span class="line">DBPort=3306</span><br><span class="line">DBPassword=zabbix</span><br><span class="line">DBSocket=/tmp/mysql.sock</span><br></pre></td></tr></table></figure>
+<p> <strong>配置 zabbix-agent 服务：</strong></p>
+<p> 注意 agent 被他们写成 <code>agentd</code></p>
+<p> vim /usr/local/zabbix/etc/zabbix_agentd.conf</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LogFile&#x3D;&#x2F;var&#x2F;log&#x2F;zabbix&#x2F;agentd.log</span><br><span class="line">Server&#x3D;127.0.0.1</span><br><span class="line">ServerActive&#x3D;127.0.0.1</span><br><span class="line">Hostname&#x3D;server</span><br></pre></td></tr></table></figure>
 
-<p><strong>配置 zabbix-agent 服务</strong></p>
-<p>注意 agent 被他们写成 <code>agentd</code></p>
-<p>vim /usr/local/zabbix/etc/zabbix_agentd.conf</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LogFile=/var/log/zabbix/agentd.log</span><br><span class="line">Server=127.0.0.1</span><br><span class="line">ServerActive=127.0.0.1</span><br><span class="line">Hostname=server</span><br></pre></td></tr></table></figure>
-
-<p>这里有几点要注意的：</p>
+<p> 这里有几点要注意的：</p>
 <ul>
 <li><code>DBSocket=/tmp/mysql.sock</code> 这一项要打开，要不然会连不上数据库</li>
 <li><code>Hostname</code> 最好指定一个名词，如果在 Web 上出现问题方便查找</li>
 </ul>
-<ol start="8">
-<li>配置启动服务</li>
+</li>
+<li><p>配置启动服务</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/zabbix/sbin/* /usr/local/sbin/</span><br><span class="line">ln -s /usr/local/zabbix/bin/* /usr/local/bin/</span><br><span class="line"></span><br><span class="line">cp /root/zabbix-3.4.11/misc/init.d/tru64/zabbix_* /etc/init.d/</span><br><span class="line">chmod +x /etc/init.d/zabbix_*</span><br></pre></td></tr></table></figure></li>
+<li><p>启动 server 和 agent</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/zabbix_server start</span><br><span class="line">/etc/init.d/zabbix_agentd start</span><br></pre></td></tr></table></figure></li>
+<li><p>注册到服务中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --add zabbix_server</span><br><span class="line">chkconfig --add zabbix_agentd</span><br></pre></td></tr></table></figure></li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/<span class="built_in">local</span>/zabbix/sbin/* /usr/<span class="built_in">local</span>/sbin/</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/zabbix/bin/* /usr/<span class="built_in">local</span>/bin/</span><br><span class="line"></span><br><span class="line">cp /root/zabbix-3.4.11/misc/init.d/tru64/zabbix_* /etc/init.d/</span><br><span class="line">chmod +x /etc/init.d/zabbix_*</span><br></pre></td></tr></table></figure>
-
-<ol start="9">
-<li>启动 server 和 agent</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/zabbix_server start</span><br><span class="line">/etc/init.d/zabbix_agentd start</span><br></pre></td></tr></table></figure>
-
-<ol start="10">
-<li>注册到服务中</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --add zabbix_server</span><br><span class="line">chkconfig --add zabbix_agentd</span><br></pre></td></tr></table></figure>
-
 <p>配置开机自启</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig zabbix_server on</span><br><span class="line">chkconfig zabbix_agentd on</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig zabbix_server on</span><br><span class="line">chkconfig zabbix_agentd on</span><br></pre></td></tr></table></figure>
 
 <p>后面启动的时候可以使用服务方式启动</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service zabbix_server start</span><br><span class="line">service zabbix_server stop</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service zabbix_server start</span><br><span class="line">service zabbix_server stop</span><br></pre></td></tr></table></figure>
 
 <p>如果报错 <code>service zabbix_server does not support chkconfig</code></p>
 <p>只需要编辑对应的文件在 <code>#!/bin/sh</code> 后 加入一行内容就好了</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># chkconfig: 2345 10 90</span></span><br></pre></td></tr></table></figure>
 
 <p>检查端口</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@server zabbix-3.4.11]# netstat -ntlp</span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    </span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      912/nginx: master p </span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      895/sshd            </span><br><span class="line">tcp        0      0 0.0.0.0:10050           0.0.0.0:*               LISTEN      11967/zabbix_agentd </span><br><span class="line">tcp        0      0 0.0.0.0:10051           0.0.0.0:*               LISTEN      11907/zabbix_server </span><br><span class="line">tcp6       0      0 :::3306                 :::*                    LISTEN      1383/mysqld         </span><br><span class="line">tcp6       0      0 :::22                   :::*                    LISTEN      895/sshd            </span><br><span class="line">tcp6       0      0 :::10050                :::*                    LISTEN      11967/zabbix_agentd </span><br><span class="line">tcp6       0      0 :::10051                :::*                    LISTEN      11907/zabbix_server</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@server zabbix-3.4.11]# netstat -ntlp</span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    </span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      912/nginx: master p </span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      895/sshd            </span><br><span class="line">tcp        0      0 0.0.0.0:10050           0.0.0.0:*               LISTEN      11967/zabbix_agentd </span><br><span class="line">tcp        0      0 0.0.0.0:10051           0.0.0.0:*               LISTEN      11907/zabbix_server </span><br><span class="line">tcp6       0      0 :::3306                 :::*                    LISTEN      1383/mysqld         </span><br><span class="line">tcp6       0      0 :::22                   :::*                    LISTEN      895/sshd            </span><br><span class="line">tcp6       0      0 :::10050                :::*                    LISTEN      11967/zabbix_agentd </span><br><span class="line">tcp6       0      0 :::10051                :::*                    LISTEN      11907/zabbix_server</span><br></pre></td></tr></table></figure>
 
 <p>看看 <code>zabbix_server</code> / <code>zabbix_agentd</code> 是否都起来了。如果没有可用查看日志检查</p>
-<h4 id="部署-Web"><a href="#部署-Web" class="headerlink" title="部署 Web"></a>部署 Web</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /home/wwwroot/default/zabbix</span><br><span class="line"><span class="built_in">cd</span> /root/zabbix-3.4.11/frontends/php</span><br><span class="line">cp -a . /home/wwwroot/default/zabbix/</span><br></pre></td></tr></table></figure>
+<h4 id="部署-Web"><a href="#部署-Web" class="headerlink" title="部署 Web"></a>部署 Web</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /home/wwwroot/default/zabbix</span><br><span class="line">cd /root/zabbix-3.4.11/frontends/php</span><br><span class="line">cp -a . /home/wwwroot/default/zabbix/</span><br></pre></td></tr></table></figure>
 
 <h5 id="访问-Web-初始化引导"><a href="#访问-Web-初始化引导" class="headerlink" title="访问 Web 初始化引导"></a>访问 Web 初始化引导</h5><p>访问zabbix：<a target="_blank" rel="noopener" href="http://ip/zabbix/index.php">http://ip/zabbix/index.php</a> ，初始化安装的默认账号：Admin，密码：zabbix</p>
 <h3 id="agent-节点安装"><a href="#agent-节点安装" class="headerlink" title="agent 节点安装"></a>agent 节点安装</h3><ol>
-<li>下载</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O zabbix-3.4.11.tar.gz  https://excellmedia.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/3.4.11/zabbix-3.4.11.tar.gz</span><br></pre></td></tr></table></figure>
+<li><p>下载</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O zabbix-3.4.11.tar.gz  https://excellmedia.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/3.4.11/zabbix-3.4.11.tar.gz</span><br></pre></td></tr></table></figure></li>
+<li><p>安装依赖库</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install net-snmp-devel libxml2-devel libcurl-devel libevent libevent-devel gcc</span><br></pre></td></tr></table></figure></li>
+<li><p>解压编译</p>
+<p> 在编译时可以指定在编译内容，这里在 server 主机同时编译了 zabbix-server 和 zabbix-agent 服务</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf zabbix-3.4.11.tar.gz</span><br><span class="line">cd zabbix-3.4.11</span><br><span class="line">./configure --prefix=/usr/local/zabbix --enable-agent</span><br></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>安装依赖库</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install net-snmp-devel libxml2-devel libcurl-devel libevent libevent-devel gcc</span><br></pre></td></tr></table></figure>
+<p> 如果要使用加密，需增加 <code>--with-openssl</code> 参数进行编译。当然前提是 server 节点支持加密</p>
+</li>
+<li><p>安装</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure></li>
+<li><p>创建用户和用户组</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">groupadd zabbix</span><br><span class="line">useradd -r -g zabbix zabbix</span><br><span class="line">chown -R zabbix:zabbix /usr/local/zabbix</span><br></pre></td></tr></table></figure></li>
+<li><p>创建日志目录</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/log/zabbix</span><br><span class="line">chown zabbix:zabbix /var/log/zabbix</span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li>解压编译</li>
-</ol>
-<p>在编译时可以指定在编译内容，这里在 server 主机同时编译了 zabbix-server 和 zabbix-agent 服务</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf zabbix-3.4.11.tar.gz</span><br><span class="line"><span class="built_in">cd</span> zabbix-3.4.11</span><br><span class="line">./configure --prefix=/usr/<span class="built_in">local</span>/zabbix --enable-agent</span><br></pre></td></tr></table></figure>
+<p> <strong>可选</strong>：加密配置</p>
+<p> 生成 PSK string ，并保存 <code>/usr/local/zabbix/etc/zabbix_agentd.psk</code></p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rand -hex 32 &gt; /usr/local/zabbix/etc/zabbix_agentd.psk</span><br></pre></td></tr></table></figure>
 
-<p>如果要使用加密，需增加 <code>--with-openssl</code> 参数进行编译。当然前提是 server 节点支持加密</p>
-<ol start="4">
-<li>安装</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p> 授权</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown zabbix:zabbix /usr/local/zabbix/etc/zabbix_agentd.psk</span><br><span class="line">chmod 644 /usr/local/zabbix/etc/zabbix_agentd.psk</span><br></pre></td></tr></table></figure></li>
+<li><p>配置</p>
+<p> <strong>配置 zabbix-agent 服务：</strong></p>
+<p> 注意 agent 被他们写成 <code>agentd</code></p>
+<p> <code>vim /usr/local/zabbix/etc/zabbix_agentd.conf</code></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LogFile&#x3D;&#x2F;var&#x2F;log&#x2F;zabbix&#x2F;agentd.log</span><br><span class="line">Server&#x3D;192.168.80.101</span><br><span class="line">ServerActive&#x3D;192.168.80.101</span><br><span class="line">Hostname&#x3D;agent1</span><br></pre></td></tr></table></figure>
 
-<ol start="5">
-<li>创建用户和用户组</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">groupadd zabbix</span><br><span class="line">useradd -r -g zabbix zabbix</span><br><span class="line">chown -R zabbix:zabbix /usr/<span class="built_in">local</span>/zabbix</span><br></pre></td></tr></table></figure>
+<p> <strong>加密配置：</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TLSConnect&#x3D;psk</span><br><span class="line">TLSAccept&#x3D;psk</span><br><span class="line">TLSPSKFile&#x3D;&#x2F;usr&#x2F;local&#x2F;zabbix&#x2F;etc&#x2F;zabbix_agentd.psk</span><br><span class="line">TLSPSKIdentity&#x3D;PSK001</span><br></pre></td></tr></table></figure>
 
-<ol start="6">
-<li>创建日志目录</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/<span class="built_in">log</span>/zabbix</span><br><span class="line">chown zabbix:zabbix /var/<span class="built_in">log</span>/zabbix</span><br></pre></td></tr></table></figure>
-
-<p><strong>可选</strong>：加密配置</p>
-<p>生成 PSK string ，并保存 <code>/usr/local/zabbix/etc/zabbix_agentd.psk</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rand -hex 32 &gt; /usr/<span class="built_in">local</span>/zabbix/etc/zabbix_agentd.psk</span><br></pre></td></tr></table></figure>
-
-<p>授权</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown zabbix:zabbix /usr/<span class="built_in">local</span>/zabbix/etc/zabbix_agentd.psk</span><br><span class="line">chmod 644 /usr/<span class="built_in">local</span>/zabbix/etc/zabbix_agentd.psk</span><br></pre></td></tr></table></figure>
-
-<ol start="7">
-<li>配置</li>
-</ol>
-<p><strong>配置 zabbix-agent 服务</strong></p>
-<p>注意 agent 被他们写成 <code>agentd</code></p>
-<p><code>vim /usr/local/zabbix/etc/zabbix_agentd.conf</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LogFile=/var/log/zabbix/agentd.log</span><br><span class="line">Server=192.168.80.101</span><br><span class="line">ServerActive=192.168.80.101</span><br><span class="line">Hostname=agent1</span><br></pre></td></tr></table></figure>
-
-<p><strong>加密配置</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TLSConnect=psk</span><br><span class="line">TLSAccept=psk</span><br><span class="line">TLSPSKFile=/usr/local/zabbix/etc/zabbix_agentd.psk</span><br><span class="line">TLSPSKIdentity=PSK001</span><br></pre></td></tr></table></figure>
-
-<p>这里有几点要注意的：</p>
+<p> 这里有几点要注意的：</p>
 <ul>
 <li>要正确配置 server ip</li>
 <li><code>Hostname</code> 最好指定一个名词，如果在 Web 上出现问题方便查找</li>
 </ul>
-<ol start="8">
-<li>配置启动服务</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/<span class="built_in">local</span>/zabbix/sbin/* /usr/<span class="built_in">local</span>/sbin/</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/zabbix/bin/* /usr/<span class="built_in">local</span>/bin/</span><br><span class="line"></span><br><span class="line">cp /root/zabbix-3.4.11/misc/init.d/tru64/zabbix_agentd /etc/init.d/</span><br><span class="line">chmod +x /etc/init.d/zabbix_agentd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置启动服务</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/zabbix/sbin/* /usr/local/sbin/</span><br><span class="line">ln -s /usr/local/zabbix/bin/* /usr/local/bin/</span><br><span class="line"></span><br><span class="line">cp /root/zabbix-3.4.11/misc/init.d/tru64/zabbix_agentd /etc/init.d/</span><br><span class="line">chmod +x /etc/init.d/zabbix_agentd</span><br></pre></td></tr></table></figure></li>
+<li><p>启动 server 和 agent</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/zabbix_agentd start</span><br></pre></td></tr></table></figure>
 
-<ol start="9">
-<li>启动 server 和 agent</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/zabbix_agentd start</span><br></pre></td></tr></table></figure>
+<p> 配置开机自启</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig zabbix_agentd on</span><br></pre></td></tr></table></figure>
 
-<p>配置开机自启</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig zabbix_agentd on</span><br></pre></td></tr></table></figure>
+<p> 如果报错 <code>service zabbix_agentd does not support chkconfig</code></p>
+<p> 只需要编辑对应的文件在 <code>#!/bin/sh</code> 后 加入一行内容就好了</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># chkconfig: 2345 10 90</span></span><br></pre></td></tr></table></figure>
 
-<p>如果报错 <code>service zabbix_agentd does not support chkconfig</code></p>
-<p>只需要编辑对应的文件在 <code>#!/bin/sh</code> 后 加入一行内容就好了</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># chkconfig: 2345 10 90</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>加密检测</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zabbix_get-s127.0.0.1-k<span class="string">&quot;system.cpu.load[all,avg1]&quot;</span>--tls-connect=psk--tls-psk-identity=<span class="string">&quot;PSK001&quot;</span>--tls-psk-file=/usr/<span class="built_in">local</span>/zabbix/etc/zabbix_agentd.psk</span><br></pre></td></tr></table></figure>
-
-<ol start="10">
-<li>在 Web 页面添加到主机中</li>
-</ol>
+<p> <strong>加密检测</strong></p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zabbix_get-s127.0.0.1-k&quot;system.cpu.load[all,avg1]&quot;--tls-connect=psk--tls-psk-identity=&quot;PSK001&quot;--tls-psk-file=/usr/local/zabbix/etc/zabbix_agentd.psk</span><br></pre></td></tr></table></figure></li>
+<li><p>在 Web 页面添加到主机中</p>
 <hr>
 <p>记录</p>
 <p>通过 yum 安装后的服务启动文件</p>
 <p>cat /usr/lib/systemd/system/zabbix-server.service</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Zabbix Server</span><br><span class="line">After=syslog.target</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Environment=&quot;CONFFILE=/etc/zabbix/zabbix_server.conf&quot;</span><br><span class="line">EnvironmentFile=-/etc/sysconfig/zabbix-server</span><br><span class="line">Type=forking</span><br><span class="line">Restart=on-failure</span><br><span class="line">PIDFile=/run/zabbix/zabbix_server.pid</span><br><span class="line">KillMode=control-group</span><br><span class="line">ExecStart=/usr/sbin/zabbix_server -c $CONFFILE</span><br><span class="line">ExecStop=/bin/kill -SIGTERM $MAINPID</span><br><span class="line">RestartSec=10s</span><br><span class="line">TimeoutSec=0</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;Zabbix Server</span><br><span class="line">After&#x3D;syslog.target</span><br><span class="line">After&#x3D;network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Environment&#x3D;&quot;CONFFILE&#x3D;&#x2F;etc&#x2F;zabbix&#x2F;zabbix_server.conf&quot;</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;zabbix-server</span><br><span class="line">Type&#x3D;forking</span><br><span class="line">Restart&#x3D;on-failure</span><br><span class="line">PIDFile&#x3D;&#x2F;run&#x2F;zabbix&#x2F;zabbix_server.pid</span><br><span class="line">KillMode&#x3D;control-group</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;sbin&#x2F;zabbix_server -c $CONFFILE</span><br><span class="line">ExecStop&#x3D;&#x2F;bin&#x2F;kill -SIGTERM $MAINPID</span><br><span class="line">RestartSec&#x3D;10s</span><br><span class="line">TimeoutSec&#x3D;0</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br></pre></td></tr></table></figure>
 
-<p>cat /usr/lib/systemd/system/zabbix-agent.service </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Zabbix Agent</span><br><span class="line">After=syslog.target</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Environment=&quot;CONFFILE=/etc/zabbix/zabbix_agentd.conf&quot;</span><br><span class="line">EnvironmentFile=-/etc/sysconfig/zabbix-agent</span><br><span class="line">Type=forking</span><br><span class="line">Restart=on-failure</span><br><span class="line">PIDFile=/run/zabbix/zabbix_agentd.pid</span><br><span class="line">KillMode=control-group</span><br><span class="line">ExecStart=/usr/sbin/zabbix_agentd -c $CONFFILE</span><br><span class="line">ExecStop=/bin/kill -SIGTERM $MAINPID</span><br><span class="line">RestartSec=10s</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<p>cat /usr/lib/systemd/system/zabbix-agent.service</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;Zabbix Agent</span><br><span class="line">After&#x3D;syslog.target</span><br><span class="line">After&#x3D;network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Environment&#x3D;&quot;CONFFILE&#x3D;&#x2F;etc&#x2F;zabbix&#x2F;zabbix_agentd.conf&quot;</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;zabbix-agent</span><br><span class="line">Type&#x3D;forking</span><br><span class="line">Restart&#x3D;on-failure</span><br><span class="line">PIDFile&#x3D;&#x2F;run&#x2F;zabbix&#x2F;zabbix_agentd.pid</span><br><span class="line">KillMode&#x3D;control-group</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;sbin&#x2F;zabbix_agentd -c $CONFFILE</span><br><span class="line">ExecStop&#x3D;&#x2F;bin&#x2F;kill -SIGTERM $MAINPID</span><br><span class="line">RestartSec&#x3D;10s</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br></pre></td></tr></table></figure></li>
+</ol>
+
     </div>
 
     
@@ -537,7 +535,29 @@
 
 
 
-<script src="/js/comments.js"></script>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 </div>
   </main>
 
@@ -554,7 +574,7 @@
   <span class="author" itemprop="copyrightHolder">huagang</span>
 </div>
 <div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
       </span>
@@ -562,7 +582,7 @@
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv">
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
       </span>
