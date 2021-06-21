@@ -1,33 +1,56 @@
 name: Pages
 
 on:
-  push:
-    branches:
-      - main  # default branch
+  - push
+  - pull_request
 
 jobs:
-  pages:
+  lint:
+    name: Lint Code Base
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
+      - name: Checkout Code
+        uses: actions/checkout@v2
         with:
-          node-version: '12.x'
-      - name: Cache NPM dependencies
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+      - name: Lint Code Base
+        uses: github/super-linter@v3
+        env:
+          VALIDATE_MARKDOWN: true
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          LINTER_RULES_PATH: /
+          MARKDOWN_CONFIG_FILE: .markdownlint.yml
+
+  deploy:
+    name: Deploy gh-pages
+    needs: lint
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Cache dependencies
         uses: actions/cache@v2
         with:
-          path: node_modules
-          key: ${{ runner.OS }}-npm-cache
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-npm-cache
-      - name: Install Dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
+            ${{ runner.os }}-node-
+
+      - run: npm ci
+      - run: npm run build
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-          publish_branch: gh-pages  # deploying branch

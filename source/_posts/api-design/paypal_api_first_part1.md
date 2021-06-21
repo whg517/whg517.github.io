@@ -10,7 +10,7 @@ tags:
 > 本文是 [Untangling an API-First Transformation at Scale. Lessons Learnt at PayPal – Part 1](https://www.infoq.com/articles/paypal-api-first-part1/?itm_source=infoq&itm_campaign=user_page&itm_medium=link)
 > 的翻译，仅供学习交流。如有翻译不当，请斧正。所有权归原作者，侵删。
 
-**要点**
+**要点:**
 
 - 在大型组织中实现以 API 优先的转换既是技术难题，也是人员问题。
 - 组织架构将极大地影响您的API优先成功策略
@@ -18,7 +18,7 @@ tags:
 - 流程和治理是必要的，但要轻量并使其适合您的客户
 - 要低估对工具，基础架构和使其有效运行所需的人员的投资
 
-<!-- more --> 
+<!-- more -->
 
 ## 制定API策略
 
@@ -118,8 +118,8 @@ tags:
 
 当我们开始时， API 市场还不成熟，实际上并没有事实上的 API 文档标准。最后我们采用了 [Google 发现文档](https://developers.google.com/discovery/v1/reference/apis)
 （GDD），因此看起来还不错，也比大多数更好。从社区支持和采用的角度看，这很快就无济于事。我们最终为 GDD 开发了相当多得工具和支持，直到 2015 年中期
-左右我们大多数开发人员都希望使用 OpenAPI（也叫 Swagger）。大约在那时，我们决定将所有 API 迁移到 OpenAPI 规范，并加入了 
-[OpenAPI Initiative](https://openapis.org/) （OAI）。它的使用，使我们减少在基础设施的投资，获得了更大的收益。总体而言，它更强大，并且我们
+左右我们大多数开发人员都希望使用 OpenAPI（也叫 Swagger）。大约在那时，我们决定将所有 API 迁移到 OpenAPI 规范，并加入了
+  [OpenAPI Initiative](https://openapis.org/) （OAI）。它的使用，使我们减少在基础设施的投资，获得了更大的收益。总体而言，它更强大，并且我们
 的开发商更愿意使用。
 
 ## 参与过程
@@ -130,7 +130,7 @@ tags:
 
 我们开发的基本参与流程如下：
 
-![](https://res.infoq.com/articles/paypal-api-first-part1/en/resources/1Picture1.jpg)
+![https://res.infoq.com/articles/paypal-api-first-part1/en/resources/1Picture1.jpg](https://res.infoq.com/articles/paypal-api-first-part1/en/resources/1Picture1.jpg)
 
 当构建 API 的团队提交概述其计划，包括用例以及通常提议的设计的提议时，该过程开始。
 
@@ -180,7 +180,7 @@ tags:
 并控制每个标准在规模上的位置，我们已经能够逐步将API产品组合推向更理想的状态。我们根据失败的最低评分标准衡量每个API的成熟度得分。
 这使我们能够使用简单的成熟度指标（对所有服务进行标准化）来汇总API产品组合的整体质量。
 
-![](https://res.infoq.com/articles/paypal-api-first-part1/en/resources/1Picture2.jpg)
+![https://res.infoq.com/articles/paypal-api-first-part1/en/resources/1Picture2.jpg](https://res.infoq.com/articles/paypal-api-first-part1/en/resources/1Picture2.jpg)
 
 上图是我们的一次记分记录，其中显示了 API 的成熟度评估。每个图像代表一个标准，这些标准源自我们要强制执行的标准。开发人员使用它可以快速了解通过了
 哪些条件以及失败了的条件。他们单击每个按钮，深入研究细节，进行更正，并更新分数，直到达到成熟目标。在过去的几年中，我们同时改进了模型和基础架构。

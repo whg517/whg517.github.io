@@ -1,18 +1,13 @@
-
 ---
 title: Google Python 风格指南
 author: Kevin
 date: 2020-08-04 10:06:00
-updated: 2020-08-04 11:50:00
+updated: 2021-06-21 17:28:00
 tags:
 - Python
 categories: 开发
 ---
 
-<a id="s1-background"></a>
-<a id="1-background"></a>
-
-<a id="background"></a>
 ## 1 背景
 
 在 Google ， Python 是主要使用的动态语言之一。该风格之南表述了一些在 Python 编程中 **应该做** 和 **不应该** 的事情。
@@ -22,27 +17,12 @@ categories: 开发
 
 很多个团队在使用 [yapf](https://github.com/google/yapf/) 来自动格式化来避免在格式上的争论。
 
-
-<a id="s2-python-language-rules"></a>
-<a id="2-python-language-rules"></a>
-
-<a id="python-language-rules"></a>
 ## 2 Python 语言规范
 
-
-<a id="s2.1-lint"></a>
-<a id="21-lint"></a>
-
-<a id="lint"></a>
 ### 2.1 Lint
 
-在你的代码上运行 `pylint` 
+在你的代码上运行 `pylint`
 
-
-<a id="s2.1.1-definition"></a>
-<a id="211-definition"></a>
-
-<a id="definition"></a>
 #### 2.1.1 定义
 
 `pylint` 是一个可以在 Python 源代码中发现 Bugs 和风格问题的工具。它可以发现一些通常由编译器捕获的问题，像 C 和 c++ 等
@@ -117,10 +97,5 @@ Re-usability mechanism for sharing code from one module to another.
 
 #### 2.2.4 判断
 
-* 使用 `import x` 导入一个包或模块。
-* 使用 `from x import y ` ， `x` 包的前缀， `y` 是不带
-
-
-
-<a id="typing-imports"></a>
-
+- 使用 `import x` 导入一个包或模块。
+- 使用 `from x import y` ， `x` 包的前缀， `y` 是不带

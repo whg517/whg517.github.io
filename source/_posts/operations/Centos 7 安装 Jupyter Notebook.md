@@ -10,7 +10,7 @@ categories:
 - 运维
 ---
 
-本文安装 Jupyter Notebook 是我在 Centos 7 服务器上安装的一次记录过程。此方式可以作为本地环境使用，也可以作为服务器环境部署。当然对于本次 
+本文安装 Jupyter Notebook 是我在 Centos 7 服务器上安装的一次记录过程。此方式可以作为本地环境使用，也可以作为服务器环境部署。当然对于本次
 Jupyter Notebook 的部署方式，也是我现在常用的项目部署方式----通过 supervisor 部署，而结合 virtualenvwrapper 能够更方便的控制虚拟环境。
 下面开始吧
 
@@ -51,7 +51,7 @@ jupyter notebook --generate-config
 
 进入 ipython ，生成 sha1 密码。
 
-```
+```text
 from notebook.auth import passwd
 passwd()
 Enter password:
@@ -83,7 +83,7 @@ c.NotebookApp.certfile = '/home/user/.jupyter/jcert.pem'
 c.NotebookApp.keyfile = '/home/user/.jupyter/jkey.key'
 ```
 
-**注意**
+**注意:**
 
 1. `password` 要填你上面密码生成的 hash 值
 2. `notebook_dir` 置了jupyter的notebook路径，即访问jupyter首页时，看到的文件列表就是该目录下的。记得授权给启动用户，要不然可能会出现无法访问
@@ -91,7 +91,7 @@ c.NotebookApp.keyfile = '/home/user/.jupyter/jkey.key'
 
 ## 启动
 
-**增加防火墙端口**
+**增加防火墙端口:**
 
 如果你使用了 firewalld 记得开发端口
 
@@ -137,13 +137,13 @@ stdout_logfile = /var/log/supervisor/jupyter_notebook/stdout.log
 
 执行 `supervisorctl`进入 supervisor 交互，重新加载 supervisor 配置文件。
 
-```
+```text
 > upload
 ```
 
 查看状态
 
-```
+```text
 status
 ```
 
