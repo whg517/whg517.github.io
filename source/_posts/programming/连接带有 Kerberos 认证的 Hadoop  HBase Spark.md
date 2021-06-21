@@ -2,7 +2,7 @@
 title: 连接带有 Kerberos 认证的 Hadoop Hbase Hive Spark
 author: Kevin
 date: 2017-11-21 18:18:08
-updated: 2020-05-28 10:26:00
+updated: 2021-06-21 17:17:00
 tags:
 - kerberos
 - hadoop
@@ -60,7 +60,7 @@ categories: Hadoop
 
 将 `krb5.conf` `tendata.keytab`  放到项目根目录
 
-![](http://qiniu.iclouds.work/Fvr3toNl75tVQV6siXCnKq1bdQ_g.png)
+![keytab](http://qiniu.iclouds.work/Fvr3toNl75tVQV6siXCnKq1bdQ_g.png)
 
 实例代码
 
@@ -285,7 +285,7 @@ public class HiveAuth {
 
 在 Resource 目录下放入 `core-site.xml` `yarn-site.xml` 两个文件。
 
-![](http://qiniu.iclouds.work/FqF9JVuTAUIj3RWpkc0lP59QtHIa.png)
+![resource](http://qiniu.iclouds.work/FqF9JVuTAUIj3RWpkc0lP59QtHIa.png)
 
 添加 Spark 依赖
 
@@ -386,9 +386,9 @@ object Put{
 
 ## 错误总结
 
-##### 1.  Can't get Kerberos realm
+### 1.  Can't get Kerberos realm
 
-```
+```java
 Exception in thread "main" java.lang.IllegalArgumentException: Can't get Kerberos realm
     at org.apache.hadoop.security.HadoopKerberosName.setConfiguration(HadoopKerberosName.java:65)
     at org.apache.hadoop.security.UserGroupInformation.initialize(UserGroupInformation.java:249)
@@ -418,7 +418,7 @@ Caused by: KrbException: Generic error (description in e-text) (60) - Unable to 
 
 主要几点
 
-```
+```text
 Caused by: KrbException: Cannot locate default realm
 
 Caused by: KrbException: Generic error (description in e-text) (60) - Unable to locate Kerberos realm
@@ -426,13 +426,13 @@ Caused by: KrbException: Generic error (description in e-text) (60) - Unable to 
 
 主要原因在代码中没有添加 `krb5.conf` 这个配置，所以检查这个配置文件的是否存在和文件内容的正确性
 
-##### 2. org.apache.hadoop.hbase.exceptions.ConnectionClosingException: Call to m1.node.hadoop/192.168.10.1:16000 failed
+### 2. org.apache.hadoop.hbase.exceptions.ConnectionClosingException
 
 读取 HBase 信息，连接到 HBase 没反应，重复出现下面的信息。
-
+<!-- markdownlint-disable MD013 MD033-->
 Call exception, tries=10, retries=31, started=48283 ms ago, cancelled=false, msg=com.google.protobuf.ServiceException: org.apache.hadoop.hbase.exceptions.ConnectionClosingException: Call to m1.node.hadoop/192.168.10.1:16000 failed on local exception: org.apache.hadoop.hbase.exceptions.ConnectionClosingException: Connection to m1.node.hadoop/192.168.10.1:16000 is closing. Call id=10, waitTime=1
 
-```
+```text
 2017-10-13 15:26:02,021 INFO  [main] zookeeper.ZooKeeper (ZooKeeper.java:<init>(438)) - Initiating client connection, connectString=m1.node.hadoop:2181,m2.node.hadoop:2181,m3.node.hadoop:2181 sessionTimeout=180000 watcher=org.apache.hadoop.hbase.zookeeper.PendingWatcher@65b3f4a4
 2017-10-13 15:26:02,077 INFO  [main-SendThread(m3.node.hadoop:2181)] zookeeper.ClientCnxn (ClientCnxn.java:logStartConnect(1019)) - Opening socket connection to server m3.node.hadoop/192.168.10.3:2181. Will not attempt to authenticate using SASL (unknown error)
 2017-10-13 15:26:02,079 INFO  [main-SendThread(m3.node.hadoop:2181)] zookeeper.ClientCnxn (ClientCnxn.java:primeConnection(864)) - Socket connection established, initiating session, client: /192.168.2.199:59415, server: m3.node.hadoop/192.168.10.3:2181
@@ -441,8 +441,8 @@ Call exception, tries=10, retries=31, started=48283 ms ago, cancelled=false, msg
 2017-10-13 15:26:06,524 WARN  [main] shortcircuit.DomainSocketFactory (DomainSocketFactory.java:<init>(117)) - The short-circuit local reads feature cannot be used because UNIX Domain sockets are not available on Windows.
 2017-10-13 15:26:54,855 INFO  [main] client.RpcRetryingCaller (RpcRetryingCaller.java:callWithRetries(146)) - Call exception, tries=10, retries=31, started=48283 ms ago, cancelled=false, msg=com.google.protobuf.ServiceException: org.apache.hadoop.hbase.exceptions.ConnectionClosingException: Call to m1.node.hadoop/192.168.10.1:16000 failed on local exception: org.apache.hadoop.hbase.exceptions.ConnectionClosingException: Connection to m1.node.hadoop/192.168.10.1:16000 is closing. Call id=10, waitTime=1 
 2017-10-13 15:27:15,012 INFO  [main] client.RpcRetryingCaller (RpcRetryingCaller.java:callWithRetries(146)) - Call exception, tries=11, retries=31, started=68440 ms ago, cancelled=false, msg=com.google.protobuf.ServiceException: org.apache.hadoop.hbase.exceptions.ConnectionClosingException: Call to m1.node.hadoop/192.168.10.1:16000 failed on local exception: org.apache.hadoop.hbase.exceptions.ConnectionClosingException: Connection to m1.node.hadoop/192.168.10.1:16000 is closing. Call id=11, waitTime=1 
-
 ```
+<!-- markdownlint-restore -->
 
 这种情况是在创建 Configuration 的格式不对造成。
 
@@ -457,11 +457,10 @@ Configuration conf = new Configuration();
 Configuration conf = HBaseConfiguration.create();
 ```
 
-##### 3.  [org.apache.hadoop.hbase.client.RpcRetryingCaller] - Call exception, tries=11, retries=35, started=48413 ms ago, cancelled=false, msg=
+### 3. 连接 HBase 没有反应，重复出现 Call exception
 
-连接 HBase 没有反应，重复出现 Call exception
-
-```
+<!-- markdownlint-disable MD013 MD033-->
+```text
 2017-11-21 17:45:11,982 INFO [org.apache.zookeeper.ZooKeeper] - Initiating client connection, connectString=m1.node.hadoop:2181,m2.node.hadoop:2181,m3.node.hadoop:2181 sessionTimeout=90000 watcher=hconnection-0x66d189790x0, quorum=m1.node.hadoop:2181,m2.node.hadoop:2181,m3.node.hadoop:2181, baseZNode=/hbase-secure
 2017-11-21 17:45:12,049 INFO [org.apache.zookeeper.ClientCnxn] - Opening socket connection to server m2.node.hadoop/192.168.10.2:2181. Will not attempt to authenticate using SASL (unknown error)
 2017-11-21 17:45:12,050 INFO [org.apache.zookeeper.ClientCnxn] - Socket connection established to m2.node.hadoop/192.168.10.2:2181, initiating session
@@ -471,7 +470,7 @@ Configuration conf = HBaseConfiguration.create();
 2017-11-21 17:45:54,986 INFO [org.apache.hadoop.hbase.client.RpcRetryingCaller] - Call exception, tries=10, retries=35, started=38401 ms ago, cancelled=false, msg=
 2017-11-21 17:46:04,998 INFO [org.apache.hadoop.hbase.client.RpcRetryingCaller] - Call exception, tries=11, retries=35, started=48413 ms ago, cancelled=false, msg=
 ```
-
+<!-- markdownlint-restore -->
 这是没有指定 HBase 安全认证导致的。
 
 增加如下配置即可
@@ -480,7 +479,7 @@ Configuration conf = HBaseConfiguration.create();
 conf.set("hbase.security.authentication", "kerberos");      // 指定 HBase 安全认证方式为 Kerberos。
 ```
 
-##### 4. java.io.IOException: java.lang.reflect.InvocationTargetException
+### 4. java.io.IOException: java.lang.reflect.InvocationTargetException
 
 连接 HBase 出现 `org.apache.hadoop.hbase.ipc.controller.ServerRpcControllerFactory` 类找不到
 
@@ -520,11 +519,11 @@ Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.hbase.ipc.control
     ... 17 more
 ```
 
-https://www.cnblogs.com/itboys/p/6862366.html
+[https://www.cnblogs.com/itboys/p/6862366.html](https://www.cnblogs.com/itboys/p/6862366.html)
 
 1. 检查应用开发工程的配置文件hbase-site.xml中是否包含配置项hbase.rpc.controllerfactory.class。
 
-   ```
+   ```text
    <name>hbase.rpc.controllerfactory.class</name>
    <value>org.apache.hadoop.hbase.ipc.controller.ServerRpcControllerFactory</value>
    ```
@@ -533,11 +532,11 @@ https://www.cnblogs.com/itboys/p/6862366.html
 
 3. 如果不想引入该Jar包，请将应用开发工程的配置文件“hbase-site.xml”中的配置“hbase.rpc.controllerfactory.class”删除掉。
 
-##### 5. SIMPLE authentication is not enabled.  Available:[TOKEN, KERBEROS]
+### 5. SIMPLE authentication is not enabled.  Available:[TOKEN, KERBEROS]
 
 这个问题我只在使用 Spark 的情况下出现过。
 
-```
+```java
 Exception in thread "main" org.apache.hadoop.security.AccessControlException: SIMPLE authentication is not enabled.  Available:[TOKEN, KERBEROS]
     at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
     at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
@@ -601,11 +600,11 @@ Caused by: org.apache.hadoop.ipc.RemoteException(org.apache.hadoop.security.Acce
 
 当人加入了上述配置文件后，重新运行又会出现下面的错误
 
-##### 6.  Can't get Master Kerberos principal for use as renewer
+### 6.  Can't get Master Kerberos principal for use as renewer
 
 记不得这个错误有没有在其他地方出现过了。反正现在在使用 Spark 的时候出现了。
 
-```
+```java
 Exception in thread "main" java.io.IOException: Can't get Master Kerberos principal for use as renewer
     at org.apache.hadoop.mapreduce.security.TokenCache.obtainTokensForNamenodesInternal(TokenCache.java:116)
     at org.apache.hadoop.mapreduce.security.TokenCache.obtainTokensForNamenodesInternal(TokenCache.java:100)
@@ -657,11 +656,11 @@ configuration.set("yarn.nodemanager.principal", "nm/_HOST@TENDATA.CN");
 configuration.set("yarn.resourcemanager.principal", "rm/_HOST@TENDATA.CN");
 ```
 
-##### Secure IO is not possible without native code extensions.
+### 7. Secure IO is not possible without native code extensions
 
 运行 mapreduce 任务，出现如下问题
 
-```
+```java
 java.lang.Exception: org.apache.hadoop.mapreduce.task.reduce.Shuffle$ShuffleError: error in shuffle in localfetcher#1
     at org.apache.hadoop.mapred.LocalJobRunner$Job.runTasks(LocalJobRunner.java:492)
     at org.apache.hadoop.mapred.LocalJobRunner$Job.run(LocalJobRunner.java:559)
@@ -694,7 +693,7 @@ Caused by: java.lang.RuntimeException: Secure IO is not possible without native 
 
 有了动态库还需要在系统中配置，推荐是配置环境变量：
 
-```
+```shell
 export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_COMMON_LIB_NATIVE_DIR
 ```
@@ -702,13 +701,14 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_COMMON_LIB_NATIVE_DIR
 环境变量生效后就可以看到警告消除，而且程序也不会出现上面提到的问题啦。
 
 
-##### Exceeded MAX_FAILED_UNIQUE_FETCHES; bailing-out
+### 8. Exceeded MAX_FAILED_UNIQUE_FETCHES; bailing-out
 
-这个问题是在使用了 Kerberos 认证的时候出现的，如果没有使用认证也出现了请参考 [Hadoop error in shuffle in fetcher: Exceeded MAX_FAILED_UNIQUE_FETCHES](https://stackoverflow.com/questions/24066128/hadoop-error-in-shuffle-in-fetcher-exceeded-max-failed-unique-fetches) 解决。
+这个问题是在使用了 Kerberos 认证的时候出现的，如果没有使用认证也出现了请参考
+[Hadoop error in shuffle in fetcher: Exceeded MAX_FAILED_UNIQUE_FETCHES](https://stackoverflow.com/questions/24066128/hadoop-error-in-shuffle-in-fetcher-exceeded-max-failed-unique-fetches) 解决。
 
 出现这个问题是在集群客户端使用 `yarn jar demo.jar` 在集群中运行 mapreduce 任务的时候报错了。
 
-```
+```java
 Error: org.apache.hadoop.mapreduce.task.reduce.Shuffle$ShuffleError: error in shuffle in fetcher#30
     at org.apache.hadoop.mapreduce.task.reduce.Shuffle.run(Shuffle.java:134)
     at org.apache.hadoop.mapred.ReduceTask.run(ReduceTask.java:377)
@@ -764,7 +764,7 @@ public class Auth {
 代码如上，在运行 mapreduce 任务的时候除了增加 `yarn.nodemanager.principal` 和 `yarn.resourcemanager.principal` 的配置还要增加 `yarn.nodemanager.webapp.spnego-principal`
  和 `yarn.resourcemanager.webapp.spnego-principal` 的配置，否则集群间交换数据会报上面的问题。在开发环境即 local 模式运行的时候可以不用后面两个。
 
-##### 7. 终极解决问题
+### 9. 终极解决问题
 
 在 Resource 目录引入所使用的服务的所有配置。比如 hadoop 的四个配置文件。
 

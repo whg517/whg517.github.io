@@ -2,14 +2,14 @@
 title: Python 项目工程化
 author: Kevin
 date: 2018-10-12 16:38:00
-updated: 2020-05-28 11:50:00
+updated: 2021-06-21 17:18:00
 tags:
 - Python
 categories: 开发
 ---
 
 如果你是新手，请先参考 [The Hitchhiker’s Guide to Python!](https://docs.python-guide.org/) 。
-当然它有[中文版](https://pythonguidecn.readthedocs.io/zh/latest/) 
+当然它有[中文版](https://pythonguidecn.readthedocs.io/zh/latest/)
 
 <!-- more -->
 
@@ -51,7 +51,8 @@ Python version 3.6
 
 #### Visual Studio Code
 
-[Visual Studio Code IDE](https://code.visualstudio.com/) 是由微软开发的一款免费的、轻量的、开源的 IDE。支持 Mac、Windows 和 Linux。可通过安装 [Python 插件](https://marketplace.visualstudio.com/items?itemName=ms-python.python) 使其支持 Python 开发。
+[Visual Studio Code IDE](https://code.visualstudio.com/) 是由微软开发的一款免费的、轻量的、开源的 IDE。
+支持 Mac、Windows 和 Linux。可通过安装 [Python 插件](https://marketplace.visualstudio.com/items?itemName=ms-python.python) 使其支持 Python 开发。
 
 ## 二、开发规范
 
@@ -59,7 +60,7 @@ Python version 3.6
 
 - [Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/)
 - [The Zen of Python](https://www.python.org/dev/peps/pep-0020/)
-- [Google Python Style Guide](https://github.com/google/styleguide/blob/gh-pages/pyguide.md) 
+- [Google Python Style Guide](https://github.com/google/styleguide/blob/gh-pages/pyguide.md)
 
 前两者是 Python 指定的语言规范和风格规范。最后一个是 Google 社区根据Python官方规范和使用过程中总结的经验结合在一起推出的一套Python开源规范。
 
@@ -69,7 +70,7 @@ Python version 3.6
 
 #### 3.1 一般项目结构
 
-```
+```text
 project_name
 |-- docs
 |-- project_name
@@ -84,7 +85,7 @@ project_name
 
 #### 3.2 Django 项目结构
 
-```
+```text
 project_name
 |-- docs
 |-- apps
