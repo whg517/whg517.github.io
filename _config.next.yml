@@ -99,11 +99,11 @@ exturl: false
 
 # Google Webmaster tools verification.
 # See: https://www.google.com/webmasters
-google_site_verification:
+google_site_verification: G9EWiZRZAkmLhkNRG7gEmOIhxaUUbPULBVwc7R8ik2Y
 
 # Bing Webmaster tools verification.
 # See: https://www.bing.com/webmaster
-bing_site_verification:
+bing_site_verification: G9EWiZRZAkmLhkNRG7gEmOIhxaUUbPULBVwc7R8ik2Y
 
 # Yandex Webmaster tools verification.
 # See: https://webmaster.yandex.ru
@@ -125,6 +125,11 @@ baidu_push: true
 
 # Baidu Analytics
 baidu_analytics: c6fe2c57d92758c7a980d22eca71fd6a
+
+# Google Analytics
+google_analytics:
+  tracking_id: UA-200000008-1
+  only_pageview: false
 
 # Show Views / Visitors of the website / page with busuanzi.
 # Get more information on http://ibruce.info/2015/04/04/busuanzi
