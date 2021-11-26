@@ -3,9 +3,9 @@ MD007:
   start_indented: false
 
 MD013:
-  line_length: 200
+  line_length: 250
   heading_line_length: 80
-  code_block_line_length: 200
+  code_block_line_length: 250
   code_blocks: true
   tables: true
   headings: true
