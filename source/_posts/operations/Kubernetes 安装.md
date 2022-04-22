@@ -267,6 +267,8 @@ systemctl status containerd
 
 结合 runc 使用 systemd cgroup 驱动，修改 `/etc/containerd/config.toml` 的 `SystemdCgroup` 为 `true` 。
 
+> 注意：containerd 使用的是默认配置，而且 `/etc/containerd/config.toml` 是没有创建的。根据 [Customizing containerd](https://github.com/containerd/containerd/blob/main/docs/getting-started.md#customizing-containerd) 中的内容，可以使用 `containerd config default > /etc/containerd/config.toml` 生成默认 containerd 默认配置
+
 ```toml
 [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
   ...
