@@ -7292,6 +7292,9 @@ Linux localhost.localdomain 3.10.0-327.el7.x86_64 #1 SMP Thu Nov 19 22:10:57 UTC
 
 <h5 id="配置-runc-使用-cgroup"><a href="#配置-runc-使用-cgroup" class="headerlink" title="配置 runc 使用 cgroup"></a>配置 runc 使用 cgroup</h5><p>在 kubernetes 文档中提到了配置内容 <a href="https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd-systemd">使用 systemd cgroup 驱动程序</a></p>
 <p>结合 runc 使用 systemd cgroup 驱动，修改 <code>/etc/containerd/config.toml</code> 的 <code>SystemdCgroup</code> 为 <code>true</code> 。</p>
+<blockquote>
+<p>注意：containerd 使用的是默认配置，而且 <code>/etc/containerd/config.toml</code> 是没有创建的。根据 <a href="https://github.com/containerd/containerd/blob/main/docs/getting-started.md#customizing-containerd">Customizing containerd</a> 中的内容，可以使用 <code>containerd config default &gt; /etc/containerd/config.toml</code> 生成默认 containerd 默认配置</p>
+</blockquote>
 <figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes.runc]</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="section">[plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes.runc.options]</span></span><br><span class="line">    <span class="attr">SystemdCgroup</span> = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 
 <p>然后重启 containerd ，并查看服务状态：</p>
@@ -8006,54 +8009,6 @@ Linux localhost.localdomain 3.10.0-327.el7.x86_64 #1 SMP Thu Nov 19 22:10:57 UTC
       </tags>
   </entry>
   <entry>
-    <title>Google Python 风格指南</title>
-    <url>/2020/08/04/programming/python/google_python_style_guide/</url>
-    <content><![CDATA[<h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h2><p>在 Google ， Python 是主要使用的动态语言之一。该风格之南表述了一些在 Python 编程中 <strong>应该做</strong> 和 <strong>不应该</strong> 的事情。</p>
-<p>为了帮你正确地格式化代码，我们准备了 <a href="https://google.github.io/styleguide/google_python_style.vim">Vim 的配置文件</a> 。<br>对于 Emacs ，使用默认的应该没什么问题。</p>
-<p>很多个团队在使用 <a href="https://github.com/google/yapf/">yapf</a> 来自动格式化来避免在格式上的争论。</p>
-<h2 id="2-Python-语言规范"><a href="#2-Python-语言规范" class="headerlink" title="2 Python 语言规范"></a>2 Python 语言规范</h2><h3 id="2-1-Lint"><a href="#2-1-Lint" class="headerlink" title="2.1 Lint"></a>2.1 Lint</h3><p>在你的代码上运行 <code>pylint</code></p>
-<h4 id="2-1-1-定义"><a href="#2-1-1-定义" class="headerlink" title="2.1.1 定义"></a>2.1.1 定义</h4><p><code>pylint</code> 是一个可以在 Python 源代码中发现 Bugs 和风格问题的工具。它可以发现一些通常由编译器捕获的问题，像 C 和 c++ 等<br>动态程度较低的语言。由于Python的动态特性，一些警告可能是不正确的;然而，虚假得警告应该相当少见。</p>
-<h4 id="2-1-2-Pros"><a href="#2-1-2-Pros" class="headerlink" title="2.1.2 Pros"></a>2.1.2 Pros</h4><p>捕获容易出错的错误，例如错别字，在分配前使用vars等。</p>
-<h4 id="2-1-3-Cons"><a href="#2-1-3-Cons" class="headerlink" title="2.1.3 Cons"></a>2.1.3 Cons</h4><p><code>pylint</code> 并不完美。要利用它，有时我们需要：</p>
-<ul>
-<li>围绕它写</li>
-<li>禁止其警告</li>
-<li>对其进行改进</li>
-</ul>
-<h4 id="2-1-4-Decision"><a href="#2-1-4-Decision" class="headerlink" title="2.1.4 Decision"></a>2.1.4 Decision</h4><p>确定在你的代码中运行  <code>pylint</code> 。</p>
-<p>如果不适当，请禁用警告，以免隐藏其他问题。要取消显示警告，可以设置行级注释：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">dict</span> = <span class="string">&#x27;something awful&#x27;</span>  <span class="comment"># Bad Idea... pylint: disable=redefined-builtin</span></span><br></pre></td></tr></table></figure>
-
-<p><code>pylint</code> 警告均由符号名称(<code>empty-docstring</code>) 标识， Google 特定警告以 <code>g-</code> 开头。</p>
-<p>如果从符号名称中看不到禁用的原因，请添加说明。以这种方式进行禁用的优势在于，我们可以轻松地搜索抑制并重新进行禁用。</p>
-<p>要获取 <code>pylint</code> 警告列表可以这样操作：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pylint --list-msgs</span><br></pre></td></tr></table></figure>
-
-<p>获取特定消息的详细信息，执行：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pylint --help-msg=C6409</span><br></pre></td></tr></table></figure>
-
-<p>推荐使用 <code>pylint：disable</code> 而不是使用旧的 <code>pylint：disable-msg</code> 形式。</p>
-<p>可以通过删除函数开头的变量来消除未使用的参数警告。记得添加注释解释为什么删除。 <code>Unused</code> 就可以了。例如：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">viking_cafe_order</span>(<span class="params">spam, beans, eggs=<span class="literal">None</span></span>):</span></span><br><span class="line">    <span class="keyword">del</span> beans, eggs  <span class="comment"># Unused by vikings.</span></span><br><span class="line">    <span class="keyword">return</span> spam + spam + spam</span><br></pre></td></tr></table></figure>
-
-<p>取消警告的其他常见形式包括使用 <code>_</code> 作为未使用参数的标识符，或在参数名称前加上 <code>unused_</code> 前缀，<br>或将其分配给 <code>_</code> 。虽然可以这么做，但不再鼓励。一些中断调用程序按名称传递参数，并且不强制要求参数实际上未使用。</p>
-<h3 id="2-2-Imports"><a href="#2-2-Imports" class="headerlink" title="2.2 Imports"></a>2.2 Imports</h3><p><code>import</code> 语句仅用在包和模块，不要用在类和函数上。对于 <a href="#typing-imports">typing module</a> 导入是特例。</p>
-<h4 id="2-2-1-定义"><a href="#2-2-1-定义" class="headerlink" title="2.2.1 定义"></a>2.2.1 定义</h4><p>Re-usability mechanism for sharing code from one module to another.</p>
-<h4 id="2-2-2-优点"><a href="#2-2-2-优点" class="headerlink" title="2.2.2 优点"></a>2.2.2 优点</h4><p>命名空间管理约定很简单。每个标识符的来源以一致的方式表示； <code>x.Obj</code> 表示 <code>Obj</code> 对象定义在 <code>x</code> 模块中。</p>
-<h4 id="2-2-3-缺点"><a href="#2-2-3-缺点" class="headerlink" title="2.2.3 缺点"></a>2.2.3 缺点</h4><p>模块名称仍然可以冲突。一些模块名称很长。</p>
-<h4 id="2-2-4-判断"><a href="#2-2-4-判断" class="headerlink" title="2.2.4 判断"></a>2.2.4 判断</h4><ul>
-<li>使用 <code>import x</code> 导入一个包或模块。</li>
-<li>使用 <code>from x import y</code> ， <code>x</code> 包的前缀， <code>y</code> 是不带</li>
-</ul>
-]]></content>
-      <categories>
-        <category>开发</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python PEP8 编码规范</title>
     <url>/2019/01/01/programming/python/Python%20PEP8%20%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/</url>
     <content><![CDATA[<p>原文链接：<a href="http://legacy.python.org/dev/peps/pep-0008/">http://legacy.python.org/dev/peps/pep-0008/</a></p>
@@ -8438,6 +8393,54 @@ Linux localhost.localdomain 3.10.0-327.el7.x86_64 #1 SMP Thu Nov 19 22:10:57 UTC
 </ul>
 <p>[^1]: PEP 7, Style Guide for C Code, van Rossum<br>[^2]: Barry’s GNU Mailman style guide <a href="http://barry.warsaw.us/software/STYLEGUIDE.txt">http://barry.warsaw.us/software/STYLEGUIDE.txt</a><br>[^3]: 挂行缩进是一种类型设置样式，其中除第一行之外，段落中的所有行都缩进。在Python中，这个术语是用来描述一种风格：在被括号括起来的语句中，左括号是这一行最后一个非空格字符，随后括号内的内容每一行进行缩进，直到遇到右括号。<br>[^4]: Donald Knuth’s The TeXBook, pages 195 and 196</p>
 <p>[^6]: Typeshed repo <a href="https://github.com/python/typeshed">https://github.com/python/typeshed</a><br>[^7]: Suggested syntax for Python 2.7 and straddling code <a href="https://www.python.org/dev/peps/pep-0484/#suggested-syntax-for-python-2-7-and-straddling-code">https://www.python.org/dev/peps/pep-0484/#suggested-syntax-for-python-2-7-and-straddling-code</a></p>
+]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Google Python 风格指南</title>
+    <url>/2020/08/04/programming/python/google_python_style_guide/</url>
+    <content><![CDATA[<h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h2><p>在 Google ， Python 是主要使用的动态语言之一。该风格之南表述了一些在 Python 编程中 <strong>应该做</strong> 和 <strong>不应该</strong> 的事情。</p>
+<p>为了帮你正确地格式化代码，我们准备了 <a href="https://google.github.io/styleguide/google_python_style.vim">Vim 的配置文件</a> 。<br>对于 Emacs ，使用默认的应该没什么问题。</p>
+<p>很多个团队在使用 <a href="https://github.com/google/yapf/">yapf</a> 来自动格式化来避免在格式上的争论。</p>
+<h2 id="2-Python-语言规范"><a href="#2-Python-语言规范" class="headerlink" title="2 Python 语言规范"></a>2 Python 语言规范</h2><h3 id="2-1-Lint"><a href="#2-1-Lint" class="headerlink" title="2.1 Lint"></a>2.1 Lint</h3><p>在你的代码上运行 <code>pylint</code></p>
+<h4 id="2-1-1-定义"><a href="#2-1-1-定义" class="headerlink" title="2.1.1 定义"></a>2.1.1 定义</h4><p><code>pylint</code> 是一个可以在 Python 源代码中发现 Bugs 和风格问题的工具。它可以发现一些通常由编译器捕获的问题，像 C 和 c++ 等<br>动态程度较低的语言。由于Python的动态特性，一些警告可能是不正确的;然而，虚假得警告应该相当少见。</p>
+<h4 id="2-1-2-Pros"><a href="#2-1-2-Pros" class="headerlink" title="2.1.2 Pros"></a>2.1.2 Pros</h4><p>捕获容易出错的错误，例如错别字，在分配前使用vars等。</p>
+<h4 id="2-1-3-Cons"><a href="#2-1-3-Cons" class="headerlink" title="2.1.3 Cons"></a>2.1.3 Cons</h4><p><code>pylint</code> 并不完美。要利用它，有时我们需要：</p>
+<ul>
+<li>围绕它写</li>
+<li>禁止其警告</li>
+<li>对其进行改进</li>
+</ul>
+<h4 id="2-1-4-Decision"><a href="#2-1-4-Decision" class="headerlink" title="2.1.4 Decision"></a>2.1.4 Decision</h4><p>确定在你的代码中运行  <code>pylint</code> 。</p>
+<p>如果不适当，请禁用警告，以免隐藏其他问题。要取消显示警告，可以设置行级注释：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">dict</span> = <span class="string">&#x27;something awful&#x27;</span>  <span class="comment"># Bad Idea... pylint: disable=redefined-builtin</span></span><br></pre></td></tr></table></figure>
+
+<p><code>pylint</code> 警告均由符号名称(<code>empty-docstring</code>) 标识， Google 特定警告以 <code>g-</code> 开头。</p>
+<p>如果从符号名称中看不到禁用的原因，请添加说明。以这种方式进行禁用的优势在于，我们可以轻松地搜索抑制并重新进行禁用。</p>
+<p>要获取 <code>pylint</code> 警告列表可以这样操作：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pylint --list-msgs</span><br></pre></td></tr></table></figure>
+
+<p>获取特定消息的详细信息，执行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pylint --help-msg=C6409</span><br></pre></td></tr></table></figure>
+
+<p>推荐使用 <code>pylint：disable</code> 而不是使用旧的 <code>pylint：disable-msg</code> 形式。</p>
+<p>可以通过删除函数开头的变量来消除未使用的参数警告。记得添加注释解释为什么删除。 <code>Unused</code> 就可以了。例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">viking_cafe_order</span>(<span class="params">spam, beans, eggs=<span class="literal">None</span></span>):</span></span><br><span class="line">    <span class="keyword">del</span> beans, eggs  <span class="comment"># Unused by vikings.</span></span><br><span class="line">    <span class="keyword">return</span> spam + spam + spam</span><br></pre></td></tr></table></figure>
+
+<p>取消警告的其他常见形式包括使用 <code>_</code> 作为未使用参数的标识符，或在参数名称前加上 <code>unused_</code> 前缀，<br>或将其分配给 <code>_</code> 。虽然可以这么做，但不再鼓励。一些中断调用程序按名称传递参数，并且不强制要求参数实际上未使用。</p>
+<h3 id="2-2-Imports"><a href="#2-2-Imports" class="headerlink" title="2.2 Imports"></a>2.2 Imports</h3><p><code>import</code> 语句仅用在包和模块，不要用在类和函数上。对于 <a href="#typing-imports">typing module</a> 导入是特例。</p>
+<h4 id="2-2-1-定义"><a href="#2-2-1-定义" class="headerlink" title="2.2.1 定义"></a>2.2.1 定义</h4><p>Re-usability mechanism for sharing code from one module to another.</p>
+<h4 id="2-2-2-优点"><a href="#2-2-2-优点" class="headerlink" title="2.2.2 优点"></a>2.2.2 优点</h4><p>命名空间管理约定很简单。每个标识符的来源以一致的方式表示； <code>x.Obj</code> 表示 <code>Obj</code> 对象定义在 <code>x</code> 模块中。</p>
+<h4 id="2-2-3-缺点"><a href="#2-2-3-缺点" class="headerlink" title="2.2.3 缺点"></a>2.2.3 缺点</h4><p>模块名称仍然可以冲突。一些模块名称很长。</p>
+<h4 id="2-2-4-判断"><a href="#2-2-4-判断" class="headerlink" title="2.2.4 判断"></a>2.2.4 判断</h4><ul>
+<li>使用 <code>import x</code> 导入一个包或模块。</li>
+<li>使用 <code>from x import y</code> ， <code>x</code> 包的前缀， <code>y</code> 是不带</li>
+</ul>
 ]]></content>
       <categories>
         <category>开发</category>

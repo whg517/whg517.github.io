@@ -308,6 +308,9 @@
 
 <h5 id="配置-runc-使用-cgroup"><a href="#配置-runc-使用-cgroup" class="headerlink" title="配置 runc 使用 cgroup"></a>配置 runc 使用 cgroup</h5><p>在 kubernetes 文档中提到了配置内容 <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd-systemd">使用 systemd cgroup 驱动程序</a></p>
 <p>结合 runc 使用 systemd cgroup 驱动，修改 <code>/etc/containerd/config.toml</code> 的 <code>SystemdCgroup</code> 为 <code>true</code> 。</p>
+<blockquote>
+<p>注意：containerd 使用的是默认配置，而且 <code>/etc/containerd/config.toml</code> 是没有创建的。根据 <a target="_blank" rel="noopener" href="https://github.com/containerd/containerd/blob/main/docs/getting-started.md#customizing-containerd">Customizing containerd</a> 中的内容，可以使用 <code>containerd config default &gt; /etc/containerd/config.toml</code> 生成默认 containerd 默认配置</p>
+</blockquote>
 <figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes.runc]</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="section">[plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes.runc.options]</span></span><br><span class="line">    <span class="attr">SystemdCgroup</span> = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 
 <p>然后重启 containerd ，并查看服务状态：</p>
@@ -659,7 +662,7 @@
 
 <div class="copyright">
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
