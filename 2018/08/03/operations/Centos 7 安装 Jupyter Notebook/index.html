@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -20,16 +19,17 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.iclouds.work","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="本文安装 Jupyter Notebook 是我在 Centos 7 服务器上安装的一次记录过程。此方式可以作为本地环境使用，也可以作为服务器环境部署。当然对于本次Jupyter Notebook 的部署方式，也是我现在常用的项目部署方式—-通过 supervisor 部署，而结合 virtualenvwrapper 能够更方便的控制虚拟环境。下面开始吧">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.iclouds.work","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本文安装 Jupyter Notebook 是我在 Centos 7 服务器上安装的一次记录过程。此方式可以作为本地环境使用，也可以作为服务器环境部署。当然对于本次 Jupyter Notebook 的部署方式，也是我现在常用的项目部署方式----通过 supervisor 部署，而结合 virtualenvwrapper 能够更方便的控制虚拟环境。 下面开始吧">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Centos 7 安装 Jupyter Notebook">
 <meta property="og:url" content="http://blog.iclouds.work/2018/08/03/operations/Centos%207%20%E5%AE%89%E8%A3%85%20Jupyter%20Notebook/index.html">
 <meta property="og:site_name" content="Myblog">
-<meta property="og:description" content="本文安装 Jupyter Notebook 是我在 Centos 7 服务器上安装的一次记录过程。此方式可以作为本地环境使用，也可以作为服务器环境部署。当然对于本次Jupyter Notebook 的部署方式，也是我现在常用的项目部署方式—-通过 supervisor 部署，而结合 virtualenvwrapper 能够更方便的控制虚拟环境。下面开始吧">
+<meta property="og:description" content="本文安装 Jupyter Notebook 是我在 Centos 7 服务器上安装的一次记录过程。此方式可以作为本地环境使用，也可以作为服务器环境部署。当然对于本次 Jupyter Notebook 的部署方式，也是我现在常用的项目部署方式----通过 supervisor 部署，而结合 virtualenvwrapper 能够更方便的控制虚拟环境。 下面开始吧">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-08-03T08:04:00.000Z">
 <meta property="article:modified_time" content="2020-05-28T03:50:00.000Z">
@@ -57,6 +57,7 @@
 
 
 
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -80,7 +81,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Myblog</h1>
+      <p class="site-title">Myblog</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">Hello World !</p>
@@ -95,12 +96,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
   </ul>
 </nav>
 
@@ -209,11 +205,16 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="huagang">
-      <meta itemprop="description" content="I Love You !">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Myblog">
+      <meta itemprop="description" content="I Love You !">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Centos 7 安装 Jupyter Notebook | Myblog">
+      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -230,13 +231,13 @@
 
       <time title="创建时间：2018-08-03 16:04:00" itemprop="dateCreated datePublished" datetime="2018-08-03T16:04:00+08:00">2018-08-03</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-05-28 11:50:00" itemprop="dateModified" datetime="2020-05-28T11:50:00+08:00">2020-05-28</time>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
       </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2020-05-28 11:50:00" itemprop="dateModified" datetime="2020-05-28T11:50:00+08:00">2020-05-28</time>
+    </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -264,46 +265,50 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>本文安装 Jupyter Notebook 是我在 Centos 7 服务器上安装的一次记录过程。此方式可以作为本地环境使用，也可以作为服务器环境部署。当然对于本次<br>Jupyter Notebook 的部署方式，也是我现在常用的项目部署方式—-通过 supervisor 部署，而结合 virtualenvwrapper 能够更方便的控制虚拟环境。<br>下面开始吧</p>
+        <p>本文安装 Jupyter Notebook 是我在 Centos 7 服务器上安装的一次记录过程。此方式可以作为本地环境使用，也可以作为服务器环境部署。当然对于本次<br>
+Jupyter Notebook 的部署方式，也是我现在常用的项目部署方式----通过 supervisor 部署，而结合 virtualenvwrapper 能够更方便的控制虚拟环境。<br>
+下面开始吧</p>
 <span id="more"></span>
-
-<p>基础系统环境需要安装 Python36 virtualenv virtualenvwrapper supervisor 。如果你的环境还没准备好，可以参照此文根据自己环境<br>调整相关操作。如果你的环境已经配置完成可以按照此文愉快的安装。如果你想安装前面提到的环境可以参考下面几篇文章。</p>
-<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>创建 jupyter 虚拟环境</p>
+<p>基础系统环境需要安装 Python36 virtualenv virtualenvwrapper supervisor 。如果你的环境还没准备好，可以参照此文根据自己环境<br>
+调整相关操作。如果你的环境已经配置完成可以按照此文愉快的安装。如果你想安装前面提到的环境可以参考下面几篇文章。</p>
+<h2 id="环境准备">环境准备</h2>
+<p>创建 jupyter 虚拟环境</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkvirtualenv jupyter</span><br></pre></td></tr></table></figure>
-
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install ipython jupyter</span><br></pre></td></tr></table></figure>
-
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="生成-jupyter-配置文件"><a href="#生成-jupyter-配置文件" class="headerlink" title="生成 jupyter 配置文件"></a>生成 jupyter 配置文件</h3><p>一般会直接生成在家目录 <code>~/.jupyter/jupyter_notebook_config.py</code></p>
+<h2 id="安装">安装</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install ipython jupyter</span><br></pre></td></tr></table></figure>
+<h2 id="配置">配置</h2>
+<h3 id="生成-jupyter-配置文件">生成 jupyter 配置文件</h3>
+<p>一般会直接生成在家目录 <code>~/.jupyter/jupyter_notebook_config.py</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure>
-
-<h3 id="生成必要配置参数"><a href="#生成必要配置参数" class="headerlink" title="生成必要配置参数"></a>生成必要配置参数</h3><p>为了服务器数据安全，我们采用设置密码和设置 https 保证安全登录。当然我们的 https 证书是自己颁发的。</p>
-<h4 id="生成加密密码"><a href="#生成加密密码" class="headerlink" title="生成加密密码"></a>生成加密密码</h4><p>进入 ipython ，生成 sha1 密码。</p>
+<h3 id="生成必要配置参数">生成必要配置参数</h3>
+<p>为了服务器数据安全，我们采用设置密码和设置 https 保证安全登录。当然我们的 https 证书是自己颁发的。</p>
+<h4 id="生成加密密码">生成加密密码</h4>
+<p>进入 ipython ，生成 sha1 密码。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from notebook.auth import passwd</span><br><span class="line">passwd()</span><br><span class="line">Enter password:</span><br><span class="line">Verify password:</span><br><span class="line">Out[3]: &#x27;sha1:5c82f59da5a3:a68e8360e2cab6336fbbfa3d141f9a617aec7dba&#x27;</span><br></pre></td></tr></table></figure>
-
 <p>输入两次密码。密码是不回显的！</p>
-<h4 id="生成自签名证书"><a href="#生成自签名证书" class="headerlink" title="生成自签名证书"></a>生成自签名证书</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout ~/.jupyter/jkey.key -out ~/.jupyter/jcert.pem</span><br></pre></td></tr></table></figure>
-
+<h4 id="生成自签名证书">生成自签名证书</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout ~/.jupyter/jkey.key -out ~/.jupyter/jcert.pem</span><br></pre></td></tr></table></figure>
 <p>会提示输入一些内容，如果你不知道该填什么的话，那就回车默认好了~</p>
-<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><p>修改文件 <code>/.jupyter/jupyter_notebook_config.py</code></p>
+<h4 id="修改配置文件">修改配置文件</h4>
+<p>修改文件 <code>/.jupyter/jupyter_notebook_config.py</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">c.NotebookApp.password = <span class="string">&#x27;sha1:5c82f59da5a3:a68e8360e2cab6336fbbfa3d141f9a617aec7dba&#x27;</span></span><br><span class="line">c.NotebookApp.port = 8888</span><br><span class="line">c.NotebookApp.ip = <span class="string">&#x27;*&#x27;</span></span><br><span class="line">c.NotebookApp.open_browser = False</span><br><span class="line">c.NotebookApp.notebook_dir = <span class="string">&#x27;/opt/jupyte_notebook/&#x27;</span></span><br><span class="line">c.NotebookApp.certfile = <span class="string">&#x27;/home/user/.jupyter/jcert.pem&#x27;</span></span><br><span class="line">c.NotebookApp.keyfile = <span class="string">&#x27;/home/user/.jupyter/jkey.key&#x27;</span></span><br></pre></td></tr></table></figure>
-
 <p><strong>注意:</strong></p>
 <ol>
 <li><code>password</code> 要填你上面密码生成的 hash 值</li>
 <li><code>notebook_dir</code> 置了jupyter的notebook路径，即访问jupyter首页时，看到的文件列表就是该目录下的。记得授权给启动用户，要不然可能会出现无法访问</li>
 <li>最后两条配置的文件路径记得要写对应文件的绝对路径！</li>
 </ol>
-<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p><strong>增加防火墙端口:</strong></p>
+<h2 id="启动">启动</h2>
+<p><strong>增加防火墙端口:</strong></p>
 <p>如果你使用了 firewalld 记得开发端口</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --add-port=8888/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-
-<h3 id="测试启动"><a href="#测试启动" class="headerlink" title="测试启动"></a>测试启动</h3><p>执行命令启动。</p>
+<h3 id="测试启动">测试启动</h3>
+<p>执行命令启动。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure>
-
 <p>然后浏览器访问页面</p>
-<h3 id="supervisord-启动"><a href="#supervisord-启动" class="headerlink" title="supervisord 启动"></a>supervisord 启动</h3><p>编辑文件 <code>/etc/supervisord.d/jupyter_notebook.ini</code> 填入如下配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[program:jupyter_notebook]</span><br><span class="line">command &#x3D; &#x2F;home&#x2F;user&#x2F;.virtualenvs&#x2F;jupyter&#x2F;bin&#x2F;jupyter notebook</span><br><span class="line">autostart &#x3D; true</span><br><span class="line">startsecs &#x3D; 5</span><br><span class="line">autorestart &#x3D; true</span><br><span class="line">startretries &#x3D; 3</span><br><span class="line">user &#x3D; kevin</span><br><span class="line">redirect_stderr &#x3D; true</span><br><span class="line">stdout_logfile_maxbytes &#x3D; 20MB</span><br><span class="line">stdout_logfile_backups &#x3D; 10</span><br><span class="line">stdout_logfile &#x3D; &#x2F;var&#x2F;log&#x2F;supervisor&#x2F;jupyter_notebook&#x2F;stdout.log</span><br></pre></td></tr></table></figure>
-
+<h3 id="supervisord-启动">supervisord 启动</h3>
+<p>编辑文件 <code>/etc/supervisord.d/jupyter_notebook.ini</code> 填入如下配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[program:jupyter_notebook]</span><br><span class="line">command = /home/user/.virtualenvs/jupyter/bin/jupyter notebook</span><br><span class="line">autostart = true</span><br><span class="line">startsecs = 5</span><br><span class="line">autorestart = true</span><br><span class="line">startretries = 3</span><br><span class="line">user = kevin</span><br><span class="line">redirect_stderr = true</span><br><span class="line">stdout_logfile_maxbytes = 20MB</span><br><span class="line">stdout_logfile_backups = 10</span><br><span class="line">stdout_logfile = /var/log/supervisor/jupyter_notebook/stdout.log</span><br></pre></td></tr></table></figure>
 <p><strong>注意：</strong></p>
 <ol>
 <li><code>command</code> 为你虚拟环境中的启动命令</li>
@@ -312,10 +317,8 @@
 </ol>
 <p>执行 <code>supervisorctl</code>进入 supervisor 交互，重新加载 supervisor 配置文件。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; upload</span><br></pre></td></tr></table></figure>
-
 <p>查看状态</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">status</span><br></pre></td></tr></table></figure>
-
 <p>当然这两个操作都可以在 web 页面上进行。</p>
 <p>如果有出错请查看相关日志</p>
 <hr>
@@ -400,7 +403,7 @@
   </footer>
 
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
   

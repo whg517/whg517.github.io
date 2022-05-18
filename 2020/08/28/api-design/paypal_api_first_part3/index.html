@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -20,16 +19,17 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.iclouds.work","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="本文是 Untangling an API-First Transformation at Scale. Lessons Learnt at PayPal – Part 3的翻译，仅供学习交流。如有翻译不当，请斧正。所有权归原作者，侵删。  要点：  寻找到在你的组织中有效的参与策略。 建立一支强大的团队，以建立信誉和提供良好得客户体验所需的人才。 找到“推动”和“拉动”激励措施的良好平衡，以吸">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.iclouds.work","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本文是 Untangling an API-First Transformation at Scale. Lessons Learnt at PayPal – Part 3 的翻译，仅供学习交流。如有翻译不当，请斧正。所有权归原作者，侵删。  要点：  寻找到在你的组织中有效的参与策略。 建立一支强大的团队，以建立信誉和提供良好得客户体验所需的人才。 找到“推动”和“拉动”激励措施的良好平衡，以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大规模分解API优先转换。在PayPal学习的经验教训–第3部分">
 <meta property="og:url" content="http://blog.iclouds.work/2020/08/28/api-design/paypal_api_first_part3/index.html">
 <meta property="og:site_name" content="Myblog">
-<meta property="og:description" content="本文是 Untangling an API-First Transformation at Scale. Lessons Learnt at PayPal – Part 3的翻译，仅供学习交流。如有翻译不当，请斧正。所有权归原作者，侵删。  要点：  寻找到在你的组织中有效的参与策略。 建立一支强大的团队，以建立信誉和提供良好得客户体验所需的人才。 找到“推动”和“拉动”激励措施的良好平衡，以吸">
+<meta property="og:description" content="本文是 Untangling an API-First Transformation at Scale. Lessons Learnt at PayPal – Part 3 的翻译，仅供学习交流。如有翻译不当，请斧正。所有权归原作者，侵删。  要点：  寻找到在你的组织中有效的参与策略。 建立一支强大的团队，以建立信誉和提供良好得客户体验所需的人才。 找到“推动”和“拉动”激励措施的良好平衡，以">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-28T02:51:00.000Z">
 <meta property="article:modified_time" content="2020-08-28T02:51:00.000Z">
@@ -56,6 +56,7 @@
 
 
 
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -79,7 +80,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Myblog</h1>
+      <p class="site-title">Myblog</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">Hello World !</p>
@@ -94,12 +95,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
   </ul>
 </nav>
 
@@ -208,11 +204,16 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="huagang">
-      <meta itemprop="description" content="I Love You !">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Myblog">
+      <meta itemprop="description" content="I Love You !">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="大规模分解API优先转换。在PayPal学习的经验教训–第3部分 | Myblog">
+      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -248,7 +249,8 @@
     
     <div class="post-body" itemprop="articleBody">
         <blockquote>
-<p>本文是 <a target="_blank" rel="noopener" href="https://www.infoq.com/articles/paypal-api-first-part3/?itm_source=infoq&itm_campaign=user_page&itm_medium=link">Untangling an API-First Transformation at Scale. Lessons Learnt at PayPal – Part 3</a><br>的翻译，仅供学习交流。如有翻译不当，请斧正。所有权归原作者，侵删。</p>
+<p>本文是 <a target="_blank" rel="noopener" href="https://www.infoq.com/articles/paypal-api-first-part3/?itm_source=infoq&amp;itm_campaign=user_page&amp;itm_medium=link">Untangling an API-First Transformation at Scale. Lessons Learnt at PayPal – Part 3</a><br>
+的翻译，仅供学习交流。如有翻译不当，请斧正。所有权归原作者，侵删。</p>
 </blockquote>
 <p><strong>要点：</strong></p>
 <ul>
@@ -258,53 +260,110 @@
 <li>在集中治理和协作之间找到适当的平衡。</li>
 <li>了解您如何适应SDLC，以及如何在每个阶段最好地增加价值。</li>
 </ul>
-<p>这是一个由三部分组成的系列文章的第3部分，该系列探讨了PayPal如何采用更为API第一的方法来构建平台服务。在第一部分中，我们探讨了迁移到松散耦合，<br>API驱动的体系结构的原因，以及使该过程大规模运行所需的一些基础结构。在第二篇中，我们更深入地研究了API本身的管理方式。在本文中，<br>我们将仔细研究程序方面以及必须克服的一些执行和操作挑战。</p>
+<p>这是一个由三部分组成的系列文章的第3部分，该系列探讨了PayPal如何采用更为API第一的方法来构建平台服务。在第一部分中，我们探讨了迁移到松散耦合，<br>
+API驱动的体系结构的原因，以及使该过程大规模运行所需的一些基础结构。在第二篇中，我们更深入地研究了API本身的管理方式。在本文中，<br>
+我们将仔细研究程序方面以及必须克服的一些执行和操作挑战。</p>
 <span id="more"></span>
-
 <p><strong>迪帕克·纳迪格（Deepak Nadig）：当您首次启动该计划时，最大的挑战是什么？</strong></p>
 <blockquote>
-<p><strong>埃里克·霍根（Erik Hogan）</strong>：我想到了一些。<br>最初，我们面临着一个习惯于现状的工程和产品组织，并且已经经历了从瀑布到敏捷的过渡。该组织的态度不是这里发明的，而是一群坚强而坚定的长期开发人员，<br>他们具有很高的抵抗力和影响力。过去曾尝试过几次旨在重构平台或进行SOA转换的类似程序，但都取得了不同的成功。出于合理的考虑，<br>这种新得努力只会导致更多的复杂性，更多的混乱和更多的技术债务。仅仅让他们购买并支持该计划是一个障碍。</p>
-<p>了解公司的范围和能力是另一个巨大的挑战。十五年的开发产生了大量的代码并解决了许多用例，其中大部分并未真正记录在案。<br>必须对现有业务流程有一个很好的了解，才能对我们希望API产品组合最终看起来形成一个合理准确的愿景。</p>
-<p>最后是如何构建程序。没有蓝图，我们必须制定既可行又能适应组织细微差别和成熟度水平的战略。那需要时间。企业没有密切参与过去的努力。<br>我们基本上从零开始。</p>
+<p><strong>埃里克·霍根（Erik Hogan）</strong>：我想到了一些。<br>
+最初，我们面临着一个习惯于现状的工程和产品组织，并且已经经历了从瀑布到敏捷的过渡。该组织的态度不是这里发明的，而是一群坚强而坚定的长期开发人员，<br>
+他们具有很高的抵抗力和影响力。过去曾尝试过几次旨在重构平台或进行SOA转换的类似程序，但都取得了不同的成功。出于合理的考虑，<br>
+这种新得努力只会导致更多的复杂性，更多的混乱和更多的技术债务。仅仅让他们购买并支持该计划是一个障碍。</p>
+<p>了解公司的范围和能力是另一个巨大的挑战。十五年的开发产生了大量的代码并解决了许多用例，其中大部分并未真正记录在案。<br>
+必须对现有业务流程有一个很好的了解，才能对我们希望API产品组合最终看起来形成一个合理准确的愿景。</p>
+<p>最后是如何构建程序。没有蓝图，我们必须制定既可行又能适应组织细微差别和成熟度水平的战略。那需要时间。企业没有密切参与过去的努力。<br>
+我们基本上从零开始。</p>
 </blockquote>
 <p><strong>迪帕克·纳迪格（Deepak Nadig）：您是如何克服这些障碍的？</strong></p>
 <blockquote>
-<p>Erik Hogan： 我将从策略开始。<br>自上而下的压力很大，以取得进展。CTO，CEO和相当多得技术VP认为我们需要进行更改，并将程序视为解决方案的一部分。从这个意义上讲，<br>我们不需要向上层管理人员兜售价值。他们了解，如果我们继续保持现状，我们将无法提高敏捷性并不能足够快地将新产品推向市场。<br>创新步伐缓慢和每次新集成的高昂成本使他们感到不高兴。</p>
-<p>我们探索了几个不同的参与模型。第一步是在每个领域招募技术领导者，以成为“冠军”。这样做的目的是创建可以宣传团队中的原则和标准的专家。<br>我们聚在一起开会，进行了一些学习，当然–-这没有什么大不了的。倡导者喜欢这个主意，但是由于他们仍然有自己的日常工作，因此没有真正的动力去贯彻。<br>其他干部或多或少已被其经理“自愿”参加。他们不仅不一定要相信我们正在尝试做的事情，而且也并没有真正为此负责。然后就失败了。</p>
-<p>我们还探索了扩展开发工具，以鼓励我们整合在一起的设计模式和标准。尽管它本身可以提供很多价值，并且实际上是成功的必要条件，<br>但是仅凭这一点还不足以重塑和巩固服务组合的能力边界。如果您有猪，使用口红并不能从根本上改变您只能制作培根和猪排的事实。<br>如果您想要一个很好的分离和敏捷的平台，则需要更深入地思考。</p>
-<p>经过沉思后，我们终于开始形成我们认为可行的愿景。作为数据驱动的管理人员，需要一些简单的指标，他们可以使用这些指标来跟踪进度并使他们的团队负责。<br>他们主要对我们正在取得多少进展以及何时“完成”感兴趣。我们还知道这将花费很长时间（数年），并且我们需要一个模型，<br>该模型可以使我们灵活地分阶段进行转换。</p>
-<p>我们决定采用API成熟度模型的思想，该模型封装了我们开发的标准。我们编写了客观可验证的标准，并以1-5的比例进行绘制。在优先级方面，<br>我们想强调设计良好的界面，并将其作为首要目标与业务能力模型相一致。这样的想法是，如果我们能够正确使用接口，那么我们就可以在业务功能之间<br>建立稳定的边界，开始迁移遗留流量，并逐步重构基础服务的实现。我们最终将获得一组封装良好的微服务，但是我们可以在不吸收前端整个重构的情况下，<br>获得API提供的大多数业务敏捷性和集成成本收益。成熟度级别3代表此步骤。实现完整数据和服务封装的API的成熟度为5。</p>
-<p>要计算完成百分比指标，我们需要一个分母。我们的方法是定义一个业务能力模型，并模拟我们认为主要资源和端点将处于最终状态的东西。一个由六到<br>七个业务架构师组成的团队在一年中的大部分时间里都在分析用例，采访领域负责人，进行代码取证并记录业务流程以得出模型。这绝不是完美的，<br>但是它确实给了我们一些可用来追踪进度的分母。</p>
-<p>最后，我们出售管理层的想法是，在第一年就将投资组合的目标百分比建立到3级成熟度，并且至关重要的是，我们得到了他们的承诺，将这一目标推广给所有经理。<br>这适用于产品和工程组织。第一步，我们解决了测量，逐步发展和优先级调整问题。至关重要的是，我们还用简单的数字表示了我们的进步，公司中的每个人<br>都可以理解。从内部营销的角度来看，这是非常强大的。我们设定的目标是，到2014年底，通过RESTful，符合标准的API公开的投资组合中占75％。<br>最终，我们大幅度击败了这一目标。</p>
+<p>Erik Hogan： 我将从策略开始。<br>
+自上而下的压力很大，以取得进展。CTO，CEO和相当多得技术VP认为我们需要进行更改，并将程序视为解决方案的一部分。从这个意义上讲，<br>
+我们不需要向上层管理人员兜售价值。他们了解，如果我们继续保持现状，我们将无法提高敏捷性并不能足够快地将新产品推向市场。<br>
+创新步伐缓慢和每次新集成的高昂成本使他们感到不高兴。</p>
+<p>我们探索了几个不同的参与模型。第一步是在每个领域招募技术领导者，以成为“冠军”。这样做的目的是创建可以宣传团队中的原则和标准的专家。<br>
+我们聚在一起开会，进行了一些学习，当然–-这没有什么大不了的。倡导者喜欢这个主意，但是由于他们仍然有自己的日常工作，因此没有真正的动力去贯彻。<br>
+其他干部或多或少已被其经理“自愿”参加。他们不仅不一定要相信我们正在尝试做的事情，而且也并没有真正为此负责。然后就失败了。</p>
+<p>我们还探索了扩展开发工具，以鼓励我们整合在一起的设计模式和标准。尽管它本身可以提供很多价值，并且实际上是成功的必要条件，<br>
+但是仅凭这一点还不足以重塑和巩固服务组合的能力边界。如果您有猪，使用口红并不能从根本上改变您只能制作培根和猪排的事实。<br>
+如果您想要一个很好的分离和敏捷的平台，则需要更深入地思考。</p>
+<p>经过沉思后，我们终于开始形成我们认为可行的愿景。作为数据驱动的管理人员，需要一些简单的指标，他们可以使用这些指标来跟踪进度并使他们的团队负责。<br>
+他们主要对我们正在取得多少进展以及何时“完成”感兴趣。我们还知道这将花费很长时间（数年），并且我们需要一个模型，<br>
+该模型可以使我们灵活地分阶段进行转换。</p>
+<p>我们决定采用API成熟度模型的思想，该模型封装了我们开发的标准。我们编写了客观可验证的标准，并以1-5的比例进行绘制。在优先级方面，<br>
+我们想强调设计良好的界面，并将其作为首要目标与业务能力模型相一致。这样的想法是，如果我们能够正确使用接口，那么我们就可以在业务功能之间<br>
+建立稳定的边界，开始迁移遗留流量，并逐步重构基础服务的实现。我们最终将获得一组封装良好的微服务，但是我们可以在不吸收前端整个重构的情况下，<br>
+获得API提供的大多数业务敏捷性和集成成本收益。成熟度级别3代表此步骤。实现完整数据和服务封装的API的成熟度为5。</p>
+<p>要计算完成百分比指标，我们需要一个分母。我们的方法是定义一个业务能力模型，并模拟我们认为主要资源和端点将处于最终状态的东西。一个由六到<br>
+七个业务架构师组成的团队在一年中的大部分时间里都在分析用例，采访领域负责人，进行代码取证并记录业务流程以得出模型。这绝不是完美的，<br>
+但是它确实给了我们一些可用来追踪进度的分母。</p>
+<p>最后，我们出售管理层的想法是，在第一年就将投资组合的目标百分比建立到3级成熟度，并且至关重要的是，我们得到了他们的承诺，将这一目标推广给所有经理。<br>
+这适用于产品和工程组织。第一步，我们解决了测量，逐步发展和优先级调整问题。至关重要的是，我们还用简单的数字表示了我们的进步，公司中的每个人<br>
+都可以理解。从内部营销的角度来看，这是非常强大的。我们设定的目标是，到2014年底，通过RESTful，符合标准的API公开的投资组合中占75％。<br>
+最终，我们大幅度击败了这一目标。</p>
 </blockquote>
 <p><strong>Deepak Nadig：团队有多少人，他们扮演什么角色？</strong></p>
 <blockquote>
-<p><strong>埃里克·霍根（Erik Hogan）</strong>：根据该计划成立了一个平台产品小组。最初有大约7个人。这是分解业务架构，定义业务功能，管理API产品组合以及管理<br>基础架构和工具路线图以使整个程序成为可能的核心团队。</p>
-<p>这些都是非常资深的技术产品经理，大多具有工程背景，他们对设计出色的平台充满热情。他们审查每个构建的API，并根据目标业务体系结构进行评估。<br>他们确定命名并尝试确保整个产品组合中的产品一致性。最重要的是，他们试图始终代表客户的观点，并确保内部概念，首字母缩写词和术语不会“泄漏”到外部接口中。<br>开发人员倾向于关注特定问题。这些产品组合经理可以在此处应用整体的平台视图，并帮助将开发人员的工作塑造为尽可能可重用的API。</p>
-<p>另一个非常关键的组是我们称为API设计器的组。这些都是非常特殊的工程师，具有丰富的体系结构，界面设计技能，以客户为中心，以及对教育和指导的热情。<br>拥有其中一些技能并不少见，但在同一个人中找到全部技能却很不寻常。我们很幸运地找到了一些非常出色的人，他们能够将这个团队建设成为该计划的核心力量。<br>他们的工作不仅是定义和维护标准，还要宣传它们，教育组织并根据成熟度模型中的标准审查API规范请求。与开发人员的这种直接互动是大多数教育和学习实际发生<br>的地方。这也是我们获得大量实际信誉的地方。在最初的扩展年中，我们这个小组中只有三到四个人。他们检查了所有API，非常忙。</p>
-<p>第三组是一个小型Scrum团队，专注于扩展程序所需的基础架构。刚开始的时候，我们对任何商业产品都不满意，因此我们建立了自己的内部开发人员门户。<br>它提供了所有API的可发现性，自动化了成熟度分数计算，提供了一些基本的工作流程，跟踪了生命周期状态，并实施了版本控制策略。<br>该核心系统还生成有关程序状态的必要报告，并将其汇总到各个团队和业务组织。随着时间的流逝，该团队还建立了库，API和插件，以简化SDLC，<br>并使开发人员更易于部署其API。</p>
-<p>最后一组是计划管理，其工作是协调所有团队的活动并总体控制跨域风险。特别是在开始时，我们发现组织中不同团队和业务部门的许多重复开发。<br>投资组合驱动方法的显着优势是减少重复投资并提高可重用性。这需要高级领导做出一些艰难的决定，最终，这些决定导致团队被重新分配到其他项目。<br>计划管理在促进这些成果方面发挥了关键作用。</p>
+<p><strong>埃里克·霍根（Erik Hogan）</strong>：根据该计划成立了一个平台产品小组。最初有大约7个人。这是分解业务架构，定义业务功能，管理API产品组合以及管理<br>
+基础架构和工具路线图以使整个程序成为可能的核心团队。</p>
+<p>这些都是非常资深的技术产品经理，大多具有工程背景，他们对设计出色的平台充满热情。他们审查每个构建的API，并根据目标业务体系结构进行评估。<br>
+他们确定命名并尝试确保整个产品组合中的产品一致性。最重要的是，他们试图始终代表客户的观点，并确保内部概念，首字母缩写词和术语不会“泄漏”到外部接口中。<br>
+开发人员倾向于关注特定问题。这些产品组合经理可以在此处应用整体的平台视图，并帮助将开发人员的工作塑造为尽可能可重用的API。</p>
+<p>另一个非常关键的组是我们称为API设计器的组。这些都是非常特殊的工程师，具有丰富的体系结构，界面设计技能，以客户为中心，以及对教育和指导的热情。<br>
+拥有其中一些技能并不少见，但在同一个人中找到全部技能却很不寻常。我们很幸运地找到了一些非常出色的人，他们能够将这个团队建设成为该计划的核心力量。<br>
+他们的工作不仅是定义和维护标准，还要宣传它们，教育组织并根据成熟度模型中的标准审查API规范请求。与开发人员的这种直接互动是大多数教育和学习实际发生<br>
+的地方。这也是我们获得大量实际信誉的地方。在最初的扩展年中，我们这个小组中只有三到四个人。他们检查了所有API，非常忙。</p>
+<p>第三组是一个小型Scrum团队，专注于扩展程序所需的基础架构。刚开始的时候，我们对任何商业产品都不满意，因此我们建立了自己的内部开发人员门户。<br>
+它提供了所有API的可发现性，自动化了成熟度分数计算，提供了一些基本的工作流程，跟踪了生命周期状态，并实施了版本控制策略。<br>
+该核心系统还生成有关程序状态的必要报告，并将其汇总到各个团队和业务组织。随着时间的流逝，该团队还建立了库，API和插件，以简化SDLC，<br>
+并使开发人员更易于部署其API。</p>
+<p>最后一组是计划管理，其工作是协调所有团队的活动并总体控制跨域风险。特别是在开始时，我们发现组织中不同团队和业务部门的许多重复开发。<br>
+投资组合驱动方法的显着优势是减少重复投资并提高可重用性。这需要高级领导做出一些艰难的决定，最终，这些决定导致团队被重新分配到其他项目。<br>
+计划管理在促进这些成果方面发挥了关键作用。</p>
 </blockquote>
 <p><strong>迪帕克·纳迪格（Deepak Nadig）：除了设定最高目标之外，您还采取了哪些措施来获得支持并鼓励开发人员和产品经理参与？</strong></p>
 <blockquote>
-<p><strong>Erik Hogan</strong>：公平地说，大多数开发人员实际上从一开始就支持我们所做的事情。我们提议从专有解决方案过渡到更多行业标准的方法，例如REST和OAuth2。<br>任何最近看过外界并且没有亲自投资于将要替换的东西的人，都凭直觉理解了采用与其他人相同的标准的价值。它也使他们个人感兴趣，因为他们将不得不使用<br>更现代的工具和技术来提高其可销售性。</p>
-<p>在对我们要做的事情进行了更多的教育之后，大多数没有立即加入的人改变了主意。有一些顽固派顽固地坚持到最后，但是在我们阐明了清晰的愿景和实现这一目标<br>的计划之后，势头明显转移了。</p>
-<p>我们试图找到创造性的方法来“吸引”开发人员。我们为最佳新服务设立了月度奖项，并在全体会议上公开认可了该团队。几个月后，团队积极游说该计划以赢得该奖项，<br>因此它肯定产生了作用。</p>
-<p>我们还举办了黑客马拉松，鼓励创造性地使用新的API。这些不仅对激励服务开发人员很重要，而且对于消除SDLC中的错误和漏洞也很重要。副作用是，<br>它向服务开发人员表明他们在其直接项目之外拥有客户。对于许多人来说，想到一个甚至不问他们就将其集成到服务中的想法是一个奇怪的想法。这不是他们习惯的。<br>这是文化上的转变，这也说明了为什么好的文档实际上真的很重要。API不仅仅是项目。它们是需要持续支持以及希望有良好开发经验的产品。</p>
+<p><strong>Erik Hogan</strong>：公平地说，大多数开发人员实际上从一开始就支持我们所做的事情。我们提议从专有解决方案过渡到更多行业标准的方法，例如REST和OAuth2。<br>
+任何最近看过外界并且没有亲自投资于将要替换的东西的人，都凭直觉理解了采用与其他人相同的标准的价值。它也使他们个人感兴趣，因为他们将不得不使用<br>
+更现代的工具和技术来提高其可销售性。</p>
+<p>在对我们要做的事情进行了更多的教育之后，大多数没有立即加入的人改变了主意。有一些顽固派顽固地坚持到最后，但是在我们阐明了清晰的愿景和实现这一目标<br>
+的计划之后，势头明显转移了。</p>
+<p>我们试图找到创造性的方法来“吸引”开发人员。我们为最佳新服务设立了月度奖项，并在全体会议上公开认可了该团队。几个月后，团队积极游说该计划以赢得该奖项，<br>
+因此它肯定产生了作用。</p>
+<p>我们还举办了黑客马拉松，鼓励创造性地使用新的API。这些不仅对激励服务开发人员很重要，而且对于消除SDLC中的错误和漏洞也很重要。副作用是，<br>
+它向服务开发人员表明他们在其直接项目之外拥有客户。对于许多人来说，想到一个甚至不问他们就将其集成到服务中的想法是一个奇怪的想法。这不是他们习惯的。<br>
+这是文化上的转变，这也说明了为什么好的文档实际上真的很重要。API不仅仅是项目。它们是需要持续支持以及希望有良好开发经验的产品。</p>
 </blockquote>
 <p><strong>迪帕克·纳迪格（Deepak Nadig）：像这样的程序总是有可能开始变得强大而失败。您做了什么以确保持续的长期成功？</strong></p>
 <blockquote>
-<p>埃里克·霍根（Erik Hogan）：  这是真的。通常会有一个强大的，最初的推动力，这是当务之急，取得了一些进展，然后组织转移到下一个新事物。<br>在某种程度上，在这种情况下也是如此。</p>
-<p>我认为关键是要始终考虑您的长期策略并对环境的变化迅速做出反应。该程序本身就像一个产品。戴上产品帽会迫使您考虑客户，他们的需求，<br>您的竞争威胁以及如何保持增长。存在用于实现业务目的的程序，您需要确保自己做得很好，为期望值做出了贡献。</p>
-<p>在我们的案例中，我们在第一年就获得了高层管理人员的大力支持。第二年，组织发生了许多变化，我们有了新的CEO，我们公开了上市，<br>并且有一系列非常不同的高层优先事项。我们的知名度急剧下降。</p>
-<p>积极的结果是，这迫使我们加倍提高开发人员客户的满意度。我们变得更加以客户为中心，并系统地改善了困扰他们的领域。我们完善了我们的工具，<br>加快了审核过程，提高了开发人员教育水平，并消除了一些不必要的成熟度标准。过程中的摩擦减少了，更多的开发商积极参与其中。</p>
-<p>我们注意到的另一件事是回头客在流程早期返回，并在SDLC早期寻求更多帮助。从本质上讲，我们向他们“销售”的产品-API设计专业知识-被认为对想要构建<br>优质服务的开发人员非常有价值。在许多情况下，我们最终节省了他们的时间，因此他们生产了更好的产品。来自各个领域的土著传教士更多，<br>这产生了积极的飞轮效应。</p>
-<p>我们采用的另一种策略是尽可能地分散权力。这始终是原始计划的一部分，但我们觉得我们需要将事情保持集中，直到我们建立可重复的过程并完善支持<br>该过程的基础结构。在第二年末，我们开始在培训各个领域的开发人员如何自己进行API成熟度评估过程方面取得了一些成功。第三年，我们大力进行教育，<br>积极招募和培训了足够的开发人员来处理大多数API审查。现在，各领域正在制定自己的计划，以在每个团队中拥有“经过认证的” API设计人员，<br>因为他们已经看到了对其构建的服务质量的积极影响。我们正在转而担任更多的支持和监督角色，而方法论本身已成为每个团队的固有组成部分。</p>
-<p>为了加强持久存在，您还应该弄清楚如何整合SDLC的每个阶段并为之做出贡献。最初，我们主要专注于设计阶段，因为我们希望确保我们拥有良好的API设计，<br>并尽可能遵循设计优先的方法。然后，我们通过提供一个供开发人员用来验证其服务实现与API规范匹配的库进入开发阶段。这将利用他们的功能测试来生成报告，<br>以识别存在差异的地方。它在识别错误​​和向后不兼容的更改（已潜入实现中）而不是API规范方面非常有效。最后，</p>
+<p>埃里克·霍根（Erik Hogan）：  这是真的。通常会有一个强大的，最初的推动力，这是当务之急，取得了一些进展，然后组织转移到下一个新事物。<br>
+在某种程度上，在这种情况下也是如此。</p>
+<p>我认为关键是要始终考虑您的长期策略并对环境的变化迅速做出反应。该程序本身就像一个产品。戴上产品帽会迫使您考虑客户，他们的需求，<br>
+您的竞争威胁以及如何保持增长。存在用于实现业务目的的程序，您需要确保自己做得很好，为期望值做出了贡献。</p>
+<p>在我们的案例中，我们在第一年就获得了高层管理人员的大力支持。第二年，组织发生了许多变化，我们有了新的CEO，我们公开了上市，<br>
+并且有一系列非常不同的高层优先事项。我们的知名度急剧下降。</p>
+<p>积极的结果是，这迫使我们加倍提高开发人员客户的满意度。我们变得更加以客户为中心，并系统地改善了困扰他们的领域。我们完善了我们的工具，<br>
+加快了审核过程，提高了开发人员教育水平，并消除了一些不必要的成熟度标准。过程中的摩擦减少了，更多的开发商积极参与其中。</p>
+<p>我们注意到的另一件事是回头客在流程早期返回，并在SDLC早期寻求更多帮助。从本质上讲，我们向他们“销售”的产品-API设计专业知识-被认为对想要构建<br>
+优质服务的开发人员非常有价值。在许多情况下，我们最终节省了他们的时间，因此他们生产了更好的产品。来自各个领域的土著传教士更多，<br>
+这产生了积极的飞轮效应。</p>
+<p>我们采用的另一种策略是尽可能地分散权力。这始终是原始计划的一部分，但我们觉得我们需要将事情保持集中，直到我们建立可重复的过程并完善支持<br>
+该过程的基础结构。在第二年末，我们开始在培训各个领域的开发人员如何自己进行API成熟度评估过程方面取得了一些成功。第三年，我们大力进行教育，<br>
+积极招募和培训了足够的开发人员来处理大多数API审查。现在，各领域正在制定自己的计划，以在每个团队中拥有“经过认证的” API设计人员，<br>
+因为他们已经看到了对其构建的服务质量的积极影响。我们正在转而担任更多的支持和监督角色，而方法论本身已成为每个团队的固有组成部分。</p>
+<p>为了加强持久存在，您还应该弄清楚如何整合SDLC的每个阶段并为之做出贡献。最初，我们主要专注于设计阶段，因为我们希望确保我们拥有良好的API设计，<br>
+并尽可能遵循设计优先的方法。然后，我们通过提供一个供开发人员用来验证其服务实现与API规范匹配的库进入开发阶段。这将利用他们的功能测试来生成报告，<br>
+以识别存在差异的地方。它在识别错误​​和向后不兼容的更改（已潜入实现中）而不是API规范方面非常有效。最后，</p>
 <p>总体而言，尽管组织和工作重点发生了一些剧烈变化，我们仍设法保持了势头并扩大了计划。以我的经验，大多数程序都在为此而努力。</p>
 </blockquote>
-<h2 id="关于被访者"><a href="#关于被访者" class="headerlink" title="关于被访者"></a>关于被访者</h2><p>Erik Hogan近二十年来一直在学习成为一名出色的产品经理意味着什么。大部分时间都花在了了解如何成为可以扩展的客户拥护者和可信赖的领导者上。他非常满意，<br>可以将复杂的问题分解为可重复使用的部分，并为工程提供准确执行快速执行所需的功能。最近，他一直在使用简单性，讲故事和专注等基本产品概念来影响组织变革，<br>这是一种非常不同的“产品”。同样，当他的妻子要求她的成功标准时，他仍然生气。</p>
-<h2 id="关于面试官"><a href="#关于面试官" class="headerlink" title="关于面试官"></a>关于面试官</h2><p>Deepak Nadig  是Intuit的杰出建筑师。在加入Intuit之前，Deepak曾是PayPal API平台工程负责人，负责领导和转换内部和外部使用的PayPal API，<br>以处理1000亿美元的付款。Deepak在领先的工程和架构组织，eBay等大型在线网站以及VeriFone和HP等企业软件公司中拥有16年以上的经验。<br>迪帕克（Deepak）经常在会议上发表演讲，并热衷于在变革企业中使用技术。</p>
+<h2 id="关于被访者">关于被访者</h2>
+<p>Erik Hogan近二十年来一直在学习成为一名出色的产品经理意味着什么。大部分时间都花在了了解如何成为可以扩展的客户拥护者和可信赖的领导者上。他非常满意，<br>
+可以将复杂的问题分解为可重复使用的部分，并为工程提供准确执行快速执行所需的功能。最近，他一直在使用简单性，讲故事和专注等基本产品概念来影响组织变革，<br>
+这是一种非常不同的“产品”。同样，当他的妻子要求她的成功标准时，他仍然生气。</p>
+<h2 id="关于面试官">关于面试官</h2>
+<p>Deepak Nadig  是Intuit的杰出建筑师。在加入Intuit之前，Deepak曾是PayPal API平台工程负责人，负责领导和转换内部和外部使用的PayPal API，<br>
+以处理1000亿美元的付款。Deepak在领先的工程和架构组织，eBay等大型在线网站以及VeriFone和HP等企业软件公司中拥有16年以上的经验。<br>
+迪帕克（Deepak）经常在会议上发表演讲，并热衷于在变革企业中使用技术。</p>
 
     </div>
 
@@ -380,7 +439,7 @@
   </footer>
 
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
   
