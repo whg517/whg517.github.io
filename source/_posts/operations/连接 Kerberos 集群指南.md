@@ -421,7 +421,7 @@ network.auth.use-sspi
 
 ##### 3.3.1.1 Chrome 策略组启用白名单
 
-添加白名单可以通过 [AuthServerWhitelist](https://dev.chromium.org/administrators/policy-list-3#AuthServerWhitelist) 策略设置。多个白名单用以逗号分隔。
+添加白名单可以通过 [AuthNegotiateDelegateAllowlist](https://chromeenterprise.google/policies/#AuthNegotiateDelegateAllowlist) 策略设置。多个白名单用以逗号分隔。
 
 参考：[Linux Quick Start](<https://dev.chromium.org/administrators/linux-quick-start>)
 
