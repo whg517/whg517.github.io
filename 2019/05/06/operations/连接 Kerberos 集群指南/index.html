@@ -488,7 +488,7 @@ JDK 是如何使用 Kerberos 的。它支持系统属性值，和 <code>krb5.con
 <h4 id="3-3-1-Linux">3.3.1 Linux</h4>
 <p>根据 <a target="_blank" rel="noopener" href="https://www.chromium.org/developers/design-documents/http-authentication">Chrome HTTP authentication</a> 中 <strong>Integrated Authentication</strong> 描述 Chrome 是支持 Kerberos 和 NTLM 认证的。默认不会启用，只有从代理接收身份验证协商或者在白名单的服务器协商时，才会启用继承身份验证。</p>
 <h5 id="3-3-1-1-Chrome-策略组启用白名单">3.3.1.1 Chrome 策略组启用白名单</h5>
-<p>添加白名单可以通过 <a target="_blank" rel="noopener" href="https://dev.chromium.org/administrators/policy-list-3#AuthServerWhitelist">AuthServerWhitelist</a> 策略设置。多个白名单用以逗号分隔。</p>
+<p>添加白名单可以通过 <a target="_blank" rel="noopener" href="https://chromeenterprise.google/policies/#AuthNegotiateDelegateAllowlist">AuthNegotiateDelegateAllowlist</a> 策略设置。多个白名单用以逗号分隔。</p>
 <p>参考：<a target="_blank" rel="noopener" href="https://dev.chromium.org/administrators/linux-quick-start">Linux Quick Start</a></p>
 <p>对于Chromium，策略配置文件位于/etc/chromium之下，对于谷歌Chrome，策略配置文件位于/etc/opt/chrome之下。在这些目录中保存着两组策略:一组是管理员需要并强制执行的，另一组是推荐给用户但不是必需的。这两组在:</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/opt/chrome/policies/managed/</span><br><span class="line">/etc/opt/chrome/policies/recommended/</span><br></pre></td></tr></table></figure>
