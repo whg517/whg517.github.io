@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="G9EWiZRZAkmLhkNRG7gEmOIhxaUUbPULBVwc7R8ik2Y">
+  <meta name="msvalidate.01" content="826E9F7DFD792263CCD9EEA67320505D">
+  <meta name="baidu-site-verification" content="code-qyVo5emTxH">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.iclouds.work","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在中小集群环境中，可以使用 k3s 快速简便安装 k8s 节点和初始化集群。 参考文档：Quick-Start Guide 或者 中文快速入门指南 注意： 中文教程中的使用均为国内阿里云加速。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 k3s 部署 k8s 环境">
+<meta property="og:url" content="http://blog.iclouds.work/2022/10/21/operations/%E4%BD%BF%E7%94%A8%20k3s%20%E9%83%A8%E7%BD%B2%20k8s%20%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:site_name" content="Myblog">
+<meta property="og:description" content="在中小集群环境中，可以使用 k3s 快速简便安装 k8s 节点和初始化集群。 参考文档：Quick-Start Guide 或者 中文快速入门指南 注意： 中文教程中的使用均为国内阿里云加速。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-21T16:37:28.000Z">
+<meta property="article:modified_time" content="2022-10-21T16:37:28.000Z">
+<meta property="article:author" content="huagang">
+<meta property="article:tag" content="k8s">
+<meta property="article:tag" content="k3s">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.iclouds.work/2022/10/21/operations/%E4%BD%BF%E7%94%A8%20k3s%20%E9%83%A8%E7%BD%B2%20k8s%20%E7%8E%AF%E5%A2%83/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.iclouds.work/2022/10/21/operations/%E4%BD%BF%E7%94%A8%20k3s%20%E9%83%A8%E7%BD%B2%20k8s%20%E7%8E%AF%E5%A2%83/","path":"2022/10/21/operations/使用 k3s 部署 k8s 环境/","title":"使用 k3s 部署 k8s 环境"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用 k3s 部署 k8s 环境 | Myblog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-200000008-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-200000008-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Myblog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello World !</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">1. 集群配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">2.</span> <span class="nav-text">2. 环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 系统环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E8%BD%AF%E4%BB%B6%E7%8E%AF%E5%A2%83"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 软件环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%8D%95%E8%8A%82%E7%82%B9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">3. 单节点环境安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%AE%89%E8%A3%85-k3s"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 安装 k3s</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-%E4%BD%BF%E7%94%A8%E5%8A%A0%E9%80%9F%E9%95%9C%E5%83%8F%E5%AE%89%E8%A3%85"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 使用加速镜像安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 使用内网环境安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%A3%80%E6%9F%A5-k8s"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 检查 k8s</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 部署应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-%E9%83%A8%E7%BD%B2deployment"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1 部署deployment</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-%E9%83%A8%E7%BD%B2-service"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.3.2 部署 service</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">huagang</p>
+  <div class="site-description" itemprop="description">I Love You !</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/whg517" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;whg517" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/huagang517@126.com" title="E-Mail → huagang517@126.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/whg517" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://blog.iclouds.work/2022/10/21/operations/%E4%BD%BF%E7%94%A8%20k3s%20%E9%83%A8%E7%BD%B2%20k8s%20%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="huagang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Myblog">
+      <meta itemprop="description" content="I Love You !">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="使用 k3s 部署 k8s 环境 | Myblog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用 k3s 部署 k8s 环境
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-10-22 00:37:28" itemprop="dateCreated datePublished" datetime="2022-10-22T00:37:28+08:00">2022-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">运维</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>在中小集群环境中，可以使用 k3s 快速简便安装 k8s 节点和初始化集群。</p>
+<p>参考文档：<a target="_blank" rel="noopener" href="https://docs.k3s.io/quick-start">Quick-Start Guide</a><br>
+或者 <a target="_blank" rel="noopener" href="https://docs.k3s.io/quick-start">中文快速入门指南</a></p>
+<p><strong>注意：</strong> 中文教程中的使用均为国内阿里云加速。</p>
+<span id="more"></span>
+<h2 id="1-集群配置">1. 集群配置</h2>
+<table>
+<thead>
+<tr>
+<th>hostname</th>
+<th>ip</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://km1.iloveyou.cn">km1.iloveyou.cn</a></td>
+<td>192.168.31.21</td>
+<td>HA 时为 master</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://km2.iloveyou.cn">km2.iloveyou.cn</a></td>
+<td>192.168.31.22</td>
+<td>HA 时为 master</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://km3.iloveyou.cn">km3.iloveyou.cn</a></td>
+<td>192.168.31.23</td>
+<td>HA 时为 master</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://kn1.iloveyou.cn">kn1.iloveyou.cn</a></td>
+<td>192.168.31.24</td>
+<td>HA 时为 node</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://kn2.iloveyou.cn">kn2.iloveyou.cn</a></td>
+<td>192.168.31.25</td>
+<td>HA 时为 node</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://kn3.iloveyou.cn">kn3.iloveyou.cn</a></td>
+<td>192.168.31.26</td>
+<td>HA 时为 node</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意：</strong> 主机名域名访问可以通过 DNS 也可以通过主机名映射。</p>
+<h2 id="2-环境准备">2. 环境准备</h2>
+<p>安装操作系统为 <a target="_blank" rel="noopener" href="https://docs.rockylinux.org/release_notes/9_0/">RockyLinux 9</a><br>
+，其他操作系统环境可能稍有不同，可以根据官方文档进行调整。</p>
+<h3 id="2-1-系统环境">2.1 系统环境</h3>
+<p>在安装前，请对所有节点操作系统做如下操作：</p>
+<ul>
+<li>配置网络： 使用 <code>nmtui</code> 命令配置，或手动修改网卡配置文件。请注意 RHEL 9.x 的网卡文件<br>
+在 <code>/etc/NetworkManager/system-connections/</code> 。</li>
+<li>关闭 selinux ：<code>sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config</code></li>
+<li>禁用 firewalld 服务：<code>systemctl disable firewalld</code></li>
+<li>并停止 firewalld 服务：<code>systemctl stop firewalld</code></li>
+<li>配置主机名：<code>hostnamectl set-hostname km1.iloveyou.cn</code> 。主机名根据具体节点调整。</li>
+<li>配置域名解析或者 hosts 文件。</li>
+<li>安装基本软件：<code>dnf install wget vim tar net-tools telnet</code></li>
+</ul>
+<h3 id="2-2-软件环境">2.2 软件环境</h3>
+<p>**注意：**这一步不是必须的，本步骤的操作只是为了想使用官方文档中的步骤安装，同时<br>
+避免为网络问题出现而准备使用内网环境安装前置步骤。 当参考 <a target="_blank" rel="noopener" href="https://docs.rancher.cn/docs/k3s/quick-start/_index/">k3s 中文文档</a>时，<br>
+可以跳过此步骤。</p>
+<ul>
+<li>k3s 安装脚本： <code>wget -q -O instal-k3s.sh https://get.k3s.io</code> 也可以手动保存成 <code>install-k3s.sh</code></li>
+<li>下载 k3s 二进制文件： 从 <code>https://github.com/k3s-io/k3s/releases</code> 下载指定版本的 k3s 。<br>
+注意：较新当版本可能在后续无法安装 Rancher ，如遇到版本情况请按照提示回退并重新安装环境。</li>
+<li>下载 helm 二进制包：从 <code>https://github.com/helm/helm/releases</code> 下载最新版本的 Helm</li>
+<li>准备内网 Web 文件服务，具体搭建不再赘述，使用 Nginx 或者 Caddy 都可以。<br>
+简单的可以在本地节点使用 node 的 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/http-server">http-server</a><br>
+快速启动一个 Web 服务。</li>
+</ul>
+<p>将下载的三个文件放到 Web 文件服务器中，以便可以通过 Web 服务器地址访问这些文件。</p>
+<h2 id="3-单节点环境安装">3. 单节点环境安装</h2>
+<h3 id="3-1-安装-k3s">3.1 安装 k3s</h3>
+<p>下载 k3s 二进制文件并使用 k3s 安装脚本安装。</p>
+<h4 id="3-1-1-使用加速镜像安装">3.1.1 使用加速镜像安装</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -sfL \</span><br><span class="line">    https://rancher-mirror.oss-cn-beijing.aliyuncs.com/k3s/k3s-install.sh | \</span><br><span class="line">    INSTALL_K3S_SKIP_SELINUX_RPM=true \</span><br><span class="line">    INSTALL_K3S_SELINUX_WARN=false \</span><br><span class="line">    INSTALL_K3S_MIRROR=cn \</span><br><span class="line">    sh -</span><br></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@km1 ~]# curl -sfL \</span><br><span class="line">    https://rancher-mirror.oss-cn-beijing.aliyuncs.com/k3s/k3s-install.sh | \</span><br><span class="line">    INSTALL_K3S_SKIP_SELINUX_RPM=true \</span><br><span class="line">    INSTALL_K3S_SELINUX_WARN=false \</span><br><span class="line">    INSTALL_K3S_MIRROR=cn \</span><br><span class="line">    sh -</span><br><span class="line">[INFO]  Finding release for channel stable</span><br><span class="line">[INFO]  Using v1.24.6+k3s1 as release</span><br><span class="line">[INFO]  Downloading hash rancher-mirror.oss-cn-beijing.aliyuncs.com/k3s/v1.24.6-k3s1/sha256sum-amd64.txt</span><br><span class="line">[INFO]  Downloading binary rancher-mirror.oss-cn-beijing.aliyuncs.com/k3s/v1.24.6-k3s1/k3s</span><br><span class="line">[INFO]  Verifying binary download</span><br><span class="line">[INFO]  Installing k3s to /usr/local/bin/k3s</span><br><span class="line">[INFO]  Skipping installation of SELinux RPM</span><br><span class="line">[INFO]  Creating /usr/local/bin/kubectl symlink to k3s</span><br><span class="line">[INFO]  Creating /usr/local/bin/crictl symlink to k3s</span><br><span class="line">[INFO]  Creating /usr/local/bin/ctr symlink to k3s</span><br><span class="line">[INFO]  Creating killall script /usr/local/bin/k3s-killall.sh</span><br><span class="line">[INFO]  Creating uninstall script /usr/local/bin/k3s-uninstall.sh</span><br><span class="line">[INFO]  env: Creating environment file /etc/systemd/system/k3s.service.env</span><br><span class="line">[INFO]  systemd: Creating service file /etc/systemd/system/k3s.service</span><br><span class="line">[INFO]  systemd: Enabling k3s unit</span><br><span class="line">Created symlink /etc/systemd/system/multi-user.target.wants/k3s.service → /etc/systemd/system/k3s.service.</span><br><span class="line">[INFO]  systemd: Starting k3s</span><br></pre></td></tr></table></figure>
+<h4 id="3-1-2-使用内网环境安装">3.1.2 使用内网环境安装</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">curl -sfl http://192.168.31.10:8080/k3s -o /usr/local/bin/k3s</span><br><span class="line">chmod +x /usr/local/bin/k3s</span><br><span class="line"></span><br><span class="line">curl -sfL \</span><br><span class="line">    http://192.168.31.10:8080/install-k3s.sh | \</span><br><span class="line">    INSTALL_K3S_SKIP_DOWNLOAD=true \</span><br><span class="line">    INSTALL_K3S_SKIP_SELINUX_RPM=true \</span><br><span class="line">    INSTALL_K3S_SELINUX_WARN=false \</span><br><span class="line">    sh -</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<p>这里解释一下上述几个执行步骤：</p>
+<ul>
+<li>首先从本地服务器下载前面准备的 <code>k3s</code> 二进制文件到 <code>/usr/local/bin/k3s</code> ，并赋予可执行权限</li>
+<li>从本地服务器下载前面准备的 <code>install-k3s.sh</code> 安装脚本</li>
+<li><code>INSTALL_K3S_SKIP_DOWNLOAD=true</code>：跳过二进制文件下载，使用本地二进制文件，也就是上面已经下载到 <code>/usr/local/bin/k3s</code> 的文件了</li>
+<li><code>INSTALL_K3S_SKIP_SELINUX_RPM=true</code>：跳过 SELINUX RPM 检查</li>
+<li><code>INSTALL_K3S_SELINUX_WARN=false</code>：跳过 SELINUX 警告</li>
+</ul>
+<p>运行结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@km1 ~]# curl -sfl http://192.168.31.10:8080/k3s -o /usr/local/bin/k3s</span><br><span class="line">chmod +x /usr/local/bin/k3s</span><br><span class="line"></span><br><span class="line">curl -sfL \</span><br><span class="line">    http://192.168.31.10:8080/install-k3s.sh | \</span><br><span class="line">    INSTALL_K3S_SKIP_DOWNLOAD=true \</span><br><span class="line">    INSTALL_K3S_SKIP_SELINUX_RPM=true \</span><br><span class="line">    INSTALL_K3S_SELINUX_WARN=false \</span><br><span class="line">    sh -</span><br><span class="line"></span><br><span class="line">[INFO]  Skipping k3s download and verify</span><br><span class="line">[INFO]  Skipping installation of SELinux RPM</span><br><span class="line">[INFO]  Creating /usr/local/bin/kubectl symlink to k3s</span><br><span class="line">[INFO]  Creating /usr/local/bin/crictl symlink to k3s</span><br><span class="line">[INFO]  Creating /usr/local/bin/ctr symlink to k3s</span><br><span class="line">[INFO]  Creating killall script /usr/local/bin/k3s-killall.sh</span><br><span class="line">[INFO]  Creating uninstall script /usr/local/bin/k3s-uninstall.sh</span><br><span class="line">[INFO]  env: Creating environment file /etc/systemd/system/k3s.service.env</span><br><span class="line">[INFO]  systemd: Creating service file /etc/systemd/system/k3s.service</span><br><span class="line">[INFO]  systemd: Enabling k3s unit</span><br><span class="line">Created symlink /etc/systemd/system/multi-user.target.wants/k3s.service → /etc/systemd/system/k3s.service.</span><br><span class="line">[INFO]  systemd: Starting k3s</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<h3 id="3-2-检查-k8s">3.2 检查 k8s</h3>
+<p>命令执行完成，并没有任何错误后，使用操作检查 k8s 是否正常：</p>
+<ul>
+<li>检查 k3s 服务：<code>systemctl status k3s</code></li>
+<li>检查 k8s 的 Pods ：<code>kubectl get pods -A</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@km1 ~]# kubectl get pods -A</span><br><span class="line">NAMESPACE     NAME                                      READY   STATUS      RESTARTS   AGE</span><br><span class="line">kube-system   local-path-provisioner-7b7dc8d6f5-tnsnd   1/1     Running     0          70s</span><br><span class="line">kube-system   coredns-b96499967-mrnj4                   1/1     Running     0          70s</span><br><span class="line">kube-system   helm-install-traefik-crd-wzb8j            0/1     Completed   0          70s</span><br><span class="line">kube-system   metrics-server-668d979685-dc8fd           1/1     Running     0          70s</span><br><span class="line">kube-system   helm-install-traefik-7gpq9                0/1     Completed   2          70s</span><br><span class="line">kube-system   svclb-traefik-c7d0cbe9-n8bxr              2/2     Running     0          19s</span><br><span class="line">kube-system   traefik-7cd4fcff68-z5l9n                  0/1     Running     0          19s</span><br></pre></td></tr></table></figure>
+<p>如果检查 pods 状态如上所示，说明一切正常。<br>
+如果节点启动失败，请使用 <code>systemctl -eu k3s</code> 查看日志。</p>
+<h3 id="3-3-部署应用">3.3 部署应用</h3>
+<p>以下为使用 <a target="_blank" rel="noopener" href="https://hub.docker.com/r/traefik/whoami">whoami</a> 镜像部署一个只有一个副本应用。</p>
+<h4 id="3-3-1-部署deployment">3.3.1 部署deployment</h4>
+<p>部署一个无状态的 <a target="_blank" rel="noopener" href="https://kubernetes.io/zh-cn/docs/concepts/workloads/controllers/deployment/">deployments</a> 。</p>
+<p>创建 <code>whoami-deployment.yml</code> 文件，并增加如下内容：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">whoami</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">whoami</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">whoami</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">whoami</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">whoami</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">traefik/whoami</span></span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">              <span class="attr">containerPort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+<p>该 Web 应用暴露 80 端口。</p>
+<p>使用如下命令启动：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f whoami-deployment.yml</span><br></pre></td></tr></table></figure>
+<p>启动后使用如下命令可以查看 deployment 的状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get deployments</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@km1 ~]# kubectl get deployments</span><br><span class="line">NAME     READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">whoami   1/1     1            1           12s</span><br></pre></td></tr></table></figure>
+<p>使用如下命令查看 deployment 详细内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe deployment whoami</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[root@km1 ~]# kubectl describe deployment whoami</span><br><span class="line">Name:                   whoami</span><br><span class="line">Namespace:              default</span><br><span class="line">CreationTimestamp:      Sat, 22 Oct 2022 00:22:36 +0800</span><br><span class="line">Labels:                 app=whoami</span><br><span class="line">Annotations:            deployment.kubernetes.io/revision: 1</span><br><span class="line">Selector:               app=whoami</span><br><span class="line">Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable</span><br><span class="line">StrategyType:           RollingUpdate</span><br><span class="line">MinReadySeconds:        0</span><br><span class="line">RollingUpdateStrategy:  25% max unavailable, 25% max surge</span><br><span class="line">Pod Template:</span><br><span class="line">  Labels:  app=whoami</span><br><span class="line">  Containers:</span><br><span class="line">   whoami:</span><br><span class="line">    Image:        traefik/whoami</span><br><span class="line">    Port:         80/TCP</span><br><span class="line">    Host Port:    0/TCP</span><br><span class="line">    Environment:  &lt;none&gt;</span><br><span class="line">    Mounts:       &lt;none&gt;</span><br><span class="line">  Volumes:        &lt;none&gt;</span><br><span class="line">Conditions:</span><br><span class="line">  Type           Status  Reason</span><br><span class="line">  ----           ------  ------</span><br><span class="line">  Available      True    MinimumReplicasAvailable</span><br><span class="line">  Progressing    True    NewReplicaSetAvailable</span><br><span class="line">OldReplicaSets:  &lt;none&gt;</span><br><span class="line">NewReplicaSet:   whoami-7f55677887 (1/1 replicas created)</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason             Age   From                   Message</span><br><span class="line">  ----    ------             ----  ----                   -------</span><br><span class="line">  Normal  ScalingReplicaSet  72s   deployment-controller  Scaled up replica set whoami-7f55677887 to 1</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<p>可以看到在最后 Events 的 Message 中的信息提示，启动了一个 replica set <code>whoami-7f55677887</code> 。</p>
+<p>使用如下命令获取 replicaset ：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl get replicaset</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">等价与 kubectl get rs</span></span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@km1 ~]# kubectl get replicaset</span><br><span class="line">NAME                DESIRED   CURRENT   READY   AGE</span><br><span class="line">whoami-7f55677887   1         1         1       2m3s</span><br></pre></td></tr></table></figure>
+<p>使用如下命令获取 replicaset 详细信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe rs whoami</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">等价与 kubectl describe rplicaset <span class="built_in">whoami</span></span></span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@km1 ~]# kubectl describe rs whoami</span><br><span class="line">Name:           whoami-7f55677887</span><br><span class="line">Namespace:      default</span><br><span class="line">Selector:       app=whoami,pod-template-hash=7f55677887</span><br><span class="line">Labels:         app=whoami</span><br><span class="line">                pod-template-hash=7f55677887</span><br><span class="line">Annotations:    deployment.kubernetes.io/desired-replicas: 1</span><br><span class="line">                deployment.kubernetes.io/max-replicas: 2</span><br><span class="line">                deployment.kubernetes.io/revision: 1</span><br><span class="line">Controlled By:  Deployment/whoami</span><br><span class="line">Replicas:       1 current / 1 desired</span><br><span class="line">Pods Status:    1 Running / 0 Waiting / 0 Succeeded / 0 Failed</span><br><span class="line">Pod Template:</span><br><span class="line">  Labels:  app=whoami</span><br><span class="line">           pod-template-hash=7f55677887</span><br><span class="line">  Containers:</span><br><span class="line">   whoami:</span><br><span class="line">    Image:        traefik/whoami</span><br><span class="line">    Port:         80/TCP</span><br><span class="line">    Host Port:    0/TCP</span><br><span class="line">    Environment:  &lt;none&gt;</span><br><span class="line">    Mounts:       &lt;none&gt;</span><br><span class="line">  Volumes:        &lt;none&gt;</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason            Age    From                   Message</span><br><span class="line">  ----    ------            ----   ----                   -------</span><br><span class="line">  Normal  SuccessfulCreate  2m30s  replicaset-controller  Created pod: whoami-7f55677887-twvct</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以看到在最后 Events 的 Message 中的信息提示中，创建了一个 pod <code>whoami-7f55677887-twvct</code> 。</p>
+<p>使用如下命令查看 pod：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@km1 ~]# kubectl get pods</span><br><span class="line">NAME                      READY   STATUS    RESTARTS   AGE</span><br><span class="line">whoami-7f55677887-twvct   1/1     Running   0          3m12s</span><br></pre></td></tr></table></figure>
+<p>使用如下命令查看 pod 详细信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe pod whoami</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">[root@km1 ~]# kubectl describe pod whoami</span><br><span class="line">Name:         whoami-7f55677887-twvct</span><br><span class="line">Namespace:    default</span><br><span class="line">Priority:     0</span><br><span class="line">Node:         km1.iloveyou.cn/192.168.31.21</span><br><span class="line">Start Time:   Sat, 22 Oct 2022 00:22:36 +0800</span><br><span class="line">Labels:       app=whoami</span><br><span class="line">              pod-template-hash=7f55677887</span><br><span class="line">Annotations:  &lt;none&gt;</span><br><span class="line">Status:       Running</span><br><span class="line">IP:           10.42.0.9</span><br><span class="line">IPs:</span><br><span class="line">  IP:           10.42.0.9</span><br><span class="line">Controlled By:  ReplicaSet/whoami-7f55677887</span><br><span class="line">Containers:</span><br><span class="line">  whoami:</span><br><span class="line">    Container ID:   containerd://7f5d95d6959b8b7d99c11e199e153d55b5b9c0a4e0175b8b19e320c6e3b11a5a</span><br><span class="line">    Image:          traefik/whoami</span><br><span class="line">    Image ID:       docker.io/traefik/whoami@sha256:24829edb0dbaea072dabd7d902769168542403a8c78a6f743676af431166d7f0</span><br><span class="line">    Port:           80/TCP</span><br><span class="line">    Host Port:      0/TCP</span><br><span class="line">    State:          Running</span><br><span class="line">      Started:      Sat, 22 Oct 2022 00:22:46 +0800</span><br><span class="line">    Ready:          True</span><br><span class="line">    Restart Count:  0</span><br><span class="line">    Environment:    &lt;none&gt;</span><br><span class="line">    Mounts:</span><br><span class="line">      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-f6c77 (ro)</span><br><span class="line">Conditions:</span><br><span class="line">  Type              Status</span><br><span class="line">  Initialized       True </span><br><span class="line">  Ready             True </span><br><span class="line">  ContainersReady   True </span><br><span class="line">  PodScheduled      True </span><br><span class="line">Volumes:</span><br><span class="line">  kube-api-access-f6c77:</span><br><span class="line">    Type:                    Projected (a volume that contains injected data from multiple sources)</span><br><span class="line">    TokenExpirationSeconds:  3607</span><br><span class="line">    ConfigMapName:           kube-root-ca.crt</span><br><span class="line">    ConfigMapOptional:       &lt;nil&gt;</span><br><span class="line">    DownwardAPI:             true</span><br><span class="line">QoS Class:                   BestEffort</span><br><span class="line">Node-Selectors:              &lt;none&gt;</span><br><span class="line">Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s</span><br><span class="line">                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason     Age    From               Message</span><br><span class="line">  ----    ------     ----   ----               -------</span><br><span class="line">  Normal  Scheduled  3m40s  default-scheduler  Successfully assigned default/whoami-7f55677887-twvct to km1.iloveyou.cn</span><br><span class="line">  Normal  Pulling    3m40s  kubelet            Pulling image &quot;traefik/whoami&quot;</span><br><span class="line">  Normal  Pulled     3m30s  kubelet            Successfully pulled image &quot;traefik/whoami&quot; in 9.861788031s</span><br><span class="line">  Normal  Created    3m30s  kubelet            Created container whoami</span><br><span class="line">  Normal  Started    3m30s  kubelet            Started container whoami</span><br></pre></td></tr></table></figure>
+<p>到此 deployment 所有信息查看完成。所有内容都是根据 <code>whoami-deployment.yml</code><br>
+生产的，而最终的 pod <code>whoami-7f55677887-twvct</code> 也就是一个容器，具有创建该容器的镜像，<br>
+和生产容器的 IP ，端口等信息。</p>
+<h4 id="3-3-2-部署-service">3.3.2 部署 service</h4>
+<p>部署一个 <a target="_blank" rel="noopener" href="https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/">service</a> ，<br>
+让上述 deployments 能对外提供访问的方式。</p>
+<p>创建文件 <code>whoami-svc.yml</code> ，并增加如下内容：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">whoami</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8080</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="string">web</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">LoadBalancer</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">whoami</span></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<p>使用如下命令创建 services：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f whoami-svc.yml</span><br></pre></td></tr></table></figure>
+<p>创建完成后，使用如下命令查看 services：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get svc</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@km1 ~]# kubectl get svc</span><br><span class="line">NAME         TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)          AGE</span><br><span class="line">kubernetes   ClusterIP      10.43.0.1      &lt;none&gt;          443/TCP          10m</span><br><span class="line">whoami       LoadBalancer   10.43.98.133   192.168.31.21   8080:32745/TCP   5s</span><br></pre></td></tr></table></figure>
+<p>可以看到已经有了一个 <code>whoami</code> 的 service ，并且使用 <code>EXTERNAL-IP</code> 和对应的端口 <code>32745</code> 。</p>
+<p>我们可以访问 <code>http://192.168.31.21:32745</code> 查看 whoami 应用的内容。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@km1 ~]# curl http://192.168.31.21:32745</span><br><span class="line">Hostname: whoami-7f55677887-twvct</span><br><span class="line">IP: 127.0.0.1</span><br><span class="line">IP: ::1</span><br><span class="line">IP: 10.42.0.9</span><br><span class="line">IP: fe80::e8be:e1ff:fec7:7cd8</span><br><span class="line">RemoteAddr: 10.42.0.1:52379</span><br><span class="line">GET / HTTP/1.1</span><br><span class="line">Host: 192.168.31.21:32745</span><br><span class="line">User-Agent: curl/7.76.1</span><br><span class="line">Accept: */*</span><br></pre></td></tr></table></figure>
+<p>至此，我们的应用部署完成，并且通过 service 提供了负载均衡访问。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/k8s/" rel="tag"># k8s</a>
+              <a href="/tags/k3s/" rel="tag"># k3s</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/26/operations/Kubernetes%20%E5%AE%89%E8%A3%85/" rel="prev" title="kubernetes 安装">
+                  <i class="fa fa-chevron-left"></i> kubernetes 安装
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">huagang</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
