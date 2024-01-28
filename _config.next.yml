@@ -1,4 +1,31 @@
 # ---------------------------------------------------------------
+# Theme Core Configuration Settings
+# See: https://theme-next.js.org/docs/theme-settings/
+# ---------------------------------------------------------------
+
+# Allow to cache content generation.
+cache:
+  enable: true
+
+# Remove unnecessary files after hexo generate.
+minify: false
+
+# Define custom file paths.
+# Create your custom files in site directory `source/_data` and uncomment needed files below.
+custom_file_path:
+#head: source/_data/head.njk
+#header: source/_data/header.njk
+#sidebar: source/_data/sidebar.njk
+#postMeta: source/_data/post-meta.njk
+#postBodyStart: source/_data/post-body-start.njk
+#postBodyEnd: source/_data/post-body-end.njk
+#footer: source/_data/footer.njk
+#bodyEnd: source/_data/body-end.njk
+#variable: source/_data/variables.styl
+#mixin: source/_data/mixins.styl
+#style: source/_data/styles.styl
+
+# ---------------------------------------------------------------
 # Scheme Settings
 # ---------------------------------------------------------------
 
@@ -12,15 +39,23 @@ scheme: Mist
 darkmode: true
 
 
-
 # ---------------------------------------------------------------
 # Site Information Settings
 # See: https://theme-next.org/docs/getting-started/
 # ---------------------------------------------------------------
 
-footer:
-  # Specify the date when the site was setup. If not defined, current year will be used.
-  since: 2017
+# Open graph settings
+# See: https://hexo.io/docs/helpers#open-graph
+open_graph:
+  enable: true
+  options:
+  #twitter_card: <twitter:card>
+  #twitter_id: <twitter:creator>
+  #twitter_site: <twitter:site>
+  #twitter_image: <twitter:image>
+  #google_plus: <g+:profile_link>
+  #fb_admins: <fb:admin_id>
+  #fb_app_id: <fb:app_id>
 
 
 # ---------------------------------------------------------------
@@ -43,11 +78,18 @@ menu:
   #commonweal: /404/ || fa fa-heartbeat
 
 
+# Enable / Disable menu icons / item badges.
+menu_settings:
+  icons: true
+  badges: false
 
 # ---------------------------------------------------------------
 # Sidebar Settings
 # See: https://theme-next.org/docs/theme-settings/sidebar
 # ---------------------------------------------------------------
+
+# Posts / Categories / Tags in sidebar.
+site_state: true
 
 # Social Links
 # Usage: `Key: permalink || icon`
@@ -57,6 +99,93 @@ social:
   GitHub: https://github.com/whg517 || fab fa-github
   E-Mail: huagang517@126.com || fa fa-envelope
 
+social_icons:
+  enable: true
+  icons_only: false
+  transition: false
+
+# Blog rolls
+links_settings:
+  icon: fa fa-globe
+  # Available values: block | inline
+  layout: block
+
+# Table of Contents in the Sidebar
+# Front-matter variable (nonsupport wrap expand_all).
+toc:
+  enable: true
+  # Automatically add list number to toc.
+  number: true
+  # If true, all words will placed on next lines if header width longer then sidebar width.
+  wrap: false
+  # If true, all level of TOC in a post will be displayed, rather than the activated part of it.
+  expand_all: false
+  # Maximum heading depth of generated toc.
+  max_depth: 6
+
+# ---------------------------------------------------------------
+# Footer Settings
+# See: https://theme-next.js.org/docs/theme-settings/footer
+# ---------------------------------------------------------------
+
+footer:
+  # Specify the date when the site was setup. If not defined, current year will be used.
+  since: 2017
+
+  # Icon between year and copyright info.
+  icon:
+    # Icon name in Font Awesome. See: https://fontawesome.com/icons
+    name: fa fa-heart
+    # If you want to animate the icon, set it to true.
+    animated: false
+    # Change the color of icon, using Hex Code.
+    color: "#ff0000"
+
+
+# ---------------------------------------------------------------
+# Custom Page Settings
+# See: https://theme-next.js.org/docs/theme-settings/custom-pages
+# ---------------------------------------------------------------
+
+# TagCloud settings for tags page.
+tagcloud:
+  min: 12 # Minimum font size in px
+  max: 30 # Maximum font size in px
+  amount: 200 # Total amount of tags
+  orderby: name # Order of tags
+  order: 1 # Sort order
+
+
+# ---------------------------------------------------------------
+# Post Settings
+# See: https://theme-next.js.org/docs/theme-settings/posts
+# ---------------------------------------------------------------
+
+# Use `description` in front-matter to specify post excerpt.
+excerpt_description: true
+
+# Read more button
+# If true, the read more button will be displayed in excerpt section.
+read_more_btn: true
+
+# Post meta display settings
+post_meta:
+  item_text: true
+  created_at: true
+  updated_at:
+    enable: true
+    another_day: true
+  categories: true
+
+# Post wordcount display settings
+# Dependencies: https://github.com/next-theme/hexo-word-counter
+symbols_count_time:
+  separated_meta: true
+  item_text_total: false
+
+# Show previous post and next post in post footer if exists
+# Available values: left | right | false
+post_navigation: left
 
 
 # ---------------------------------------------------------------
@@ -75,6 +204,21 @@ codeblock:
     show_result: true
     # Available values: default | flat | mac
     style:
+
+  # Powered by Hexo & NexT
+  powered: true
+
+  # Beian ICP and gongan information for Chinese users. See: https://beian.miit.gov.cn, https://beian.mps.gov.cn
+  beian:
+    enable: false
+    icp:
+    # The digit in the num of gongan beian.
+    gongan_id:
+    # The full num of gongan beian.
+    gongan_num:
+    # The icon for gongan beian. Login and See: https://beian.mps.gov.cn/web/business/businessHome/website
+    gongan_icon_url:
+
 
 # `Follow me on GitHub` banner in the top-right corner.
 github_banner:
@@ -111,7 +255,7 @@ yandex_site_verification:
 
 # Baidu Webmaster tools verification.
 # See: https://ziyuan.baidu.com/site
-baidu_site_verification: code-qyVo5emTxH
+baidu_site_verification: iXqxS1Uq7rHdK6xq
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO.
 baidu_push: true
@@ -145,7 +289,7 @@ baidu_analytics: c6fe2c57d92758c7a980d22eca71fd6a
 
 # Google Analytics
 google_analytics:
-  tracking_id: UA-200000008-1
+  tracking_id: G-6VG5P4NMDQ
   only_pageview: false
 
 # Show Views / Visitors of the website / page with busuanzi.

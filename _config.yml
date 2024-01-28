@@ -28,7 +28,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render:  # 跳过指定文件的渲染，您可使用 glob 表达式来匹配路径。
+skip_render: # 跳过指定文件的渲染，您可使用 glob 表达式来匹配路径。
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -38,12 +38,12 @@ external_link:
   enable: true # Open external links in new tab
   field: site # Apply to the whole site
   exclude: ''
-filename_case: 0  # 把文件名称转换为 (1) 小写或 (2) 大写	0
-render_drafts: false  # 显示草稿	false
-post_asset_folder: false   # 启用 Asset 文件夹
-relative_link: false  # 把链接改为与根目录的相对位址
+filename_case: 0 # 把文件名称转换为 (1) 小写或 (2) 大写	0
+render_drafts: false # 显示草稿	false
+post_asset_folder: false # 启用 Asset 文件夹
+relative_link: false # 把链接改为与根目录的相对位址
 future: true
-highlight:   # 代码块的设置
+highlight: # 代码块的设置
   enable: true
   line_number: true
   auto_detect: false
