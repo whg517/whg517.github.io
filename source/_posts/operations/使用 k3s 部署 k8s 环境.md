@@ -16,9 +16,10 @@ k8s 集群，并在 k8s 启动完成后，使用 helm 在 k8s 之上安装 ranch
 通过阅读本文，你可以了解如下内容：
 
 - 如何使用 k3s 初始化一个 k8s 集群
-- 如果在 k8s 上发布一个多副本 Web 应用，并通过负载均衡访问该应用
+- 如何在 k8s 上发布一个多副本 Web 应用，并通过负载均衡访问该应用
 - 如何手动安装 helm
-- 如何通过 helm 安装 rancher 节点
+- 如何通过 helm 安装 rancher
+
 
 参考文档：[Quick-Start Guide](https://docs.k3s.io/quick-start)
 或者 [中文快速入门指南](https://docs.k3s.io/quick-start)
@@ -176,7 +177,7 @@ curl -sfL \
 - 检查 k3s 服务：`systemctl status k3s`
 - 检查 k8s 的 Pods ：`kubectl get pods -A`
 
-```
+```text
 [root@rm1 ~]# kubectl get pods -A
 INFO[0000] Acquiring lock file /var/lib/rancher/k3s/data/.lock 
 INFO[0000] Preparing data dir /var/lib/rancher/k3s/data/e430ebdc9a66bbba77e21922f682788d68338a4eb3c035740aeeef38be42b6f9 
