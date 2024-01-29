@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
-
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -13,16 +12,16 @@
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
   <meta name="google-site-verification" content="G9EWiZRZAkmLhkNRG7gEmOIhxaUUbPULBVwc7R8ik2Y">
   <meta name="msvalidate.01" content="826E9F7DFD792263CCD9EEA67320505D">
-  <meta name="baidu-site-verification" content="code-qyVo5emTxH">
+  <meta name="baidu-site-verification" content="iXqxS1Uq7rHdK6xq">
 
 <link rel="stylesheet" href="/css/main.css">
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.iclouds.work","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.iclouds.work","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null,"show_result":true},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="在当前微服务大环境之下，越来越多的项目使用 RESTful HTTP接口方位资源 。为了团队开发的友好体验，开发人员尽可能遵循一致的 REST API 设计原则就显得至关重要。 API 设计指南旨在提供一套基础规范，便于团队设计和开发出一致的 RESTful 接口。">
 <meta property="og:type" content="article">
@@ -35,7 +34,7 @@
 <meta property="og:image" content="https://camo.githubusercontent.com/df0495791d84a25a2285a6cc1071cafba58efcef/687474703a2f2f7777772e77656273657175656e63656469616772616d732e636f6d2f6367692d62696e2f63647261773f6c7a3d626d39305a534276646d56794945526c646d56736233426c63697767515856306232316864476c76626977675158427749464e6c636e5a6c636a6f67436941674943416751573441454155414a776b6762476c725a53424e62335a705a55316861325679414341475632467564484d6764473867615735305a5764795958526c494864706447676763484a70625746796553427a5a584a3261574e6c4144634752484a7663474a766541706c626d5167626d39305a516f416751774c5169425162334a3059577773494552434149454a42564a6c5a326c7a6448494167526b4852454967546d393061575a70597743424c41567a414345476458526f4143734655774267426a6f675647686c414630654149465f436b4e736157567564414174426d56755a4342316332567963796367596e4a7664334e6c6369427663694270626e4e30595778735a5751675958427743674342495177416769516741494641425143424953384167516f4749446f6754574675645746734149467a45516f4b4367434441676f384c53302d4149497143694136494578765a326c7549476c7564473841676a384a41494931454342565743414b41436f4b4c5434674b77434357424d364149514742553568625755675a58526a4c6743444651344147784a446232356d61584a74414945424345466a5932567a637942556232746c62676f4b41494d33457941745069417441494e6b4351426e426b6c454149454d43774342565155416851494d41495233436d4e7663476c6c63774172434143434948414168484d4d41494d4b44774344414267364948646c596d6876623273676367434365673441676e55534149565144546f41685859485a584941677767474149635442674245435656535443776755324e7663475541687a49475355514b54674347505177416868774e4941434442683441486845416778455062674342616777416778774e41494d61446941416778304d6257463549474e7663486b414c5245416856747141495a484230463164476876636d6c36414959374277434758516374506941724149457544564a6c6358566c63335167595143464f515a306279424551694277636d39305a574e305a5751676157356d62334941696951474367434442517374506941744149637443564a6c5a476c795a574e30414459484147774e494756755a4842766157353041496f57426d45414477317941485947414945514441434a564163415377746c5a41415948674349434167414d4163416341344168476f474145304641494564466d4a6859327367644738416846384e6158526f49474e765a47554167686f61615143426167634167546f484144304a4149492d42334d4150677341676c4548414573464149497a4467434258773041676e3847644739725a57357a414363534149305f42584a705a3268304947396d4149747044554e685932686c4948526f5958516764476870637942566332567949456c454948427962335a705a47566b41494e4e437743495a676f416767634a41494e3744334e776232357a4149305f427743454367597349484a6c5a6e4a6c63326773494746755a43424a524143424841634167514d5041495941445143424441634167555547596e6b416a466b4649456c454149516b47335231636d34416846344d4948527649474d416a523846414977526167434a5677314762473933414959714351434d61516741676d6f4b614746755a3255416a3359464149465842575268644745674c534230655842705932467349485a70595143514467567959574e306157356e414a41504267434a51517432615745416a6e7348436743504e676f67414968444541434b5a7730416b464d4641496b424477434444415541676b59574b77424e437743485741706a4149457942514348526730416857554859574e6f414951654441434566775668626d5167496e4e70626d4e6c49674346455159416b53514f414952334367434e66776341684851464149705145414342556773416846416341494938425746755a4342755a58634159525141684655544f6942566347526864475567633352686448554167536b47414946444251417845776f4b436726733d6d736367656e">
 <meta property="og:image" content="https://camo.githubusercontent.com/de3129ed4573bcc492e23ba013ba4c370d00facf/687474703a2f2f7777772e77656273657175656e63656469616772616d732e636f6d2f6367692d62696e2f63647261773f6c7a3d626d39305a534276646d56794945526c646d56736233426c63697767515856306232316864476c76626977675158427749464e6c636e5a6c636a6f67436941674943416751573441454155414a776b6762476c725a53424e62335a705a55316861325679414341475632467564484d6764473867615735305a5764795958526c494864706447676763484a70625746796553427a5a584a3261574e6c4144634752484a7663474a766541706c626d5167626d39305a516f416751774c5169425162334a3059577773494552434149454a42564a6c5a326c7a6448494167526b4852454967546d393061575a70597743424c41567a414345476458526f4143734655774267426a6f675647686c414630654149465f436b4e736157567564414174426d56755a4342316332567963796367596e4a7664334e6c6369427663694270626e4e30595778735a5751675958427743674342495177416769516741494641425143424953384167516f4749446f416757775243677068624851416779554941494548426942794142514d494341416778734c50433074506743445477733649454e76626d5a705a3356795a516f6749414344614173674c5434674b77434357424d4165675a4f5957316c49475630597934416841674641494d61445141664567426442584a744149515f4255466a5932567a637942556232746c41494554426743444f7849674c5434674c5143424667784263484167535551416848774959334a6c644143424778417450674346466773674f69424662574a6c5a41416b46475673633255675457467564574673414949454a41434562516b674f69424d6232647062694270626e527641495542435143424b52465657414347474155414c516f416768386d4149495a4b77434243416341676a6f4e41494973484143474c776b41676a38494149455344674345434159416831454c41496446436d4e7663476c6c63774175434756755a41434565476f4168575148515856306147397961586f4168563848414956364279302d494373416732414e556d56786457567a6443426841495256426e527649455243494842796233526c5933526c5a434270626d5a766367434a5151594b414951614379302d49433041686b6f4a556d566b61584a6c593351414e676341624130675a57356b63473970626e514169544d475951415044584941646759416752414d414968784277424c4332566b414267654149526a43414177423045416351785657416f415351674167527757596d466a617942306277434664417741696c77465932396b5a5143434752707041494670427743424f51634150516b41676a30486377412d437743435541634153775541676a494f414946654451434366675a306232746c626e4d414a7849416a467346636d6c6e61485167623259416977554e5132466a61475567644768686443423061476c7a4946567a5a5849675355516763484a76646d6c6b5a5751416730774c41495536427743434241774167336f5063334276626e4d416a4673484149514a42697767636d566d636d567a614377675957356b49456c454149456342774342417738416944454e4149454d4277434252515a696551434c645155675355514168434d62644856796267434558517767644738675977434d4f77554b4367434c4c326f416a58554d41497754447743504e516f74506973416a6877514f67434f5251646c6367434d56775941673359495a574a6f62323972494656535443776755324e76634755416b414547535551416a776f4f41493572445341416932554b41494e464251434c5977304148424541677a554f4f6942754149453244414267434143444342316f5a5143426151354a52414344597755416168494167684234526d78766477434a4d776b416a45304941495630436d6868626d646c414a4963425143455951566b595852684943306764486c7761574e6862434232615745416b6a5146636d466a64476c755a7743534e5159416a56384c646d6c68414a456842776f416b56774b4941434e666841416841734e414a4a35425143435751384168685946414956514669734154517341696d454b597743424d675541696b384e414968764232466a614143484b41774169416b465957356b49434a7a6157356a5a53494169427347414a4e4b4467434941516f4168423063414946534377434857687741676a77465957356b4947356c647742684641434858784d36494656775a4746305a53427a64474630645143424b51594167554d464144455443676f4b26733d6d736367656e">
 <meta property="article:published_time" content="2020-08-21T06:22:00.000Z">
-<meta property="article:modified_time" content="2022-10-29T13:18:58.723Z">
+<meta property="article:modified_time" content="2024-01-29T01:41:26.261Z">
 <meta property="article:author" content="huagang">
 <meta property="article:tag" content="api-desig">
 <meta name="twitter:card" content="summary">
@@ -51,12 +50,15 @@
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>API 设计指南 | Myblog</title>
   
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-200000008-1"></script>
-  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-200000008-1","only_pageview":false}</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6VG5P4NMDQ"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-6VG5P4NMDQ","only_pageview":false,"measure_protocol_api_secret":null}</script>
   <script src="/js/third-party/analytics/google-analytics.js"></script>
 
   <script src="/js/third-party/analytics/baidu-analytics.js"></script>
   <script async src="https://hm.baidu.com/hm.js?c6fe2c57d92758c7a980d22eca71fd6a"></script>
+
+
+
 
 
 
@@ -70,8 +72,8 @@
   <div class="headband"></div>
 
   <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
@@ -91,7 +93,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
     </div>
   </div>
 </div>
@@ -106,15 +108,9 @@
 
 
 
-</div>
+</header>
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
@@ -135,11 +131,11 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">huagang</p>
   <div class="site-description" itemprop="description">I Love You !</div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
@@ -159,38 +155,24 @@
       </div>
   </nav>
 </div>
-  <div class="links-of-author site-overview-item animated">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/whg517" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;whg517" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/whg517" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;whg517" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="/huagang517@126.com" title="E-Mail → huagang517@126.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="/huagang517@126.com" title="E-Mail → huagang517@126.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-
-
 
         </div>
       </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
 
     
-  <div class="back-to-top" role="button" aria-label="返回顶部">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
-  <a href="https://github.com/whg517" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
+    </div>
 
     <div class="main-inner post posts-expand">
 
@@ -239,7 +221,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-10-29 21:18:58" itemprop="dateModified" datetime="2022-10-29T21:18:58+08:00">2022-10-29</time>
+      <time title="修改时间：2024-01-29 09:41:26" itemprop="dateModified" datetime="2024-01-29T09:41:26+08:00">2024-01-29</time>
     </span>
 
   
@@ -258,8 +240,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-        <p>在当前微服务大环境之下，越来越多的项目使用 RESTful HTTP接口方位资源 。为了团队开发的友好体验，开发人员尽可能遵循一致的 REST API 设计原则就显得至关重要。</p>
+    <div class="post-body" itemprop="articleBody"><p>在当前微服务大环境之下，越来越多的项目使用 RESTful HTTP接口方位资源 。为了团队开发的友好体验，开发人员尽可能遵循一致的 REST API 设计原则就显得至关重要。</p>
 <p>API 设计指南旨在提供一套基础规范，便于团队设计和开发出一致的 RESTful 接口。</p>
 <span id="more"></span>
 <h2 id="2-目录">2. 目录</h2>
@@ -1190,7 +1171,7 @@
 如果 API 产生或出现空值，则根据 API 本身的架构，这实际上不太可能是有效数据。</p>
 <p>另外，在 JSON 中，对象不应有被定义为 <code>undefined</code> 的属性；这在概念上与用 <code>null</code> 值定义的属性是分离的，但是许多编程语言都难以区分这种区别。</p>
 <p>例如，被定义为 <code>&#123;&quot;type&quot;: &quot;null&quot;&#125;</code> 的属性 <code>myProperty</code> 可以表示：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;myProperty&quot;</span><span class="punctuation">:</span> <span class="keyword">null</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;myProperty&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">null</span></span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 <p>而如果属性被定义为 <code>undefined</code> 则不会出现在对象中：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span> <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 <p>在大多数强类型化语言（例如Java）中，没有 <code>undefined</code> 类型的概念，这意味着对于JSON对象中所有未定义的字段，反序列化器将返回此类类型的值，如 <code>null</code> 您尝试检索它们的值。<br>
@@ -1544,12 +1525,12 @@ API 不应将其与时区相关联。原因是 UTC 偏移会更改浮动时间�
           <div class="post-nav">
             <div class="post-nav-item">
                 <a href="/2020/08/17/api-design/api_first_approach/" rel="prev" title="API first">
-                  <i class="fa fa-chevron-left"></i> API first
+                  <i class="fa fa-angle-left"></i> API first
                 </a>
             </div>
             <div class="post-nav-item">
                 <a href="/2020/08/27/api-design/paypal_api_first_part1/" rel="next" title="大规模分解API优先转换。在PayPal学习的经验教训–第1部分">
-                  大规模分解API优先转换。在PayPal学习的经验教训–第1部分 <i class="fa fa-chevron-right"></i>
+                  大规模分解API优先转换。在PayPal学习的经验教训–第1部分 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
@@ -1568,15 +1549,14 @@ API 不应将其与时区相关联。原因是 UTC 偏移会更改浮动时间�
   <footer class="footer">
     <div class="footer-inner">
 
-
-<div class="copyright">
-  &copy; 2017 – 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">huagang</span>
-</div>
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">huagang</span>
+  </div>
 <div class="busuanzi-count">
     <span class="post-meta-item" id="busuanzi_container_site_uv">
       <span class="post-meta-item-icon">
@@ -1602,10 +1582,30 @@ API 不应将其与时区相关联。原因是 UTC 偏移会更改浮动时间�
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/whg517" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
   <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
   
+
 
 
 
